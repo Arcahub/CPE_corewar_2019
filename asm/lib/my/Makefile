@@ -11,7 +11,8 @@ SRC	=	my_strlen.c	\
 		my_getline.c	\
 		my_strncmp.c	\
 		my_strdup.c		\
-		my_strncpy.c
+		my_strncpy.c	\
+		my_strcpy.c
 NAME = libmy.a
 
 OBJ	=	$(SRC:.c=.o)
