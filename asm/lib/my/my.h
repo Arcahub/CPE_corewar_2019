@@ -20,5 +20,7 @@ char *my_strdup(char const *);
 char *my_strcpy(char *, char const *);
 char *my_strncpy(char *, char const *, int);
 bool my_findchr(char *, char);
+char **str_to_word_array(char *);
+char **str_to_word_array_sep(char *, char);
 
 #endif /* !MY_H_ */
