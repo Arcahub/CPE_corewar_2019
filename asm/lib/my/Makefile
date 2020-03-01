@@ -12,7 +12,11 @@ SRC	=	my_strlen.c	\
 		my_strncmp.c	\
 		my_strdup.c		\
 		my_strncpy.c	\
-		my_strcpy.c
+		my_strcpy.c	\
+		my_findchr.c	\
+		str_to_word_array.c	\
+		str_to_word_array_sep.c
+
 NAME = libmy.a
 
 OBJ	=	$(SRC:.c=.o)
