@@ -1,0 +1,16 @@
+language: C
+services:
+- docker
+jobs:
+  include:
+  - stage: build
+    install: docker pull epitechcontent/epitest-docker
+    script: docker run -t -i -v $TRAVIS_BUILD_DIR:/mnt/data epitechcontent/epitest-docker
+      /bin/bash -c "cd /mnt/data/ && make"
+  - stage: tests
+    install: docker pull epitechcontent/epitest-docker
+    script: docker run -t -i -v $TRAVIS_BUILD_DIR:/mnt/data epitechcontent/epitest-docker
+      /bin/bash -c "cd /mnt/data/ && make tests_run"
+  - stage: deploy
+    install: chmod 755 ./deploy.sh
+    script: ./deploy.sh

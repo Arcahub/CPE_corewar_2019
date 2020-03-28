@@ -29,7 +29,7 @@ LDFLAGS = -L./lib $(LIBS)
 
 LIBS = $(foreach LIB, $(LIBS_DIR), $(addprefix -l, $(LIB_NAME)))
 
-HEADER = -I./include -I../include
+HEADER = -I./include
 
 REDDARK	=	\033[31;1m
 RED	=	\033[31;1m

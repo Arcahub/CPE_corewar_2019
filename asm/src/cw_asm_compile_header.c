@@ -44,7 +44,7 @@ int cw_asm_header_compute_line(char *line, header_t *header)
     return (0);
 }
 
-int cw_asm_compile_header(FILE *fdin, int fdout, header_t *header)
+int cw_asm_compile_header(FILE *fdin, header_t *header)
 {
     int ret = 0;
     char *line = my_get_line(fdin);
@@ -55,7 +55,7 @@ int cw_asm_compile_header(FILE *fdin, int fdout, header_t *header)
     header->prog_size = 0x17000000;
     for (; line && ret == 0 && (header->prog_name[0] == '\0' || \
     header->comment[0] == '\0'); line = my_get_line(fdin)) {
-        if (*line == '.')
+        if (*line == COMMENT_CMD_STRING[0] || *line == NAME_CMD_STRING[0])
             ret = cw_asm_header_compute_line(line, header);
         else if (*line != '\0' && *line != COMMENT_CHAR) {
             free(line);

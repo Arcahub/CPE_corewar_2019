@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include "cw_asm.h"
 
-int write_header(int fdout, header_t *header)
+int cw_asm_write_header(int fdout, header_t *header)
 {
     if (header->prog_name[0] == '\0' || header->comment[0] == '\0')
         return (84);

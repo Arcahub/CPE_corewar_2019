@@ -33,6 +33,7 @@ typedef char    args_type_t;
                                    ( ld 1,r1 put what's in the address (1+pc) \
                                    into r1 (4 bytes )) */
 # define T_LAB           8       /* LABEL */
+
 struct  op_s
 {
    char         *mnemonique;
@@ -71,4 +72,31 @@ typedef struct header_s header_t;
 # define CYCLE_TO_DIE    1536    /* number of cycle before beig declared dead */
 # define CYCLE_DELTA     5
 # define NBR_LIVE        40
+
+
+static const op_t op_tab[] = {
+    {"live", 1, {T_DIR}, 1, 10, "alive"},
+    {"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load"},
+    {"st", 2, {T_REG, T_IND | T_REG}, 3, 5, "store"},
+    {"add", 3, {T_REG, T_REG, T_REG}, 4, 10, "addition"},
+    {"sub", 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction"},
+    {"and", 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 6,
+      "et (and  r1, r2, r3   r1&r2 -> r3"},
+    {"or", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 7, 6,
+      "ou  (or   r1, r2, r3   r1 | r2 -> r3"},
+    {"xor", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 8, 6,
+      "ou (xor  r1, r2, r3   r1^r2 -> r3"},
+    {"zjmp", 1, {T_DIR}, 9, 20, "jump if zero"},
+    {"ldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 10, 25,
+      "load index"},
+    {"sti", 3, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, 11, 25,
+      "store index"},
+    {"fork", 1, {T_DIR}, 12, 800, "fork"},
+    {"lld", 2, {T_DIR | T_IND, T_REG}, 13, 10, "long load"},
+    {"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
+      "long load index"},
+    {"lfork", 1, {T_DIR}, 15, 1000, "long fork"},
+    {"aff", 1, {T_REG}, 16, 2, "aff"},
+    {0, 0, {0}, 0, 0, 0}
+};
 #endif
