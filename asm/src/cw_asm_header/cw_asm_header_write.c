@@ -6,6 +6,7 @@
 */
 
 #include "header/cw_asm_header.h"
+#include <unistd.h>
 
 int cw_asm_header_write(cw_asm_header_t *self, int fdout)
 {

@@ -9,6 +9,7 @@
 #define CW_ASM_INSTRUCT_H_
 
 #include "op.h"
+#include <stdio.h>
 
 typedef struct cw_asm_instruct_s {
     char *label;
@@ -21,5 +22,6 @@ typedef struct cw_asm_instruct_s {
 void cw_asm_instruct_destroy(cw_asm_instruct_t *self, cw_asm_instruct_t **list);
 cw_asm_instruct_t *cw_asm_instruct_create(cw_asm_instruct_t *last);
 int cw_asm_check_params(cw_asm_instruct_t *instruct);
+int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, FILE *fdin);
 
 #endif /* !CW_ASM_INSTRUCT_H_ */
