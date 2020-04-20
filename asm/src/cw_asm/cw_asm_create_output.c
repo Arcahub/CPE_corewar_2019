@@ -10,7 +10,7 @@
 #include <fcntl.h>
 #include "my.h"
 
-char *cw_asm_compute_output_path(char *old_path)
+static char *cw_asm_compute_output_path(char *old_path)
 {
     char *path = NULL;
     char *tmp = NULL;
@@ -29,16 +29,16 @@ char *cw_asm_compute_output_path(char *old_path)
     return (path);
 }
 
-int cw_asm_create_output(char *old_path)
+int cw_asm_output_create(char *raw_path)
 {
-    char *path = cw_asm_compute_output_path(old_path);
+    char *path = cw_asm_compute_output_path(raw_path);
     int fd = 0;
 
     if (path == NULL)
-        return (84);
+        return (-1);
     fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
     free(path);
     if (fd < 0)
-        return (84);
+        return (-1);
     return (fd);
 }

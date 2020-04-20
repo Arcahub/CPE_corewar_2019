@@ -7,18 +7,19 @@
 
 #include <stdio.h>
 #include "cw_asm.h"
+#include "header/cw_asm_header.h"
+#include "instructs/cw_asm_instruct.h"
 
 int cw_asm(int argc, char **argv)
 {
-    FILE *fdin = 0;
-    int fdout = 0;
+    cw_asm_t *asm_s = cw_asm_create(argv[1]);
+    int ret = 0;
 
-    if (argc != 2)
+    if (asm_s == NULL)
         return (84);
-    if (cw_asm_check_file(argv[1], &fdin))
-        return (84);
-    fdout = cw_asm_create_output(argv[1]);
-    if (fdout < 0)
-        return (84);
-    return (cw_asm_compile(fdin, fdout));
+    cw_asm_header_load(asm_s->header, asm_s->fdin);
+    ret = cw_asm_instruct_load(&asm_s->instructs, asm_s->fdin);
+    cw_asm_write(asm_s);
+    cw_asm_destroy(asm_s);
+    return (ret);
 }

@@ -11,12 +11,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-bool cw_asm_check_file(char *path, FILE **fd)
+FILE *cw_asm_input_open(char *path)
 {
+    FILE *fdin = NULL;
+
     if (path == NULL)
-        return (true);
-    *fd = fopen(path, "r");
-    if (*fd == NULL)
-        return (true);
-    return (false);
+        return (NULL);
+    fdin = fopen(path, "r");
+    if (fdin == NULL)
+        return (NULL);
+    return (fdin);
 }
