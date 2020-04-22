@@ -38,6 +38,7 @@ char **str_to_word_array_sep(char *str, char sep)
             count_word++;
     }
     array = malloc(sizeof(char *) * (count_word + 1));
+    for (int i = 0; i < count_word; array[i] = NULL, i++);
     array[count_word] = NULL;
     fill_array(array, str, sep);
     return (array);

@@ -13,10 +13,12 @@
 
 typedef struct cw_asm_instruct_s {
     char *label;
-    unsigned int instruct_code;
+    char instruct_code;
     char *parameters[MAX_ARGS_NUMBER];
     char coding_byte;
+    int instruct_size;
     struct cw_asm_instruct_s *next;
+    struct cw_asm_instruct_s *last;
 } cw_asm_instruct_t;
 
 void cw_asm_instruct_destroy(cw_asm_instruct_t *self, cw_asm_instruct_t **list);

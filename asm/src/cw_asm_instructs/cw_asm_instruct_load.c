@@ -18,9 +18,13 @@ cw_asm_instruct_t *last, char *line)
 
     if (!instruct)
         return (NULL);
-    // cw_asm_instruct_load_label(instruct, &line);
-    // cw_asm_instruct_load_cmd(instruct, &line);
-    // cw_asm_instruct_load_args(instruct, &line);
+    cw_asm_instruct_load_label(instruct, &line);
+    cw_asm_instruct_load_cmd(instruct, &line);
+    if (instruct->label == NULL && instruct->instruct_code == -1) {
+        cw_asm_instruct_destroy(instruct, NULL);
+        return (NULL);
+    }
+    cw_asm_instruct_load_args(instruct, &line);
     return (instruct);
 }
 
@@ -30,14 +34,16 @@ int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, FILE *fdin)
     cw_asm_instruct_t *tmp = NULL;
 
     for (; line; line = my_get_line(fdin)) {
-        if (*line == '0')
+        if (*line == '0' || *line == '#') {
+            free(line);
             continue;
+        }
         tmp = cw_asm_instruct_load_compute_line(*instructs_list, line);
-        printf("%s\n", line);
+        // printf("%s\n", line);
+        free(line);
         if (tmp == NULL)
             return (84);
         *instructs_list = tmp;
-        free(line);
     }
     return (0);
 }

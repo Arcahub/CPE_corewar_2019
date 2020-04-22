@@ -24,6 +24,8 @@ static void cw_asm_instruct_isolate(cw_asm_instruct_t *self, cw_asm_instruct_t *
 
 void cw_asm_instruct_destroy(cw_asm_instruct_t *self, cw_asm_instruct_t **list)
 {
+    if (!self)
+        return;
     if (list != NULL)
         cw_asm_instruct_isolate(self, list);
     if (self->label)

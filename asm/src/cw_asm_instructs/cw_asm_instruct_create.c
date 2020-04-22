@@ -8,16 +8,20 @@
 #include "instructs/cw_asm_instruct.h"
 #include <stdlib.h>
 
-cw_asm_instruct_t *cw_asm_instruct_create(cw_asm_instruct_t *last)
+cw_asm_instruct_t *cw_asm_instruct_create(cw_asm_instruct_t *head)
 {
     cw_asm_instruct_t *self = malloc(sizeof(cw_asm_instruct_t));
 
     if (self == NULL)
         return (NULL);
-    self->next = last;
+    self->next = head;
+    self->last = NULL;
+    if (head != NULL)
+        head->last = self;
     self->label = NULL;
-    self->instruct_code = 0;
+    self->instruct_code = -1;
     self->coding_byte = 0;
+    self->instruct_size = 0;
     for (int i = 0; i < MAX_ARGS_NUMBER; i++)
         self->parameters[i] = NULL;
     return (self);

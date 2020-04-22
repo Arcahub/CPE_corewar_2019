@@ -11,5 +11,7 @@
 
 void cw_asm_write(cw_asm_t *self)
 {
+    cw_asm_get_prog_size(self);
     cw_asm_header_write(self->header, self->fdout);
+    cw_asm_instructs_write(self->instructs, self->fdout);
 }

@@ -20,7 +20,7 @@ void cw_asm_destroy(cw_asm_t *self)
         cw_asm_instruct_destroy(self->instructs, &self->instructs);
     if (self->fdout >= 0)
         close(self->fdout);
-    if (self->fdin == NULL)
+    if (self->fdin)
         fclose(self->fdin);
     free(self);
 }

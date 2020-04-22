@@ -14,11 +14,12 @@ cw_asm_header_t *cw_asm_header_create(void)
 
     if (!header)
         return (NULL);
+    header->magic = 0;
     header->magic = COREWAR_EXEC_MAGIC;
-    for (int i = 0; i < PROG_NAME_LENGTH + 1; i++)
+    for (int i = 0; i < PROG_NAME_LENGTH + 2; i++)
         header->prog_name[i] = '\0';
     header->prog_size = 0;
-    for (int i = 0; i < COMMENT_LENGTH + 1; i++)
+    for (int i = 0; i < COMMENT_LENGTH + 2; i++)
         header->comment[i] = '\0';
     return (header);
 }
