@@ -22,8 +22,9 @@ cw_asm_instruct_t **instructs_list, int *offset, int fdout)
             write(fdout, &value, sizeof(char));
             break;
         case DIRECT_CHAR:
-            value = (cw_asm_instruct_write_arg_direct(sti,
-            *instructs_list, *offset, i));
+            value = reverse_bytes16(reverse_bytes((
+            cw_asm_instruct_write_arg_direct(sti,
+            *instructs_list, *offset, i))));
             write(fdout, &value, IND_SIZE);
             break;
         default:
