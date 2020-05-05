@@ -22,5 +22,7 @@ char *my_strncpy(char *, char const *, int);
 bool my_findchr(char *, char);
 char **str_to_word_array(char *);
 char **str_to_word_array_sep(char *, char);
+int my_getnbr(char const *str);
+int my_strcmp(char *, char *);
 
 #endif /* !MY_H_ */
