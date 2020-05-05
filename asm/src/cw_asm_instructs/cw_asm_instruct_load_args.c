@@ -19,7 +19,7 @@ void cw_asm_instruct_load_args(cw_asm_instruct_t *instruct, char **line)
         return;
     for (; args[i]; i++);
     if (i != nbr_args || nbr_args > MAX_ARGS_NUMBER) {
-        for (int j = 0; args[i]; i++)
+        for (i = 0; args[i]; i++)
             free(args[i]);
         free(args);
         return;

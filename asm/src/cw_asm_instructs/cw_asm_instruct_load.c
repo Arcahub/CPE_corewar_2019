@@ -34,12 +34,11 @@ int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, FILE *fdin)
     cw_asm_instruct_t *tmp = NULL;
 
     for (; line; line = my_get_line(fdin)) {
-        if (*line == '0' || *line == '#') {
+        if (*line == '\0' || *line == '#') {
             free(line);
             continue;
         }
         tmp = cw_asm_instruct_load_compute_line(*instructs_list, line);
-        // printf("%s\n", line);
         free(line);
         if (tmp == NULL)
             return (84);

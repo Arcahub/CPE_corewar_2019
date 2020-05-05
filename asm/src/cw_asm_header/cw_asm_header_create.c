@@ -6,6 +6,7 @@
 */
 
 #include "header/cw_asm_header.h"
+#include "tools.h"
 #include <stdlib.h>
 
 cw_asm_header_t *cw_asm_header_create(void)
@@ -15,11 +16,11 @@ cw_asm_header_t *cw_asm_header_create(void)
     if (!header)
         return (NULL);
     header->magic = 0;
-    header->magic = COREWAR_EXEC_MAGIC;
+    header->magic = reverse_bytes(COREWAR_EXEC_MAGIC);
     for (int i = 0; i < PROG_NAME_LENGTH + 2; i++)
         header->prog_name[i] = '\0';
     header->prog_size = 0;
-    for (int i = 0; i < COMMENT_LENGTH + 2; i++)
-        header->comment[i] = '\0';
+    for (int j = 0; j < COMMENT_LENGTH + 2; j++)
+        header->comment[j] = '\0';
     return (header);
 }

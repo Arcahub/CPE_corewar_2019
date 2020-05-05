@@ -25,15 +25,14 @@ static int cw_asm_header_check_arg(char *str)
 
 static int cw_asm_header_compute_line(char *line, cw_asm_header_t *self)
 {
-    if (my_strncmp(line, NAME_CMD_STRING, my_strlen(NAME_CMD_STRING)) == 0) {
+    if (my_strcmp(line, NAME_CMD_STRING) == 0) {
         if (cw_asm_header_check_arg(line + my_strlen(NAME_CMD_STRING)) == 84)
             return (84);
         else {
             my_strncpy(self->prog_name, line + my_strlen(NAME_CMD_STRING) \
             + 2, my_strlen(line + my_strlen(NAME_CMD_STRING)) - 3);
         }
-    } else if (my_strncmp(line, COMMENT_CMD_STRING, \
-    my_strlen(COMMENT_CMD_STRING)) == 0) {
+    } else if (my_strcmp(line, COMMENT_CMD_STRING) == 0) {
         if (cw_asm_header_check_arg(line + my_strlen(COMMENT_CMD_STRING)) == 84)
             return (84);
         else

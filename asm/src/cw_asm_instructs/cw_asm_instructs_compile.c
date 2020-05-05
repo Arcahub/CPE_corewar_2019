@@ -37,7 +37,7 @@ static void cw_asm_instruct_compile_size_special_case(cw_asm_instruct_t
         instruct->instruct_size += DIR_SIZE;
     } else
         instruct->instruct_size += IND_SIZE;
-    instruct->instruct_size+= 1;
+    instruct->instruct_size += 1;
 }
 
 void cw_asm_instructs_compile(cw_asm_instruct_t *instructs_list)
