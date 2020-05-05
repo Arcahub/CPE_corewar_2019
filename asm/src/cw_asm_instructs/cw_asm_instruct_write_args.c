@@ -38,9 +38,7 @@ cw_asm_instruct_t *instructs_list, int offset, int i)
         value = reverse_bytes(my_getnbr(param + 1));
         return (value);
     }
-    printf("off: %d\n", offset);
     value = cw_asm_instruct_get_label_offset(param, instructs_list, offset);
-    printf("val: %d\n", value);
     return (reverse_bytes(value));
 }
 

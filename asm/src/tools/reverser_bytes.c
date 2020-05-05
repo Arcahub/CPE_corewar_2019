@@ -15,7 +15,7 @@ uint32_t reverse_bytes(uint32_t bytes)
 
     for (i = 0; i < 32; i += 8) {
         byte = (bytes >> i) & 0xff;
-        aux |= byte << (16 - 8 - i);
+        aux |= byte << (32 - 8 - i);
     }
     return (aux);
 }
@@ -28,7 +28,7 @@ uint32_t reverse_bytes32(uint32_t bytes)
 
     for (i = 0; i < 32; i += 8) {
         byte = (bytes >> i) & 0xff;
-        aux |= byte << (16 - 8 - i);
+        aux |= byte << (32 - 8 - i);
     }
     return (aux);
 }
