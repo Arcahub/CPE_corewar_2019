@@ -9,7 +9,9 @@
 
 void cw_asm_instruct_compile_global(cw_asm_instruct_t *instruct)
 {
-    for (int i = 0; instruct->parameters[i]; i++) {
+    int i = 0;
+
+    for (; instruct->parameters[i]; i++) {
         switch (*instruct->parameters[i]) {
         case 'r':
             instruct->coding_byte += 0b01;
@@ -26,4 +28,6 @@ void cw_asm_instruct_compile_global(cw_asm_instruct_t *instruct)
         instruct->coding_byte = instruct->coding_byte << 2;
     }
     instruct->instruct_size += 2;
+    for (; i < 3; i++)
+        instruct->coding_byte = instruct->coding_byte << 2;
 }
