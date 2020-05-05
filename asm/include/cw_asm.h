@@ -29,5 +29,6 @@ void cw_asm_destroy(cw_asm_t *self);
 int cw_asm_output_create(char *raw_path);
 FILE *cw_asm_input_open(char *path);
 void cw_asm_write(cw_asm_t *self);
+void cw_asm_get_prog_size(cw_asm_t *self);
 
 #endif /* !CW_ASM_H_ */
