@@ -63,10 +63,6 @@ jobs:
     name: Test compiler
     needs: [build_asm, install_criterion]
     runs-on: [ubuntu-latest]
-    env:
-      LD_LIBRARY_PATH: ${{ runner.temp }}/Criterion/build:${{ env.LD_LIBRARY_PATH }}
-      LIBRARY_PATH: ${{ runner.temp }}/Criterion/build:${{ env.LIBRARY_PATH }}
-      CPATH: ${{ runner.temp }}/Criterion/include:${{ env.CPATH }}
 
     steps:
       - uses: actions/checkout@v2
@@ -74,16 +70,16 @@ jobs:
       - name: Run tests
         working-directory: ./asm
         run: make tests_run
+        env:
+          LD_LIBRARY_PATH: ${{ runner.temp }}/Criterion/build:${{ env.LD_LIBRARY_PATH }}
+          LIBRARY_PATH: ${{ runner.temp }}/Criterion/build:${{ env.LIBRARY_PATH }}
+          CPATH: ${{ runner.temp }}/Criterion/include:${{ env.CPATH }}
 
   test_vm:
 
     name: Test VM
     needs: [build_asm, install_criterion]
     runs-on: [ubuntu-latest]
-    env:
-      LD_LIBRARY_PATH: ${{ runner.temp }}/Criterion/build:${{ env.LD_LIBRARY_PATH }}
-      LIBRARY_PATH: ${{ runner.temp }}/Criterion/build:${{ env.LIBRARY_PATH }}
-      CPATH: ${{ runner.temp }}/Criterion/include:${{ env.CPATH }}
 
     steps:
       - uses: actions/checkout@v2
@@ -91,3 +87,7 @@ jobs:
       - name: Run tests
         working-directory: ./corewar
         run: make tests_run
+        env:
+          LD_LIBRARY_PATH: ${{ runner.temp }}/Criterion/build:${{ env.LD_LIBRARY_PATH }}
+          LIBRARY_PATH: ${{ runner.temp }}/Criterion/build:${{ env.LIBRARY_PATH }}
+          CPATH: ${{ runner.temp }}/Criterion/include:${{ env.CPATH }}
