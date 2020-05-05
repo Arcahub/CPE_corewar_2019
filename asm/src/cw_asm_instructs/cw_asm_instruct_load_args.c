@@ -25,7 +25,7 @@ void cw_asm_instruct_load_args(cw_asm_instruct_t *instruct, char **line)
         return;
     }
     for (i = 0; i < nbr_args; i++) {
-        instruct->parameters[i] = my_strdup(args[i]);
+        instruct->parameters[i] = my_trimline(args[i]);
         free(args[i]);
     }
     free(args);
