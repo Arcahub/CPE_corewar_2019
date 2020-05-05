@@ -16,7 +16,8 @@ SRC	=	my_strlen.c	\
 		my_findchr.c	\
 		str_to_word_array.c	\
 		str_to_word_array_sep.c	\
-		my_getnbr.c
+		my_getnbr.c	\
+		my_strcmp.c
 
 NAME = libmy.a
 
