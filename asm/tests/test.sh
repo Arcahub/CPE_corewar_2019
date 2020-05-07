@@ -6,10 +6,10 @@
 ##
 
 CHAMP_SRC_DIR='./champs'
-CWD='tests'
+CWD='asm/tests'
 
 REF_BINARY='asm'
-MY_ASM_PATH="../asm/asm"
+MY_ASM_PATH="../asm"
 MY_BINARY='my_asm'
 REF_OUTPUT="$ref"
 MY_OUTPUT="$my"
@@ -71,4 +71,4 @@ fi
 
 cp $MY_ASM_PATH $MY_BINARY
 run
-rm MY_BINARY
+rm $MY_BINARY
