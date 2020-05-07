@@ -49,7 +49,6 @@ static int cw_asm_header_load_compute_line(cw_asm_header_t *header, char *line)
 
 int cw_asm_header_load(cw_asm_header_t *self, FILE *fdin)
 {
-    int ret = 0;
     char *line = my_get_line(fdin);
     int count = 0;
 
