@@ -59,8 +59,8 @@ cw_asm_instruct_t **instructs_list, int *offset, int fdout)
             write(fdout, &value + 4 - DIR_SIZE, DIR_SIZE);
             break;
         default:
-            value = reverse_bytes32(my_getnbr(instruct->parameters[i]));
-            write(fdout, &value + 4 - IND_SIZE, IND_SIZE);
+            value = reverse_bytes16(my_getnbr(instruct->parameters[i]));
+            write(fdout, &value, IND_SIZE);
         }
     }
 }
