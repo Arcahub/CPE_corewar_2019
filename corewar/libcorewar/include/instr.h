@@ -78,6 +78,23 @@ typedef struct {
 } cw_lvalue_t;
 
 /*
+** Index values (can't be indirect for some reason)
+*/
+
+typedef enum {
+    CW_IVAL_REG = CW_RVAL_REG,
+    CW_IVAL_DIR = CW_RVAL_DIR,
+} cw_ival_type_t;
+
+typedef struct {
+    cw_ival_type_t type;
+    union {
+        cw_val_reg_t reg;
+        cw_val_dir_t dir;
+    } u;
+} cw_ivalue_t;
+
+/*
 ** Instruction
 */
 
@@ -121,20 +138,20 @@ typedef struct {
             cw_val_reg_t dst;
         } xor;
         struct {
-            cw_val_ind_t ind;
+            cw_val_ind_t addr;
         } zjmp;
         struct {
             cw_rval_type_t base;
-            cw_rval_type_t ind;
+            cw_ival_type_t ind;
             cw_val_reg_t dst;
         } ldi;
         struct {
             cw_val_reg_t src;
             cw_rval_type_t base;
-            cw_rval_type_t ind;
+            cw_ival_type_t ind;
         } sti;
         struct {
-            cw_val_ind_t ind;
+            cw_val_ind_t addr;
         } fork;
         struct {
             cw_lvalue_t src;
@@ -142,11 +159,11 @@ typedef struct {
         } lld;
         struct {
             cw_rval_type_t base;
-            cw_rval_type_t ind;
+            cw_ival_type_t ind;
             cw_val_reg_t dst;
         } lldi;
         struct {
-            cw_val_ind_t ind;
+            cw_val_ind_t addr;
         } lfork;
         struct {
             cw_val_reg_t reg;
