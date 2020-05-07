@@ -20,7 +20,7 @@ void cw_asm_instruct_load_label(cw_asm_instruct_t *instruct, char **line)
     int i = 0;
 
     while (**line == ' ' || **line == '\t')
-        (*line)++;
+        *line += 1;
     if (**line == '\0')
         return;
     for (; is_only_alphanumc((*line)[i]); i++);
