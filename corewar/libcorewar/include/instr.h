@@ -121,7 +121,7 @@ typedef struct {
             cw_val_reg_t dst;
         } xor;
         struct {
-            cw_val_dir_t ind;
+            cw_val_ind_t ind;
         } zjmp;
         struct {
             cw_rval_type_t base;
