@@ -14,6 +14,8 @@ MY_BINARY='my_asm'
 REF_OUTPUT="$ref"
 MY_OUTPUT="$my"
 
+EXIT_STATUS=0
+
 RED="\e[31m"
 GREEN="\e[32m"
 
@@ -36,11 +38,13 @@ do_test() {
     if [ $exit_code_ref != $exit_code_my ]
     then
         echo -e "$RED KO: exit code diff (my: $exit_code_my != ref: $exit_code_ref)"
+        EXIT_STATUS=1
     fi
     diff my ref
     if [ $? != 0 ]
     then
         echo -e "$RED KO: files differ"
+        EXIT_STATUS=1
     else
         echo -e "$GREEN OK: Test passed"
     fi
@@ -72,3 +76,4 @@ fi
 cp $MY_ASM_PATH $MY_BINARY
 run
 rm $MY_BINARY
+exit $EXIT_STATUS
