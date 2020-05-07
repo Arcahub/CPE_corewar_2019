@@ -84,7 +84,7 @@ void cw_vm_destroy(cw_vm_t *self);
 ** Running the VM
 */
 
-bool cw_vm_update(cw_vm_t *self, OPT(u64) cycle_count);
+bool cw_vm_run(cw_vm_t *self, OPT(u64) cycle_count);
 
 /*
 ** Callbacks
