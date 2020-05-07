@@ -10,6 +10,7 @@
 
 #include "my/types.h"
 #include "my/collections/vec.h"
+#include "my/collections/list.h"
 #include "corewar/instr.h"
 
 typedef struct {
@@ -34,12 +35,13 @@ typedef struct {
 } cw_program_def_t;
 
 typedef struct {
+    char *name;
+    char *comment;
     const u32_t prog_number;
-    vec_t *cores;
+    u64_t age;
 } cw_program_t;
 
 typedef struct {
-    const cw_program_t *prog;
     struct {
         usize_t pc;
         u8_t **regs;
@@ -50,13 +52,25 @@ typedef struct {
     } state;
 } cw_core_t;
 
+typedef struct cw_vm cw_vm_t;
+
 typedef struct {
+    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*);
+    void *data;
+} cw_instr_callback_t;
+
+struct cw_vm {
     const cw_config_t config;
     u64_t cycle_to_die;
     u8_t *mem;
     usize_t prog_count;
     cw_program_t *programs;
-} cw_vm_t;
+    vec_t *cores;
+    struct {
+        list_t *all;
+        list_t *opcodes[CW_OPCODE_LAST + 1];
+    } callbacks;
+};
 
 /*
 ** Creating and destroying the VM
@@ -73,15 +87,13 @@ void cw_vm_destroy(cw_vm_t *self);
 bool cw_vm_update(cw_vm_t *self, OPT(u64) cycle_count);
 
 /*
-** Debugging & events
+** Callbacks
 */
 
-void cw_vm_set_live_callback(cw_vm_t *self, bool (*fn)(void*, cw_vm_t*, u32_t),
-    void*);
-void cw_vm_set_aff_callback(cw_vm_t *self, bool (*fn)(void*, cw_vm_t*, char),
-    void*);
-void cw_vm_set_debug_callback(cw_vm_t *self,
-    bool (*fn)(void*, cw_vm_t*, const cw_instr_t*), void*);
+void cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
+    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*), void*);
+void *cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
+    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*));
 
 /*
 ** Utilities

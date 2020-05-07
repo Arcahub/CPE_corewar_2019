@@ -29,6 +29,10 @@ typedef enum {
     CW_INSTR_AFF = 0x10,
 } cw_opcode_t;
 
+#define CW_OPCODE_LAST CW_INSTR_AFF
+
+OPT_DEFINE(cw_opcode_t, cw_opcode)
+
 /*
 ** Instruction parameters
 */
