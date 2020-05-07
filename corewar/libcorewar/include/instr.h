@@ -120,14 +120,14 @@ typedef struct {
             cw_val_dir_t ind;
         } zjmp;
         struct {
-            cw_ival_type_t a;
-            cw_ival_type_t b;
+            cw_rval_type_t base;
+            cw_rval_type_t ind;
             cw_val_reg_t dst;
         } ldi;
         struct {
             cw_val_reg_t src;
-            cw_rval_type_t a;
-            cw_rval_type_t b;
+            cw_rval_type_t base;
+            cw_rval_type_t ind;
         } sti;
         struct {
             cw_val_ind_t ind;
@@ -137,8 +137,8 @@ typedef struct {
             cw_val_reg_t dst;
         } lld;
         struct {
-            cw_ival_type_t a;
-            cw_ival_type_t b;
+            cw_rval_type_t base;
+            cw_rval_type_t ind;
             cw_val_reg_t dst;
         } lldi;
         struct {
