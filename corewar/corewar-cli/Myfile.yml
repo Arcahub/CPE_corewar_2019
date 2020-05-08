@@ -14,7 +14,7 @@ namespace: corewar-cli
 dependencies:
   - libmy=master
 
-allowed: malloc realloc free
+allowed: malloc realloc free write
 
 src:
   - ./src/main.c
