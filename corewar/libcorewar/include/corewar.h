@@ -18,6 +18,7 @@ typedef struct {
     usize_t comment_length;
     u32_t corewar_exec_magic;
     usize_t reg_size;
+    usize_t reg_count;
     usize_t idx_mod;
     usize_t ind_size;
     usize_t dir_size;

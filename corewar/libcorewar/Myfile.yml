@@ -17,6 +17,7 @@ dependencies:
 allowed: malloc realloc free
 
 src:
-  - ./src/lib.c
+  - ./src/vm/destroy.c
+  - ./src/vm/new.c
 
 tests_src:
