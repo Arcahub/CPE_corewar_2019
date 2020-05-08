@@ -19,8 +19,6 @@ EXIT_STATUS=0
 RED="\e[31m"
 GREEN="\e[32m"
 
-## BINARY_OUTPUT_PATH = $(sed 's/.s/.cor/g' $filepath)
-
 do_test() {
     local filepath=$1
     local exit_code_ref=0
