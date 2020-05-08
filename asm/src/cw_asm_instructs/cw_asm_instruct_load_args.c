@@ -9,6 +9,22 @@
 #include "my.h"
 #include <stdlib.h>
 
+static char *cw_asm_instruct_clean_arg(char *arg)
+{
+    char *str = NULL;
+    int i = 0;
+
+    for (; arg[i] != '\0' && arg[i] != COMMENT_CHAR; i++);
+    if (arg[i] != '\0') {
+        arg = my_strndup(arg, i);
+        str = arg;
+    }
+    arg = my_trimline(arg);
+    if (str)
+        free(str);
+    return (arg);
+}
+
 void cw_asm_instruct_load_args(cw_asm_instruct_t *instruct, char **line)
 {
     char **args = str_to_word_array_sep(*line, SEPARATOR_CHAR);
@@ -25,7 +41,7 @@ void cw_asm_instruct_load_args(cw_asm_instruct_t *instruct, char **line)
         return;
     }
     for (i = 0; i < nbr_args; i++) {
-        instruct->parameters[i] = my_trimline(args[i]);
+        instruct->parameters[i] = cw_asm_instruct_clean_arg(args[i]);
         free(args[i]);
     }
     free(args);
