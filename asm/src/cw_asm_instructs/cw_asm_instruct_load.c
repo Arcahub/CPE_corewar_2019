@@ -25,6 +25,10 @@ cw_asm_instruct_t *last, char *line)
         return (NULL);
     }
     cw_asm_instruct_load_args(instruct, &line);
+    if (cw_asm_instruct_check_args(instruct)) {
+        cw_asm_instruct_destroy(instruct, NULL);
+        return (NULL);
+    }
     return (instruct);
 }
 
