@@ -25,5 +25,15 @@ void cw_asm_instruct_destroy(cw_asm_instruct_t *self, cw_asm_instruct_t **list);
 cw_asm_instruct_t *cw_asm_instruct_create(cw_asm_instruct_t *last);
 int cw_asm_check_params(cw_asm_instruct_t *instruct);
 int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, FILE *fdin);
+void cw_asm_instruct_write_args(cw_asm_instruct_t *instruct,
+cw_asm_instruct_t **instructs_list, int *offset, int fdout);
+void cw_asm_instruct_load_args(cw_asm_instruct_t *instruct, char **line);
+void cw_asm_instruct_load_cmd(cw_asm_instruct_t *instruct, char **line);
+void cw_asm_instruct_load_label(cw_asm_instruct_t *instruct, char **line);
+void cw_asm_instructs_compile(cw_asm_instruct_t *instructs_list);
+void cw_asm_instructs_write(cw_asm_instruct_t *instructs_list, int fdout);
+int cw_asm_instruct_write_arg_direct(cw_asm_instruct_t *instruct,
+cw_asm_instruct_t *instructs_list,
+int offset, int i);
 
 #endif /* !CW_ASM_INSTRUCT_H_ */
