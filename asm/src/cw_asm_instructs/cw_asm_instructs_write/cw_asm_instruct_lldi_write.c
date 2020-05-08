@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 static void cw_asm_instruct_write_args_lldi(cw_asm_instruct_t *lldi,
-cw_asm_instruct_t **instructs_list, int *offset, int fdout)
+    cw_asm_instruct_t **instructs_list, int *offset, int fdout)
 {
     int value = 0;
 
