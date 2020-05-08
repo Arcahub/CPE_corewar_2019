@@ -11,7 +11,12 @@
 void cw_asm_instruct_lfork_write(cw_asm_instruct_t *instruct,
 cw_asm_instruct_t **list, int fdout, int *offset)
 {
+    int value = 0;
+
     write(fdout, &instruct->instruct_code, sizeof(char));
-    cw_asm_instruct_write_args(instruct, list, offset, fdout);
+    value = reverse_bytes16(reverse_bytes((
+    cw_asm_instruct_write_arg_direct(instruct,
+    *list, *offset, 0))));
+    write(fdout, &value, IND_SIZE);
     *offset -= instruct->instruct_size;
 }
