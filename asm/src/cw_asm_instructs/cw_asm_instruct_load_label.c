@@ -8,11 +8,12 @@
 #include "instructs/cw_asm_instruct.h"
 #include "my.h"
 
-static bool is_only_alphanumc(char c)
+static bool cw_asm_instruct_load_label_is_valid_char(char c)
 {
-    if (c < 48 || (c > 57 && c < 97) || c > 122)
-        return (false);
-    return (true);
+    for (int i = 0; LABEL_CHARS[i] != '\0'; i++)
+        if (LABEL_CHARS[i] == c)
+            return (true);
+    return (false);
 }
 
 void cw_asm_instruct_load_label(cw_asm_instruct_t *instruct, char **line)
@@ -23,7 +24,7 @@ void cw_asm_instruct_load_label(cw_asm_instruct_t *instruct, char **line)
         *line += 1;
     if (**line == '\0')
         return;
-    for (; is_only_alphanumc((*line)[i]); i++);
+    for (; cw_asm_instruct_load_label_is_valid_char((*line)[i]); i++);
     if ((*line)[i] != ':')
         return;
     instruct->label = my_strndup(*line, i);
