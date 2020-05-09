@@ -40,8 +40,11 @@ cw_asm_t *cw_asm_create(char *path)
         cw_asm_destroy(asm_s);
         return (NULL);
     }
-    asm_s->fdout = cw_asm_output_create(path);
-    if (asm_s->fdout < 0) {
+    asm_s->output_path = cw_asm_compute_output_path(path);
+    asm_s->output_buff.len = 0;
+    asm_s->output_buff.data = NULL;
+    asm_s->bw = cw_asm_output_create(&asm_s->output_buff);
+    if (asm_s->bw == NULL) {
         cw_asm_destroy(asm_s);
         return (NULL);
     }

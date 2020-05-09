@@ -23,14 +23,16 @@ typedef struct {
 typedef struct cw_asm_s {
     cw_asm_header_t *header;
     cw_asm_instruct_t *instructs;
-    int fdout;
+    bufwriter_t *bw;
+    cw_asm_output_buff_t output_buff;
+    char *output_path;
     bufreader_t *fdin;
 } cw_asm_t;
 
 int cw_asm(int, char **);
 cw_asm_t *cw_asm_create(char *path);
 void cw_asm_destroy(cw_asm_t *self);
-int cw_asm_output_create(char *);
+bufwriter_t *cw_asm_output_create(cw_asm_output_buff_t *);
 bufreader_t *cw_asm_input_open(char *path);
 void cw_asm_write(cw_asm_t *self);
 void cw_asm_get_prog_size(cw_asm_t *self);

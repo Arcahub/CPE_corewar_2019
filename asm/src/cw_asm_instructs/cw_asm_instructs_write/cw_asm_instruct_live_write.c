@@ -9,9 +9,9 @@
 #include <unistd.h>
 
 void cw_asm_instruct_live_write(cw_asm_instruct_t *instruct,
-cw_asm_instruct_t **list, int fdout, int *offset)
+cw_asm_instruct_t **list, bufwriter_t *bw, int *offset)
 {
-    write(fdout, &instruct->instruct_code, sizeof(char));
-    cw_asm_instruct_write_args(instruct, list, offset, fdout);
+    bufwriter_write(bw, &instruct->instruct_code, sizeof(char));
+    cw_asm_instruct_write_args(instruct, list, offset, bw);
     *offset -= instruct->instruct_size;
 }
