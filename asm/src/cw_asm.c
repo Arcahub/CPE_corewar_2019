@@ -20,6 +20,11 @@ int cw_asm(int argc, char **argv)
         return (84);
     cw_asm_header_load(asm_s->header, asm_s->fdin);
     ret = cw_asm_instruct_load(&asm_s->instructs, asm_s->fdin);
+    if (ret == 84 ||
+    asm_s->header->prog_name[0] == '\0' || asm_s->header->comment[0] == '\0') {
+        cw_asm_destroy(asm_s);
+        return (84);
+    }
     cw_asm_instructs_compile(asm_s->instructs);
     cw_asm_write(asm_s);
     cw_asm_destroy(asm_s);
