@@ -21,3 +21,4 @@ src:
   - ./src/vm/new.c
 
 tests_src:
+  - ./tests/vm_ctor.c

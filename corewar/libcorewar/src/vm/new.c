@@ -10,10 +10,6 @@
 #include "my/io.h"
 #include "corewar/corewar.h"
 
-/*
-** TODO: Load address default values
-*/
-
 static bool load_program(cw_vm_t *self, cw_program_t *prog,
     const cw_program_def_t *def)
 {
@@ -23,7 +19,7 @@ static bool load_program(cw_vm_t *self, cw_program_t *prog,
     usize_t size_off = ((name_off + name_len + 1) / 4 + 1) * 4;
     usize_t comment_off = size_off + 4;
     usize_t data_off = ((comment_off + comment_len + 1) / 4 + 1) * 4;
-    u32_t magic = u32_be_to_ne(*((u32_t*) &def->data[0]));
+    u32_t magic = *((u32_t*) &def->data[0]);
     u32_t prog_size = u32_be_to_ne(*((u32_t*) &def->data[size_off]));
 
     if (magic != self->config.corewar_exec_magic)
@@ -39,11 +35,16 @@ static bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     usize_t n)
 {
     bool err = false;
+    cw_program_def_t def;
 
     self->prog_count = n;
     self->programs = my_calloc(n, sizeof(cw_program_t));
-    for (usize_t i = 0; !err && i < n; i++)
-        err = load_program(self, &self->programs[i], &defs[i]);
+    for (usize_t i = 0; !err && i < n; i++) {
+        def = defs[i];
+        if (!defs[i].load_address.is_some)
+            def.load_address = SOME(usize, i * self->config.mem_size / n);
+        err = load_program(self, &self->programs[i], &def);
+    }
     return (err);
 }
 
