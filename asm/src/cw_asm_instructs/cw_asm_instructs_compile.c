@@ -5,8 +5,8 @@
 ** cw_asm_instructs_compile
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include "instructs/cw_asm_instruct_compile.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct_compile.h"
 
 void cw_asm_instructs_compile(cw_asm_instruct_t *instructs_list)
 {

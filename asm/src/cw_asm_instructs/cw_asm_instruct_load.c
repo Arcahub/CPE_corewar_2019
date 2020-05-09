@@ -5,11 +5,10 @@
 ** cw_asm_compile_instructs
 */
 
-#include "my.h"
-#include "cw_asm.h"
-#include "instructs/cw_asm_instruct.h"
+#include "my/my.h"
+#include "asm/cw_asm.h"
+#include "asm/instructs/cw_asm_instruct.h"
 #include <unistd.h>
-#include <stdlib.h>
 
 static cw_asm_instruct_t *cw_asm_instruct_load_compute_line(
 cw_asm_instruct_t *last, char *line)
@@ -28,18 +27,21 @@ cw_asm_instruct_t *last, char *line)
     return (instruct);
 }
 
-int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, FILE *fdin)
+int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, bufreader_t *fdin)
 {
-    char *line = my_get_line(fdin);
+    char *line = bufreader_read_line(fdin);
     cw_asm_instruct_t *tmp = NULL;
+    int last_char = 0;
 
-    for (; line; line = my_get_line(fdin)) {
+    for (; line; line = bufreader_read_line(fdin)) {
+        last_char = my_cstrlen(line) - 1;
+        line[last_char] = (line[last_char] == '\n') ? '\0' : line[last_char];
         if (cw_asm_is_line_useless(line)) {
-            free(line);
+            my_free(line);
             continue;
         }
         tmp = cw_asm_instruct_load_compute_line(*instructs_list, line);
-        free(line);
+        my_free(line);
         if (tmp == NULL)
             return (84);
         *instructs_list = tmp;

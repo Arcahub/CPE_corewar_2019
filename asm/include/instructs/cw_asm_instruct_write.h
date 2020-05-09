@@ -8,7 +8,7 @@
 #ifndef CW_ASM_INSTRUCT_WRITE_H_
 #define CW_ASM_INSTRUCT_WRITE_H_
 
-#include "instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct.h"
 
 void cw_asm_instruct_add_write(cw_asm_instruct_t *instruct,
 cw_asm_instruct_t **list, int fdout, int *offset);

@@ -5,7 +5,7 @@
 ** cw_asm_instruct_aff_write
 */
 
-#include "instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct.h"
 #include <unistd.h>
 
 void cw_asm_instruct_aff_write(cw_asm_instruct_t *instruct,

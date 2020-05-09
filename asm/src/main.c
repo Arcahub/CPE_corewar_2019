@@ -5,7 +5,7 @@
 ** main
 */
 
-#include "cw_asm.h"
+#include "asm/cw_asm.h"
 
 int main(int argc, char **argv)
 {

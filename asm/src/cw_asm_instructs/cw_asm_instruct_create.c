@@ -5,12 +5,12 @@
 ** cw_asm_instruct_create
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include <stdlib.h>
+#include "asm/instructs/cw_asm_instruct.h"
+
 
 cw_asm_instruct_t *cw_asm_instruct_create(cw_asm_instruct_t *head)
 {
-    cw_asm_instruct_t *self = malloc(sizeof(cw_asm_instruct_t));
+    cw_asm_instruct_t *self = my_malloc(sizeof(cw_asm_instruct_t));
 
     if (self == NULL)
         return (NULL);

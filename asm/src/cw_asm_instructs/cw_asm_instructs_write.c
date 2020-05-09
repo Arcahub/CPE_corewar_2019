@@ -5,8 +5,8 @@
 ** cw_asm_instructs_write
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include "instructs/cw_asm_instruct_write.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct_write.h"
 
 /*
 void cw_asm_instructs_debug(cw_asm_instruct_t *instructs_list)

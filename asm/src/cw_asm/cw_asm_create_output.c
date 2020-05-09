@@ -5,25 +5,25 @@
 ** cw_asm_create_output
 */
 
-#include <stdlib.h>
-#include <unistd.h>
+#include "my/my.h"
+#include "my/io.h"
+#include "asm/cw_asm.h"
 #include <fcntl.h>
-#include "my.h"
 
 static char *cw_asm_compute_output_path(char *old_path)
 {
     char *path = NULL;
     char *tmp = NULL;
-    int length = my_strlen(old_path);
+    int length = my_cstrlen(old_path);
 
     if (length > 2)
         if (old_path[length - 1] == 's' && old_path[length - 2] == '.')
             length = length - 2;
-    tmp = my_strndup(old_path, length);
+    tmp = my_cstrndup(old_path, length);
     if (tmp == NULL)
         return (NULL);
-    path = my_strcat(tmp, ".cor");
-    free(tmp);
+    path = my_format("%s%s", tmp, ".cor");
+    my_free(tmp);
     if (path == NULL)
         return (NULL);
     return (path);
@@ -37,7 +37,7 @@ int cw_asm_output_create(char *raw_path)
     if (path == NULL)
         return (-1);
     fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
-    free(path);
+    my_free(path);
     if (fd < 0)
         return (-1);
     return (fd);

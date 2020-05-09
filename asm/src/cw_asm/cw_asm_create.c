@@ -5,13 +5,31 @@
 ** cw_asm_create
 */
 
-#include "cw_asm.h"
-#include "header/cw_asm_header.h"
-#include <stdlib.h>
+#include "asm/cw_asm.h"
+#include "asm/header/cw_asm_header.h"
+
+static char *cw_asm_compute_output_path(char *old_path)
+{
+    char *path = NULL;
+    char *tmp = NULL;
+    int length = my_cstrlen(old_path);
+
+    if (length > 2)
+        if (old_path[length - 1] == 's' && old_path[length - 2] == '.')
+            length = length - 2;
+    tmp = my_cstrndup(old_path, length);
+    if (tmp == NULL)
+        return (NULL);
+    path = my_format("%s%s", tmp, ".cor");
+    my_free(tmp);
+    if (path == NULL)
+        return (NULL);
+    return (path);
+}
 
 cw_asm_t *cw_asm_create(char *path)
 {
-    cw_asm_t *asm_s = malloc(sizeof(cw_asm_t));
+    cw_asm_t *asm_s = my_malloc(sizeof(cw_asm_t));
 
     if (asm_s == NULL)
         return (NULL);
