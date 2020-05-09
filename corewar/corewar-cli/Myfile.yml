@@ -14,7 +14,9 @@ namespace: corewar-cli
 dependencies:
   - libmy=master
 
-allowed: malloc realloc free write
+allowed:
+  - malloc free
+  - write read open close
 
 src:
   - ./src/main.c
@@ -23,6 +25,9 @@ src:
   - ./src/args_parser/destroy.c
   - ./src/args_parser/run.c
   - ./src/cli/init.c
+  - ./src/cli/destroy.c
+  - ./src/cli/add_prog.c
+  - ./src/cli/run.c
   - ./src/cli/parse/parse.c
   - ./src/cli/parse/parse_functions/get_champion_with_args.c
   - ./src/cli/parse/parse_functions/get_champion.c
