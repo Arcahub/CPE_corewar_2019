@@ -43,7 +43,7 @@ cw_asm_instruct_t *instructs_list, int offset, int i)
 }
 
 void cw_asm_instruct_write_args(cw_asm_instruct_t *instruct,
-cw_asm_instruct_t **instructs_list, int *offset, int fdout)
+cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw)
 {
     int value = 0;
 
@@ -51,16 +51,16 @@ cw_asm_instruct_t **instructs_list, int *offset, int fdout)
         switch (*instruct->parameters[i]) {
         case 'r':
             value = my_getnbr(instruct->parameters[i] + 1);
-            write(fdout, &value, sizeof(char));
+            bufwriter_write(bw, &value, sizeof(char));
             break;
         case DIRECT_CHAR:
             value = cw_asm_instruct_write_arg_direct(instruct, *instructs_list,
             *offset, i);
-            write(fdout, &value + 4 - DIR_SIZE, DIR_SIZE);
+            bufwriter_write(bw, &value + 4 - DIR_SIZE, DIR_SIZE);
             break;
         default:
             value = u16_swap_endian(my_getnbr(instruct->parameters[i]));
-            write(fdout, &value, IND_SIZE);
+            bufwriter_write(bw, &value, IND_SIZE);
         }
     }
 }
