@@ -24,5 +24,7 @@ char **str_to_word_array(char *);
 char **str_to_word_array_sep(char *, char);
 int my_getnbr(char const *str);
 int my_strcmp(char *, char *);
+char *my_itoa(int nb);
+int my_nblen(int nb);
 
 #endif /* !MY_H_ */

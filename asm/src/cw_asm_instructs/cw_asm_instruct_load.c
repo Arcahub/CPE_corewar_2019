@@ -8,11 +8,13 @@
 #include "my.h"
 #include "cw_asm.h"
 #include "instructs/cw_asm_instruct.h"
+#include "error/cw_asm_error.h"
 #include <unistd.h>
 #include <stdlib.h>
 
 static cw_asm_instruct_t *cw_asm_instruct_load_compute_line(
-cw_asm_instruct_t *last, char *line)
+    cw_asm_error_context_t err_context,
+    cw_asm_instruct_t *last, char *line)
 {
     cw_asm_instruct_t *instruct = cw_asm_instruct_create(last);
 
@@ -25,7 +27,7 @@ cw_asm_instruct_t *last, char *line)
         return (NULL);
     }
     cw_asm_instruct_load_args(instruct, &line);
-    if (cw_asm_instruct_check_args(instruct)) {
+    if (cw_asm_instruct_check_args(err_context, instruct)) {
         cw_asm_instruct_destroy(instruct, NULL);
         return (NULL);
     }
@@ -36,17 +38,21 @@ int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, FILE *fdin)
 {
     char *line = my_get_line(fdin);
     cw_asm_instruct_t *tmp = NULL;
+    cw_asm_error_context_t err_context = {-1, -1, 0, 0};
 
     for (; line; line = my_get_line(fdin)) {
+        err_context.str_line = line;
         if (*line == '\0' || *line == '#') {
             free(line);
             continue;
         }
-        tmp = cw_asm_instruct_load_compute_line(*instructs_list, line);
+        tmp = cw_asm_instruct_load_compute_line(err_context,
+            *instructs_list, line);
         free(line);
         if (tmp == NULL)
             return (84);
         *instructs_list = tmp;
+        err_context.line++;
     }
     return (0);
 }

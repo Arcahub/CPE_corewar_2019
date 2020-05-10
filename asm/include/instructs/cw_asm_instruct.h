@@ -10,6 +10,7 @@
 
 #include "op.h"
 #include <stdio.h>
+#include "error/cw_asm_error.h"
 
 typedef struct cw_asm_instruct_s {
     char *label;
@@ -32,6 +33,8 @@ void cw_asm_instruct_load_cmd(cw_asm_instruct_t *instruct, char **line);
 void cw_asm_instruct_load_label(cw_asm_instruct_t *instruct, char **line);
 void cw_asm_instructs_compile(cw_asm_instruct_t *instructs_list);
 void cw_asm_instructs_write(cw_asm_instruct_t *instructs_list, int fdout);
+int cw_asm_instruct_check_args(cw_asm_error_context_t err_context,
+    cw_asm_instruct_t *instruct);
 int cw_asm_instruct_write_arg_direct(cw_asm_instruct_t *instruct,
 cw_asm_instruct_t *instructs_list,
 int offset, int i);

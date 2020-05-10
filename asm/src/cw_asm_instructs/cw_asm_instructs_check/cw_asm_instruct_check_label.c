@@ -12,15 +12,15 @@ static int cw_asm_instruct_check_label_char(char c)
 {
     for (int i = 0; LABEL_CHARS[i]; i++)
         if (c == LABEL_CHARS[i])
-            return 0;
-    return 1;
+            return (0);
+    return (1);
 }
 
 int cw_asm_instruct_check_label(char *parameter)
 {
     for (int i = 0; parameter[i]; i++) {
         if (cw_asm_instruct_check_label_char(parameter[i]))
-            return 0;
+            return (0);
     }
-    return 1;
+    return (1);
 }
