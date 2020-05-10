@@ -5,8 +5,8 @@
 ** cw_asm_instruct_destroy
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include <stdlib.h>
+#include "asm/instructs/cw_asm_instruct.h"
+#include "my/my.h"
 
 static void cw_asm_instruct_isolate(cw_asm_instruct_t *self,
 cw_asm_instruct_t **list)
@@ -30,10 +30,10 @@ void cw_asm_instruct_destroy(cw_asm_instruct_t *self, cw_asm_instruct_t **list)
     if (list != NULL)
         cw_asm_instruct_isolate(self, list);
     if (self->label)
-        free(self->label);
+        my_free(self->label);
     for (int i = 0; i < MAX_ARGS_NUMBER; i++) {
         if (self->parameters[i])
-            free(self->parameters[i]);
+            my_free(self->parameters[i]);
     }
-    free(self);
+    my_free(self);
 }

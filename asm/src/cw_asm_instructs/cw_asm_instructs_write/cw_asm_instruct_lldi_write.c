@@ -5,7 +5,8 @@
 ** cw_asm_instruct_lldi_write
 */
 
-#include "instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/cw_asm_tools.h"
 #include <unistd.h>
 
 static void cw_asm_instruct_write_args_lldi(cw_asm_instruct_t *lldi,
@@ -20,13 +21,13 @@ static void cw_asm_instruct_write_args_lldi(cw_asm_instruct_t *lldi,
             write(fdout, &value, sizeof(char));
             break;
         case DIRECT_CHAR:
-            value = reverse_bytes16(reverse_bytes(
-                cw_asm_instruct_write_arg_direct(lldi,
-                *instructs_list, *offset, i)));
+            value = u16_swap_endian(reverse_bytes((
+            cw_asm_instruct_write_arg_direct(lldi,
+            *instructs_list, *offset, i))));
             write(fdout, &value, IND_SIZE);
             break;
         default:
-            value = reverse_bytes16(my_getnbr(lldi->parameters[i]));
+            value = u16_swap_endian(my_getnbr(lldi->parameters[i]));
             write(fdout, &value, IND_SIZE);
         }
     }

@@ -6,15 +6,16 @@
 */
 
 #include <stdio.h>
-#include "cw_asm.h"
-#include "header/cw_asm_header.h"
-#include "instructs/cw_asm_instruct.h"
+#include "asm/cw_asm.h"
+#include "asm/header/cw_asm_header.h"
+#include "asm/instructs/cw_asm_instruct.h"
 
 int cw_asm(int argc, char **argv)
 {
     cw_asm_t *asm_s = cw_asm_create(argv[1]);
     int ret = 0;
 
+    (void) argc;
     if (asm_s == NULL)
         return (84);
     cw_asm_header_load(asm_s->header, asm_s->fdin);

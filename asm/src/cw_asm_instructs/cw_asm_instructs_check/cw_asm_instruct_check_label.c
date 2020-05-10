@@ -5,8 +5,8 @@
 ** cw_asm_instruct_check_args
 */
 
-#include "cw_asm.h"
-#include "instructs/cw_asm_instruct.h"
+#include "asm/cw_asm.h"
+#include "asm/instructs/cw_asm_instruct.h"
 
 static int cw_asm_instruct_check_label_char(char c)
 {

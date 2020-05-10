@@ -5,9 +5,9 @@
 ** cw_asm_instruct_check_args
 */
 
-#include "cw_asm.h"
-#include "instructs/cw_asm_instruct.h"
-#include "my.h"
+#include "asm/cw_asm.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/my.h"
 
 static int is_only_numeric(char *str)
 {

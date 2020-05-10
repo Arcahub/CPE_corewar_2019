@@ -5,7 +5,7 @@
 ** cw_asm_instruct_compile_live
 */
 
-#include "instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct.h"
 
 void cw_asm_instruct_compile_fork(cw_asm_instruct_t *instruct)
 {

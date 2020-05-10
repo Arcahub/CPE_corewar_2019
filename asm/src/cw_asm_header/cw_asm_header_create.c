@@ -5,13 +5,13 @@
 ** cw_asm_create
 */
 
-#include "header/cw_asm_header.h"
-#include "tools.h"
-#include <stdlib.h>
+#include "asm/header/cw_asm_header.h"
+#include "asm/cw_asm_tools.h"
+#include "my/my.h"
 
 cw_asm_header_t *cw_asm_header_create(void)
 {
-    cw_asm_header_t *header = malloc(sizeof(cw_asm_header_t));
+    cw_asm_header_t *header = my_malloc(sizeof(cw_asm_header_t));
 
     if (!header)
         return (NULL);

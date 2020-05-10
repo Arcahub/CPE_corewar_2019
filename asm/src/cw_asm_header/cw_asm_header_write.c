@@ -5,8 +5,9 @@
 ** cw_asm_header_write
 */
 
-#include "header/cw_asm_header.h"
-#include "tools.h"
+#include "asm/header/cw_asm_header.h"
+#include "asm/cw_asm_tools.h"
+#include "my/io.h"
 #include <unistd.h>
 
 int cw_asm_header_write(cw_asm_header_t *self, int fdout)

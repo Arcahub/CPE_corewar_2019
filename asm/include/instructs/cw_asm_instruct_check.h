@@ -8,8 +8,8 @@
 #ifndef CW_ASM_INSTRUCT_CHECK_H_
 #define CW_ASM_INSTRUCT_CHECK_H_
 
-#include "instructs/cw_asm_instruct.h"
-#include "error/cw_asm_error.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/error/cw_asm_error.h"
 
 int cw_asm_instruct_check_value(cw_asm_error_context_t context,
     char *parameter);

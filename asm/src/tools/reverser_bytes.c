@@ -20,7 +20,7 @@ uint32_t reverse_bytes(uint32_t bytes)
     return (aux);
 }
 
-uint32_t reverse_bytes32(uint32_t bytes)
+uint32_t u32_swap_endian(uint32_t bytes)
 {
     uint32_t aux = 0;
     uint8_t byte = 0;
@@ -33,7 +33,7 @@ uint32_t reverse_bytes32(uint32_t bytes)
     return (aux);
 }
 
-uint32_t reverse_bytes16(uint32_t bytes)
+uint32_t u16_swap_endian(uint32_t bytes)
 {
     uint32_t aux = 0;
     uint8_t byte = 0;

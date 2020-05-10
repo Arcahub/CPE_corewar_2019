@@ -5,9 +5,10 @@
 ** cw_asm_instruct_check_display_error
 */
 
-#include "cw_asm.h"
-#include "error/cw_asm_error.h"
-#include "my.h"
+#include "asm/cw_asm.h"
+#include "asm/error/cw_asm_error.h"
+#include "asm/cw_asm_tools.h"
+#include "my/my.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +16,7 @@
 
 void cw_asm_error_put_str(char *str, cw_asm_error_color_t color)
 {
-    int len = my_strlen(str);
+    int len = my_cstrlen(str);
 
     cw_asm_error_color(color);
     write(2, str, len);
@@ -25,7 +26,7 @@ void cw_asm_error_put_str(char *str, cw_asm_error_color_t color)
 void cw_asm_error_put_nb(int nb, cw_asm_error_color_t color)
 {
     char *nb_str = my_itoa(nb);
-    int len = my_strlen(nb_str);
+    int len = my_cstrlen(nb_str);
 
     cw_asm_error_color(color);
     write(2, nb_str, len);

@@ -5,9 +5,9 @@
 ** cw_asm_instruct_sti_write
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include "tools.h"
-#include "my.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/cw_asm_tools.h"
+#include "my/my.h"
 #include <unistd.h>
 
 static void cw_asm_instruct_write_args_sti(cw_asm_instruct_t *sti,
@@ -22,13 +22,13 @@ cw_asm_instruct_t **instructs_list, int *offset, int fdout)
             write(fdout, &value, sizeof(char));
             break;
         case DIRECT_CHAR:
-            value = reverse_bytes16(reverse_bytes((
+            value = u16_swap_endian(reverse_bytes((
             cw_asm_instruct_write_arg_direct(sti,
             *instructs_list, *offset, i))));
             write(fdout, &value, IND_SIZE);
             break;
         default:
-            value = reverse_bytes16(my_getnbr(sti->parameters[i]));
+            value = u16_swap_endian(my_getnbr(sti->parameters[i]));
             write(fdout, &value, IND_SIZE);
         }
     }

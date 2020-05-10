@@ -5,8 +5,8 @@
 ** cw_asm_error_color_reset
 */
 
-#include "cw_asm.h"
-#include "error/cw_asm_error.h"
+#include "asm/cw_asm.h"
+#include "asm/error/cw_asm_error.h"
 #include <unistd.h>
 
 void cw_asm_error_color(cw_asm_error_color_t color)

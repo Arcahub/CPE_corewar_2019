@@ -5,8 +5,8 @@
 ** cw_asm_instruct_load_label
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include "my.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "my/my.h"
 
 static bool cw_asm_instruct_load_label_is_valid_char(char c)
 {
@@ -27,6 +27,6 @@ void cw_asm_instruct_load_label(cw_asm_instruct_t *instruct, char **line)
     for (; cw_asm_instruct_load_label_is_valid_char((*line)[i]); i++);
     if ((*line)[i] != ':')
         return;
-    instruct->label = my_strndup(*line, i);
+    instruct->label = my_cstrndup(*line, i);
     *line += i + 1;
 }

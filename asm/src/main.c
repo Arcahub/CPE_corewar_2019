@@ -6,8 +6,8 @@
 */
 
 #include <unistd.h>
-#include "cw_asm.h"
-#include "my.h"
+#include "asm/cw_asm.h"
+#include "my/my.h"
 
 static int cw_asm_display_usage(void)
 {
@@ -22,7 +22,7 @@ static int cw_asm_display_usage(void)
 
 int main(int argc, char **argv)
 {
-    if (argc == 2 && !my_strcmp("-h", argv[1]))
+    if (argc == 2 && !my_cstrcmp("-h", argv[1]))
         return cw_asm_display_usage();
     return (cw_asm(argc, argv));
 }

@@ -5,9 +5,9 @@
 ** cw_asm_instruct_check_args
 */
 
-#include "cw_asm.h"
-#include "instructs/cw_asm_instruct.h"
-#include "instructs/cw_asm_instruct_check.h"
+#include "asm/cw_asm.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct_check.h"
 
 static char cw_asm_instruct_check_args_get_type(
     cw_asm_error_context_t err_context, char *parameter)

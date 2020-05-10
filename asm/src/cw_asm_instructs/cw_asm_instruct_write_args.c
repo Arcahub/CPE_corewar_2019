@@ -5,12 +5,12 @@
 ** cw_asm_instruct_write_args
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include "tools.h"
-#include "my.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/cw_asm_tools.h"
+#include "my/my.h"
 #include <unistd.h>
 
-int cw_asm_instruct_get_label_offset(char *param, 
+int cw_asm_instruct_get_label_offset(char *param,
 cw_asm_instruct_t *instructs_list, int offset)
 {
     cw_asm_instruct_t *tmp = instructs_list;
@@ -20,7 +20,7 @@ cw_asm_instruct_t *instructs_list, int offset)
     param = (*param == ':') ? param + 1 : param;
     for (; tmp && tmp->next; tmp = tmp->next);
     for (; tmp; tmp = tmp->last) {
-        if (tmp->label && !my_strncmp(tmp->label, param, my_strlen(param)))
+        if (tmp->label && !my_cstrncmp(tmp->label, param, my_cstrlen(param)))
             return (offset + offset2);
         if (tmp->instruct_code != -1)
             offset2 += tmp->instruct_size;
@@ -59,7 +59,7 @@ cw_asm_instruct_t **instructs_list, int *offset, int fdout)
             write(fdout, &value + 4 - DIR_SIZE, DIR_SIZE);
             break;
         default:
-            value = reverse_bytes16(my_getnbr(instruct->parameters[i]));
+            value = u16_swap_endian(my_getnbr(instruct->parameters[i]));
             write(fdout, &value, IND_SIZE);
         }
     }

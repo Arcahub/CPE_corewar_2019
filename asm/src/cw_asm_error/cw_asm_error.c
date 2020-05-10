@@ -5,9 +5,9 @@
 ** cw_asm_instruct_check_display_error
 */
 
-#include "cw_asm.h"
-#include "error/cw_asm_error.h"
-#include "my.h"
+#include "asm/cw_asm.h"
+#include "asm/error/cw_asm_error.h"
+#include "my/my.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>

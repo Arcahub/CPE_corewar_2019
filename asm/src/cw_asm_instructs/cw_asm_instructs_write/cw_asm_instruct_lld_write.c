@@ -5,7 +5,7 @@
 ** cw_asm_instruct_lld_write
 */
 
-#include "instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct.h"
 #include <unistd.h>
 
 void cw_asm_instruct_lld_write(cw_asm_instruct_t *instruct,

@@ -5,9 +5,7 @@
 ** str_to_word_array
 */
 
-#include <stdlib.h>
-
-char *my_strndup(char *, int);
+#include "my/my.h"
 
 static void fill_array(char **array, char *str, char sep)
 {
@@ -19,7 +17,7 @@ static void fill_array(char **array, char *str, char sep)
         for (size = 0; *(str + size) != sep && \
         *(str + size) != '\0'; size++);
         if (size != 0) {
-            array[index] = my_strndup(str, size);
+            array[index] = my_cstrndup(str, size);
             index++;
         }
         str = str + size;
@@ -37,7 +35,7 @@ char **str_to_word_array_sep(char *str, char sep)
         if ((str[i - 1] == sep))
             count_word++;
     }
-    array = malloc(sizeof(char *) * (count_word + 1));
+    array = my_malloc(sizeof(char *) * (count_word + 1));
     for (int i = 0; i < count_word; array[i] = NULL, i++);
     array[count_word] = NULL;
     fill_array(array, str, sep);

@@ -6,9 +6,9 @@
 */
 
 #include <unistd.h>
-#include "cw_asm.h"
-#include "header/cw_asm_header.h"
-#include "instructs/cw_asm_instruct.h"
+#include "asm/cw_asm.h"
+#include "asm/header/cw_asm_header.h"
+#include "asm/instructs/cw_asm_instruct.h"
 
 void cw_asm_write(cw_asm_t *self)
 {
