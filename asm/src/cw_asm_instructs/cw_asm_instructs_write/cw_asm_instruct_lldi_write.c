@@ -21,7 +21,7 @@ cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw)
             bufwriter_write(bw, &value, sizeof(char));
             break;
         case DIRECT_CHAR:
-            value = u16_swap_endian(reverse_bytes((
+            value = u16_swap_endian(u32_swap_endian((
             cw_asm_instruct_write_arg_direct(lldi,
             *instructs_list, *offset, i))));
             bufwriter_write(bw, &value, IND_SIZE);

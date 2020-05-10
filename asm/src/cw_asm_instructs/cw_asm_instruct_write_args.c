@@ -35,11 +35,11 @@ cw_asm_instruct_t *instructs_list, int offset, int i)
     char *param = instruct->parameters[i];
 
     if (*(param + 1) != LABEL_CHAR) {
-        value = reverse_bytes(my_getnbr(param + 1));
+        value = u32_swap_endian(my_getnbr(param + 1));
         return (value);
     }
     value = cw_asm_instruct_get_label_offset(param, instructs_list, offset);
-    return (reverse_bytes(value));
+    return (u32_swap_endian(value));
 }
 
 void cw_asm_instruct_write_args(cw_asm_instruct_t *instruct,

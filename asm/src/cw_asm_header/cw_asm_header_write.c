@@ -14,7 +14,7 @@ int cw_asm_header_write(cw_asm_header_t *self, bufwriter_t *bw)
 {
     if (self->prog_name[0] == '\0' || self->comment[0] == '\0')
         return (84);
-    self->prog_size = reverse_bytes(self->prog_size);
+    self->prog_size = u32_swap_endian(self->prog_size);
     bufwriter_write(bw, self, sizeof(cw_asm_header_t));
     return (0);
 }

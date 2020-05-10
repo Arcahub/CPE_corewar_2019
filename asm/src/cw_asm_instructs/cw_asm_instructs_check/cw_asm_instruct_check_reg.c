@@ -7,7 +7,8 @@
 
 #include "asm/cw_asm.h"
 #include "asm/instructs/cw_asm_instruct.h"
-#include "asm/my.h"
+#include "asm/cw_asm_tools.h"
+#include "my/my.h"
 
 static int is_only_numeric(char *str)
 {

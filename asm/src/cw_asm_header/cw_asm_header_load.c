@@ -52,9 +52,11 @@ int cw_asm_header_load(cw_asm_header_t *self, bufreader_t *fdin)
 {
     char *line = bufreader_read_line(fdin);
     int count = 0;
+    int last_char = 0;
 
     for (; line && count != 2; line = bufreader_read_line(fdin)) {
-        line[my_cstrlen(line) - 1] = '\0';
+        last_char = my_cstrlen(line) - 1;
+        line[last_char] = (line[last_char] == '\n') ? '\0' : line[last_char];
         if (cw_asm_is_line_useless(line))
             continue;
         else if (!cw_asm_header_load_compute_line(self, line))

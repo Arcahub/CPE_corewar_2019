@@ -49,7 +49,7 @@ int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, bufreader_t *fdin)
         }
         tmp = cw_asm_instruct_load_compute_line(err_context,
             *instructs_list, line);
-        free(line);
+        my_free(line);
         if (tmp == NULL)
             return (84);
         *instructs_list = tmp;
