@@ -27,7 +27,7 @@ static char *cw_asm_compute_output_path(char *old_path)
     return (path);
 }
 
-cw_asm_t *cw_asm_create(char *path)
+cw_asm_t *cw_asm_create(cw_asm_conf_t *conf)
 {
     cw_asm_t *asm_s = my_malloc(sizeof(cw_asm_t));
 
@@ -35,12 +35,13 @@ cw_asm_t *cw_asm_create(char *path)
         return (NULL);
     asm_s->header = cw_asm_header_create();
     asm_s->instructs = NULL;
-    asm_s->fdin = cw_asm_input_open(path);
+    asm_s->fdin = cw_asm_input_open(conf->input_path);
     if (asm_s->header == NULL || asm_s->fdin == NULL) {
         cw_asm_destroy(asm_s);
         return (NULL);
     }
-    asm_s->output_path = cw_asm_compute_output_path(path);
+    asm_s->output_path = (conf->output_path) ? conf->output_path :
+    cw_asm_compute_output_path(conf->input_path);
     asm_s->output_buff.len = 0;
     asm_s->output_buff.data = NULL;
     asm_s->bw = cw_asm_output_create(&asm_s->output_buff);

@@ -8,6 +8,7 @@
 #ifndef CW_ASM_H_
 #define CW_ASM_H_
 
+#include "asm/cw_asm_conf.h"
 #include "my/my.h"
 #include "my/io.h"
 #include "asm/op.h"
@@ -30,7 +31,7 @@ typedef struct cw_asm_s {
 } cw_asm_t;
 
 int cw_asm(int, char **);
-cw_asm_t *cw_asm_create(char *path);
+cw_asm_t *cw_asm_create(cw_asm_conf_t *conf);
 void cw_asm_destroy(cw_asm_t *self);
 bufwriter_t *cw_asm_output_create(cw_asm_output_buff_t *);
 bufreader_t *cw_asm_input_open(char *path);
