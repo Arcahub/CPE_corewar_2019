@@ -5,7 +5,7 @@
 ** display int enter without other character
 */
 
-#include "my.h"
+#include "my/my.h"
 
 static int sign_nbr(int nbr, int sign)
 {

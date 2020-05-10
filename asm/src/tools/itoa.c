@@ -5,12 +5,12 @@
 ** Return a number from a string (int)
 */
 
-#include <stdlib.h>
-#include "my.h"
+#include "asm/cw_asm_tools.h"
+#include "my/my.h"
 
 char *my_itoa(int nb)
 {
-    char *str = malloc(sizeof(char) * 12);
+    char *str = my_malloc(sizeof(char) * 12);
     int i = (nb < 0 ? 1 : 0) + my_nblen(nb) - 1;
 
     for (int y = 0; y < 12; y++)

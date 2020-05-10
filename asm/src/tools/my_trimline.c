@@ -5,16 +5,16 @@
 ** my_trimline
 */
 
-#include "my.h"
-#include <stdlib.h>
+#include "my/my.h"
+#include "my/io.h"
 
 char *my_trimline(char *line)
 {
     char *res = NULL;
     int j = 0;
 
-    res = malloc(sizeof(char) * (my_strlen(line) + 1));
-    for (int h = 0; h < my_strlen(line) + 1; h++)
+    res = my_malloc(sizeof(char) * (my_cstrlen(line) + 1));
+    for (usize_t h = 0; h < my_cstrlen(line) + 1; h++)
         res[h] = '\0';
     if (res == NULL)
         return (NULL);

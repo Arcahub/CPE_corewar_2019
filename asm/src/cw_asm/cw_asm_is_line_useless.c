@@ -5,7 +5,7 @@
 ** cw_asm_is_line_useless
 */
 
-#include "cw_asm.h"
+#include "asm/cw_asm.h"
 
 bool cw_asm_is_line_useless(char *line)
 {

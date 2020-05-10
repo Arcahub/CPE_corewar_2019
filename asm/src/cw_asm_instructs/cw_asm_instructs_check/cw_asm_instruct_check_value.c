@@ -5,14 +5,14 @@
 ** cw_asm_instruct_check_args
 */
 
-#include "cw_asm.h"
-#include "instructs/cw_asm_instruct.h"
-#include "error/cw_asm_error.h"
+#include "asm/cw_asm.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/error/cw_asm_error.h"
 
 static int is_only_numeric(char *str)
 {
     for (int i = 0; str[i]; i++) {
-        if (str[i] < '0' || str[i] > '9')
+        if ((str[i] < '0' || str[i] > '9') && str[i] != '-')
             return (0);
     }
     return (1);

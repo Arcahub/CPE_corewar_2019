@@ -5,9 +5,9 @@
 ** cw_asm_load_instruct_args
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include "my.h"
-#include <stdlib.h>
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/cw_asm_tools.h"
+#include "my/my.h"
 
 static char *cw_asm_instruct_clean_arg(char *arg)
 {
@@ -16,12 +16,12 @@ static char *cw_asm_instruct_clean_arg(char *arg)
 
     for (; arg[i] != '\0' && arg[i] != COMMENT_CHAR; i++);
     if (arg[i] != '\0') {
-        arg = my_strndup(arg, i);
+        arg = my_cstrndup(arg, i);
         str = arg;
     }
     arg = my_trimline(arg);
     if (str)
-        free(str);
+        my_free(str);
     return (arg);
 }
 
@@ -36,14 +36,14 @@ void cw_asm_instruct_load_args(cw_asm_instruct_t *instruct, char **line)
     for (; args[i]; i++);
     if (i != nbr_args || nbr_args > MAX_ARGS_NUMBER) {
         for (i = 0; args[i]; i++)
-            free(args[i]);
-        free(args);
+            my_free(args[i]);
+        my_free(args);
         return;
     }
     for (i = 0; i < nbr_args; i++) {
         instruct->parameters[i] = cw_asm_instruct_clean_arg(args[i]);
-        free(args[i]);
+        my_free(args[i]);
     }
-    free(args);
+    my_free(args);
     return;
 }

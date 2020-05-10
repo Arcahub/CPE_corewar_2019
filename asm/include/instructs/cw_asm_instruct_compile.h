@@ -8,7 +8,7 @@
 #ifndef CW_ASM_INSTRUCT_COMPILE_H_
 #define CW_ASM_INSTRUCT_COMPILE_H_
 
-#include "instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct.h"
 
 void cw_asm_instruct_compile_global(cw_asm_instruct_t *instruct);
 void cw_asm_instruct_compile_live(cw_asm_instruct_t *instruct);

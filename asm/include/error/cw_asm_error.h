@@ -9,6 +9,7 @@
 #define CW_ASM_ERROR_H_
 
 #include <stdbool.h>
+#include <stdarg.h>
 
 //type of error output
 enum {ERROR = 0, WARNING = 1, NOTE = 2};

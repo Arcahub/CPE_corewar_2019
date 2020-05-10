@@ -5,9 +5,9 @@
 ** cw_asm_instruct_check_args
 */
 
-#include "cw_asm.h"
-#include "instructs/cw_asm_instruct.h"
-#include "instructs/cw_asm_instruct_check.h"
+#include "asm/cw_asm.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct_check.h"
 
 static char IND_DIR[2] = {T_IND, T_DIR};
 
