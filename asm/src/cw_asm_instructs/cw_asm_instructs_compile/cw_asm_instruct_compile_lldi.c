@@ -7,7 +7,7 @@
 
 #include "instructs/cw_asm_instruct.h"
 
-void cw_asm_instruct_compile_sti_ldi(cw_asm_instruct_t *instruct)
+void cw_asm_instruct_compile_lldii(cw_asm_instruct_t *instruct)
 {
     for (int i = 0; instruct->parameters[i]; i++) {
         switch (*instruct->parameters[i]) {

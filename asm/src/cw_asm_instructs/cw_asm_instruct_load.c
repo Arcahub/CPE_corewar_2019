@@ -42,7 +42,7 @@ int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, FILE *fdin)
 
     for (; line; line = my_get_line(fdin)) {
         err_context.str_line = line;
-        if (*line == '\0' || *line == '#') {
+        if (cw_asm_is_line_useless(line)) {
             free(line);
             continue;
         }

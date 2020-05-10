@@ -26,5 +26,6 @@ int my_getnbr(char const *str);
 int my_strcmp(char *, char *);
 char *my_itoa(int nb);
 int my_nblen(int nb);
+char *my_trimline(char *line);
 
 #endif /* !MY_H_ */

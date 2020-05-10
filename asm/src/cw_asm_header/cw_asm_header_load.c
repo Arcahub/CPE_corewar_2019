@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "header/cw_asm_header.h"
+#include "cw_asm.h"
 #include "my.h"
 
 static bool cw_asm_header_load_compute_comment(cw_asm_header_t *header,
@@ -49,12 +50,11 @@ static int cw_asm_header_load_compute_line(cw_asm_header_t *header, char *line)
 
 int cw_asm_header_load(cw_asm_header_t *self, FILE *fdin)
 {
-    int ret = 0;
     char *line = my_get_line(fdin);
     int count = 0;
 
     for (; line && count != 2; line = my_get_line(fdin)) {
-        if (*line == COMMENT_CHAR)
+        if (cw_asm_is_line_useless(line))
             continue;
         else if (!cw_asm_header_load_compute_line(self, line))
             count += 1;
