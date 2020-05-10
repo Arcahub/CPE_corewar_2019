@@ -5,7 +5,7 @@
 ** cw_asm_instruct_compile_sti
 */
 
-#include "instructs/cw_asm_instruct.h"
+#include "asm/instructs/cw_asm_instruct.h"
 
 void cw_asm_instruct_compile_lldii(cw_asm_instruct_t *instruct)
 {
@@ -27,3 +27,4 @@ void cw_asm_instruct_compile_lldii(cw_asm_instruct_t *instruct)
     }
     instruct->instruct_size += 2;
 }
+

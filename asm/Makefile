@@ -1,97 +1,216 @@
 ##
-## EPITECH PROJECT, 2019
-## bootstap_runner
+## EPITECH PROJECT, 2020
+## CPE_corewar_2019
 ## File description:
-## Makefile
+## Makefile to build the project
 ##
 
-CC = gcc
+CC		?=	gcc
 
-FILES = $(shell find ./src/ -iname "*.c")
+SHELL	=	/bin/sh
 
-SRC = $(FILES:./src/%=src/%)
+MYFILE	=	Myfile.yml
 
-LIBS_DIR = $(shell find ./lib/ -type d -name "my*")
+define readcfg
+$(strip $(shell sed -n '/^$(1):/,/^\S/s/^\s\+\-\|^$(1)://p' $(MYFILE)))
+endef
 
-LIB_NAME = $(LIB:./lib/%=%)
+dep2name = $(shell echo $(1) | sed -En 's/^@?([^=]+).*/\1/p')
 
-BUILD_DIR = build/
+dep2lib	= $(shell echo $(1) | sed -En 's/^@?lib([^=]+).*/-l\1/p')
 
-OBJ = $(addprefix $(BUILD_DIR), $(SRC:.c=.o))
+dep2ar	= $(shell echo $(1) | sed -En 's/^@?([^=]+).*/\1.a/p')
 
-RMD_FILES = $(OBJ) vgcore.* lib/my_graph/*.o lib/my/*.o
+dep2branch = $(shell echo $(1) | sed -En 's/^lib[^=]+=(.+)/\1/p')
 
-NAME = asm
+ALLOWED ?=	$(call readcfg,allowed)
 
-CFLAGS += $(LDFLAGS) $(HEADER) -W -Wall -Wno-unused-parameter -Wextra -pedantic $(DEBUG)
+BINTYPE	:=	$(call readcfg,type)
 
-LDFLAGS = -L./lib $(LIBS)
+DEPS	:=	$(call readcfg,dependencies)
 
-LIBS = $(foreach LIB, $(LIBS_DIR), $(addprefix -l, $(LIB_NAME)))
+MAINSRC	:=	$(call readcfg,main)
 
-HEADER = -I./include
+SRC		:=	$(call readcfg,src)
 
-REDDARK	=	\033[31;1m
-RED	=	\033[31;1m
-GREEN	=	\033[32;1m
-YEL	=	\033[33;1m
-BLUE	=	\033[34;1m
-PINK	=	\033[35;1m
-CYAN	=	\033[36;1m
-WHITE	=	\033[0m
+NAME	:=	$(call readcfg,name)
 
-all : $(NAME)
+NAMESPC :=	$(call readcfg,namespace)
 
-debug:
-	$(eval CFLAGS += -g3)
-	@printf "$(PINK)[DEBUG]$(WHITE)\n"
-	@make BLUE='\033[35;1m' DEBUG='-g3' -s fclean $(NAME)
+TESTSRC	:=	$(call readcfg,tests_src)
 
-$(BUILD_DIR)%.o:%.c
-	@mkdir -p `dirname  $@`
-	@printf "$(GREEN)[$(WHITE)ASM$(GREEN)] — $(BLUE)%-70s" $@
-	@printf "$(GREEN)[$(WHITE)√$(GREEN)]\n$(WHITE)"
-	@$(CC) $(CFLAGS) -o $@ -c $<
+LIBDIR	?=	$(abspath ./lib)
 
-$(NAME) : make_lib start_compil $(OBJ)
-	@$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
-	@printf "\n$(GREEN) → Successfully build.  "
-	@printf "$(BLUE) Binary :$(CYAN) $(NAME)\n\n$(WHITE)"
+INCLUDE =	-I$(OUTDIR)/include -I$(LIBDIR)/include
 
-start_compil:
-	@printf "\n$(GREEN)[$(WHITE)ASM$(GREEN)] — START BUILD\n\n"
+CFLAGS	=	-fdiagnostics-color -fno-builtin -W -Wall -Wextra -pedantic \
+			$(INCLUDE) $(if $(DEBUG),-g3) \
+			$(patsubst %,-DMY_ALLOW_FUN_%,$(strip \
+				$(shell echo $(ALLOWED) | tr a-z A-Z)))
 
-make_lib :
-	@printf "\n$(GREEN)[$(WHITE)LIB$(GREEN)] — $(YEL)BUILDING LIBS\n\n"
-	@$(foreach LIB, $(LIBS_DIR), \
-	printf "$(GREEN)[$(WHITE)LIB$(GREEN)] — $(YEL)BUILDING %-67s" $(LIB_NAME) \
-	&& make -sC $(LIB) \
-	&& printf "$(YEL)[$(WHITE)√$(YEL)]\n$(WHITE)";)
-	@printf "\n"
+CPPFLAGS =	-MD -MP
 
-doc :
-	@doxygen doxyconf
-	@printf "\n$(GREEN)[$(WHITE)LIB$(GREEN)] — $(PURPLE)CREATE DOC$(WHITE)\n\n"
+LIBS	=	$(foreach dep,$(DEPS),$(call dep2lib,$(dep)))
 
-clean :
-	@printf "$(REDDARK)\nCleaning build files of \
-	$(GREEN)[$(WHITE)ASM$(GREEN)]\n\n"
-	@printf "$(GREEN)[$(WHITE)ASM$(GREEN)] — $(RED)%-45s\n" $(OBJ)
-	@printf "\n$(GREEN) → $(RED) Build clean.\n\n$(WHITE)"
-	@rm -f $(RMD_FILES)
+TEST	=	unit-tests
 
-fclean :
-	@printf "$(REDDARK)\nCleaning Repository \
-	$(GREEN)[$(WHITE)ASM$(GREEN)] \n"
-	@make -s clean
-	@rm -rf $(BUILD_DIR)
-	@printf "$(GREEN)[$(WHITE)ASM$(GREEN)] — $(RED)%-45s\n" $(BUILD_DIR)
-	@rm -f $(NAME)
-	@$(foreach LIB, $(LIBS_DIR), \
-	rm -f $(addsuffix .a, $(addprefix lib/lib, $(LIB_NAME))) && \
-	printf "$(GREEN)[$(WHITE)ASM$(GREEN)] — $(RED)%-45s\n" \
-	$(addsuffix .a, $(addprefix lib/lib, $(LIB_NAME)));)
-	@printf "$(GREEN)[$(WHITE)ASM$(GREEN)] — $(RED)%-45s\n" $(NAME)
-	@printf "\n$(GREEN) → $(REDDARK) Repository clean.\n\n$(WHITE)"
+OUTDIR	=	./target/$(if $(DEBUG),debug,release)
 
-re : fclean all
+OUTNAME	=	$(OUTDIR)/$(notdir $(NAME))
+
+OUTTEST	=	$(OUTDIR)/$(TEST)
+
+CPPDEPS	=	$(SRC:%.c=$(OUTDIR)/%.d)
+
+DEPSARC	=	$(foreach dep,$(DEPS),$(LIBDIR)/$(call dep2ar,$(dep)))
+
+MAINOBJ	:=	$(MAINSRC:%.c=$(OUTDIR)/%.o)
+
+OBJ		=	$(SRC:%.c=$(OUTDIR)/%.o)
+
+TESTOBJ	=	$(TESTSRC:%.c=$(OUTDIR)/%.o)
+
+COVREPS	=	$(SRC:%.c=$(OUTDIR)/%.gcda) $(SRC:.c=$(OUTDIR)/%.gcno) \
+			$(MAINSRC:.c=$(OUTDIR)/%.gcda) $(MAINSRC:.c=$(OUTDIR)/%.gcno) \
+			$(TESTSRC:.c=$(OUTDIR)/%.gcda) $(TESTSRC:.c=$(OUTDIR)/%.gcno)
+
+define makelibs
+	$(foreach dep,$(DEPS), \
+		$(if $(call dep2branch,$(dep)), \
+			$(MAKE) -sC $(LIBDIR) $(1) \
+				NAME=$(call dep2name,$(dep)) \
+				BRANCH=$(call dep2branch,$(dep)) \
+				LIBDIR=$(LIBDIR); \
+		) \
+	)
+endef
+
+define info_deps_head
+	@echo -n " ╭──────────────────────┬"
+	@echo -n "──────────────────────┬"
+	@echo "──────────────────────┬────────────╮"
+	@printf " │ %-20s │ %-20s │ %-20s │ %-10s │\n" 'Definition' 'CC argument' \
+		'File name' 'Branch'
+	@echo -n " ├──────────────────────┼"
+	@echo -n "──────────────────────┼"
+	@echo "──────────────────────┼────────────┤"
+endef
+
+define info_dep_line
+	@printf " │ %-20s │ %-20s │ %-20s │ %-10s │\n" '$(1)' \
+		'$(call dep2lib,$(1))' '$(call dep2ar,$(1))' '$(call dep2branch,$(1))'
+
+endef
+
+define info_deps_end
+	@echo -n " ╰──────────────────────┴"
+	@echo -n "──────────────────────┴"
+	@echo "──────────────────────┴────────────╯"
+endef
+
+
+export CC
+
+export SHELL
+
+export ALLOWED
+
+export DEBUG
+
+all: $(NAME)
+
+info:
+	@echo "\033[0;32mname:\033[0m" $(NAME)
+	@echo "\033[0;32mtype:\033[0m" $(BINTYPE)
+	@echo "\033[0;32mnamespace:\033[0m" $(NAMESPC)
+	@echo -n "\033[0;32mallowed:\033[0m"
+	@for fn in $(ALLOWED); do echo -n " $$fn"; done
+	@echo
+	@echo "\033[0;32mdependencies:\033[0m"
+	$(call info_deps_head)
+	$(foreach dep,$(DEPS),$(call info_dep_line,$(dep)))
+	$(call info_deps_end)
+	@echo "\033[0;32mlibs:\033[0m" $(LIBS)
+	@echo "\033[0;32mmain:\033[0m" $(MAINSRC)
+	@echo -n "\033[0;32msrc:\033[0m"
+	@if [ '$(VERBOSE)' ]; then \
+		for f in $(SRC); do echo -n "\n - $$f"; done; \
+		echo; \
+	else \
+		echo '' $(shell echo $(SRC) | wc -w) 'file(s)'; \
+	fi
+	@echo -n "\033[0;32mtests:\033[0m"
+	@if [ '$(VERBOSE)' ]; then \
+		for f in $(TESTSRC); do echo -n "\n - $$f"; done; \
+		echo; \
+	else \
+		echo '' $(shell echo $(TESTSRC) | wc -w) 'file(s)'; \
+	fi
+
+$(NAME): $(OUTNAME)
+	@cp $< $@
+
+$(OUTNAME): $(DEPSARC) $(OBJ) $(MAINOBJ)
+	@if [ '$(BINTYPE)' = 'bin' ]; then \
+		$(CC) $(CFLAGS) -o $@ $(OBJ) $(MAINOBJ) $(LIBDIR:%=-L%) $(LIBS); \
+		printf '\r  \033[K\033[0;32m Finished\033[0m `%s` (binary)\n' "$@"; \
+	fi
+	@if [ '$(BINTYPE)' = 'lib' ]; then \
+		ar -rc $@ $(OBJ); \
+		printf '\r  \033[K\033[0;32m Finished\033[0m `%s` (library)\n' "$@"; \
+	fi
+
+$(DEPSARC):
+	@$(call makelibs,all)
+
+$(OUTDIR)/%.o: %.c | $(OUTDIR)
+	@printf '\r  \033[K\033[0;32mCompiling\033[0m `$<`\n'
+	@mkdir -p $(dir $@)
+	@rm -f $(patsubst %.o,%.gcda,$@) $(patsubst %.o,%.gcno,$@)
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+$(OUTDIR): $(abspath ./include)
+	@mkdir -p $@/include
+	@ln -Tfs $(abspath ./include) $@/include/$(NAMESPC)
+
+$(TEST): $(OUTTEST)
+	@cp $(OUTTEST) $(TEST)
+
+$(OUTTEST): CFLAGS += --coverage
+$(OUTTEST): LIBS += -lcriterion
+$(OUTTEST): $(DEPSARC) $(OBJ) $(TESTOBJ)
+	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(TESTOBJ) $(LIBDIR:%=-L%) $(LIBS)
+	@printf '\r  \033[K\033[0;32m Finished\033[0m %s test build\n' \
+		$(if $(DEBUG),'debug','release')
+
+run: $(NAME)
+	@printf '\r  \033[K\033[0;32m  Running\033[0m `$(strip $(NAME) $(ARGS))`\n'
+	@./$(NAME) $(ARGS) || printf '\033[0;31mProgram exited with %d\033[0m\n' $$?
+
+tests_run: $(TEST)
+	@printf '\r  \033[K\033[0;32m  Running\033[0m `$(TEST)`\n'
+	@./$(TEST)
+
+clean:
+	@$(call makelibs,clean)
+	@printf '\r  \033[K\033[0;34m Cleaning\033[0m `$(NAME)`\n'
+	@rm -f $(OBJ) $(TESTOBJ) $(MAINOBJ) $(COVREPS) $(CPPDEPS) $(OUTNAME) \
+		$(OUTTEST)
+
+fclean:
+	@$(call makelibs,fclean)
+	@printf '\r  \033[K\033[0;36m   Wiping\033[0m `$(NAME)`\n'
+	@rm -f $(OBJ) $(TESTOBJ) $(MAINOBJ) $(COVREPS) $(CPPDEPS) $(OUTNAME) \
+		$(OUTTEST)
+	@rm -f $(NAME) $(TEST)
+	@rm -rf $(OUTDIR)
+
+re: fclean all
+
+retest: fclean tests_run
+
+rerun: re run
+
+.PHONY: all info run tests_run clean fclean re retest rerun
+
+-include $(CPPDEPS)
