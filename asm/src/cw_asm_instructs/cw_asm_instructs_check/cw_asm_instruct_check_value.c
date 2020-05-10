@@ -12,7 +12,7 @@
 static int is_only_numeric(char *str)
 {
     for (int i = 0; str[i]; i++) {
-        if (str[i] < '0' || str[i] > '9')
+        if ((str[i] < '0' || str[i] > '9') && str[i] != '-')
             return (0);
     }
     return (1);
