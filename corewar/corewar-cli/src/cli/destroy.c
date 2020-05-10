@@ -17,7 +17,6 @@ void cw_corewar_cli_destroy(cw_corewar_cli_t *self)
     LIST_FOR_EACH(self->progs_list, iter) {
         prog = iter.v;
         my_free(prog->data);
-        write(1, prog->data, prog->size - 1);
         my_free(prog);
     }
     list_destroy(self->progs_list);
