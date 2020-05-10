@@ -16,7 +16,7 @@ cw_asm_header_t *cw_asm_header_create(void)
     if (!header)
         return (NULL);
     header->magic = 0;
-    header->magic = u32_swap_endian(COREWAR_EXEC_MAGIC);
+    header->magic = u32_ne_to_be(COREWAR_EXEC_MAGIC);
     for (int i = 0; i < PROG_NAME_LENGTH + 2; i++)
         header->prog_name[i] = '\0';
     header->prog_size = 0;

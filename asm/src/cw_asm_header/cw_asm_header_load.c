@@ -14,7 +14,7 @@
 #include "my/my.h"
 
 static bool cw_asm_header_load_compute_comment(cw_asm_header_t *header,
-char *line)
+    char *line)
 {
     if (my_cstrncmp(line, COMMENT_CMD_STRING, my_cstrlen(COMMENT_CMD_STRING)))
         return (false);

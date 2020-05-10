@@ -11,7 +11,7 @@
 #include <fcntl.h>
 
 OPT(usize) cw_asm_flush_to_output_buffer(void *user_data, const void *data,
-usize_t count)
+    usize_t count)
 {
     cw_asm_output_buff_t *buff = user_data;
     void *new_data = my_malloc(sizeof(u8_t) * (buff->len + count));
@@ -28,7 +28,7 @@ usize_t count)
 
 bufwriter_t *cw_asm_output_create(cw_asm_output_buff_t *buff)
 {
-    bufwriter_t *bw = bufwriter_new(64);
+    bufwriter_t *bw = bufwriter_new(512);
 
     if (bw == NULL)
         return (NULL);

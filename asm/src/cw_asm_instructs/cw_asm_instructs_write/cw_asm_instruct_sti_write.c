@@ -22,20 +22,20 @@ cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw)
             bufwriter_write(bw, &value, sizeof(char));
             break;
         case DIRECT_CHAR:
-            value = u16_swap_endian(u32_swap_endian((
+            value = u16_ne_to_be(u32_ne_to_be((
             cw_asm_instruct_write_arg_direct(sti,
             *instructs_list, *offset, i))));
             bufwriter_write(bw, &value, IND_SIZE);
             break;
         default:
-            value = u16_swap_endian(my_getnbr(sti->parameters[i]));
+            value = u16_ne_to_be(my_getnbr(sti->parameters[i]));
             bufwriter_write(bw, &value, IND_SIZE);
         }
     }
 }
 
 void cw_asm_instruct_sti_write(cw_asm_instruct_t *instruct,
-cw_asm_instruct_t **list, bufwriter_t *bw, int *offset)
+    cw_asm_instruct_t **list, bufwriter_t *bw, int *offset)
 {
     bufwriter_write(bw, &instruct->instruct_code, sizeof(char));
     bufwriter_write(bw, &instruct->coding_byte, sizeof(char));

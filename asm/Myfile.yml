@@ -21,7 +21,6 @@ main: ./src/main.c
 src:
   - ./src/cw_asm.c
   - ./src/tools/my_getnbr.c
-  - ./src/tools/reverser_bytes.c
   - ./src/tools/my_trimline.c
   - ./src/tools/str_to_word_array_sep.c
   - ./src/tools/nblen.c

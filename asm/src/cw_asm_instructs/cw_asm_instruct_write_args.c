@@ -11,7 +11,7 @@
 #include <unistd.h>
 
 int cw_asm_instruct_get_label_offset(char *param,
-cw_asm_instruct_t *instructs_list, int offset)
+    cw_asm_instruct_t *instructs_list, int offset)
 {
     cw_asm_instruct_t *tmp = instructs_list;
     int offset2 = 0;
@@ -29,21 +29,21 @@ cw_asm_instruct_t *instructs_list, int offset)
 }
 
 int cw_asm_instruct_write_arg_direct(cw_asm_instruct_t *instruct,
-cw_asm_instruct_t *instructs_list, int offset, int i)
+    cw_asm_instruct_t *instructs_list, int offset, int i)
 {
     int value = 0;
     char *param = instruct->parameters[i];
 
     if (*(param + 1) != LABEL_CHAR) {
-        value = u32_swap_endian(my_getnbr(param + 1));
+        value = u32_ne_to_be(my_getnbr(param + 1));
         return (value);
     }
     value = cw_asm_instruct_get_label_offset(param, instructs_list, offset);
-    return (u32_swap_endian(value));
+    return (u32_ne_to_be(value));
 }
 
 void cw_asm_instruct_write_args(cw_asm_instruct_t *instruct,
-cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw)
+    cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw)
 {
     int value = 0;
 
@@ -59,7 +59,7 @@ cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw)
             bufwriter_write(bw, &value + 4 - DIR_SIZE, DIR_SIZE);
             break;
         default:
-            value = u16_swap_endian(my_getnbr(instruct->parameters[i]));
+            value = u16_ne_to_be(my_getnbr(instruct->parameters[i]));
             bufwriter_write(bw, &value, IND_SIZE);
         }
     }

@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 void cw_asm_instruct_aff_write(cw_asm_instruct_t *instruct,
-cw_asm_instruct_t **list, bufwriter_t *bw, int *offset)
+    cw_asm_instruct_t **list, bufwriter_t *bw, int *offset)
 {
     bufwriter_write(bw, &instruct->instruct_code, sizeof(char));
     bufwriter_write(bw, &instruct->coding_byte, sizeof(char));

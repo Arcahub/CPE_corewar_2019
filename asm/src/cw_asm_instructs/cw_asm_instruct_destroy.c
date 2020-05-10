@@ -9,7 +9,7 @@
 #include "my/my.h"
 
 static void cw_asm_instruct_isolate(cw_asm_instruct_t *self,
-cw_asm_instruct_t **list)
+    cw_asm_instruct_t **list)
 {
     cw_asm_instruct_t *tmp = *list;
 
