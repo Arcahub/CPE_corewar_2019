@@ -35,10 +35,10 @@ jobs:
         run: make
 
   install_criterion:
-    
+
     name: Install criterion
     runs-on: [ubuntu-latest]
-    
+
     steps:
       - uses: actions/cache@v1
         id: cache
@@ -67,6 +67,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/cache@v1
+        id: cache
+        env:
+          cache-name: cache-criterion
+        with:
+          path: ${{ runner.temp }}/Criterion
+          key: ${{ runner.os }}-${{ env.cache-name }}
+
       - name: Run tests
         working-directory: ./asm
         run: make tests_run
@@ -83,6 +91,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/cache@v1
+        id: cache
+        env:
+          cache-name: cache-criterion
+        with:
+          path: ${{ runner.temp }}/Criterion
+          key: ${{ runner.os }}-${{ env.cache-name }}
 
       - name: Run tests
         working-directory: ./corewar
