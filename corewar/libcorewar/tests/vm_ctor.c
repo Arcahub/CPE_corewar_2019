@@ -17,7 +17,7 @@
 static const cw_config_t DEFAULT_CONFIG = {
     .prog_name_length = 128,
     .comment_length = 2048,
-    .corewar_exec_magic = 0xF383EA00,
+    .corewar_exec_magic = 0xEA83F3,
     .reg_size = 4,
     .reg_count = 16,
     .idx_mod = 512,
