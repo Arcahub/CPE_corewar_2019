@@ -5,11 +5,10 @@
 ** cw_asm_destroy
 */
 
-#include "cw_asm.h"
-#include "header/cw_asm_header.h"
-#include "instructs/cw_asm_instruct.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "asm/cw_asm.h"
+#include "asm/header/cw_asm_header.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "my/io.h"
 
 void cw_asm_destroy(cw_asm_t *self)
 {
@@ -18,9 +17,7 @@ void cw_asm_destroy(cw_asm_t *self)
     cw_asm_header_destroy(self->header);
     while (self->instructs)
         cw_asm_instruct_destroy(self->instructs, &self->instructs);
-    if (self->fdout >= 0)
-        close(self->fdout);
-    if (self->fdin)
-        fclose(self->fdin);
-    free(self);
+    bufwriter_free(self->bw);
+    my_free(self->output_buff.data);
+    my_free(self);
 }

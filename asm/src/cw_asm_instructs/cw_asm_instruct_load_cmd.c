@@ -5,8 +5,8 @@
 ** cw_asm_instruct_load_cmd
 */
 
-#include "instructs/cw_asm_instruct.h"
-#include "my.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "my/my.h"
 
 static bool is_only_alphanumc(char c)
 {
@@ -22,14 +22,14 @@ void cw_asm_instruct_load_cmd(cw_asm_instruct_t *instruct, char **line)
     int j = 0;
 
     while (**line == ' ' || **line == '\t')
-        (*line)++;
+        *line += 1;
     if (**line == '\0')
         return;
     for (; is_only_alphanumc((*line)[i]); i++);
-    if ((*line)[i] != ' ')
+    if ((*line)[i] != ' ' && (*line)[i] != '\t')
         return;
     for (; op_tab[j].mnemonique && !cmd_exist; j++) {
-        if (!my_strncmp(op_tab[j].mnemonique, *line, i))
+        if (!my_cstrncmp(op_tab[j].mnemonique, *line, i))
             cmd_exist = true;
     }
     if (cmd_exist) {
