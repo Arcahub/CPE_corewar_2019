@@ -36,6 +36,7 @@ void cw_vm_destroy(cw_vm_t *self)
         destroy_core(self, self->cores->data[i]);
         my_free(self->cores->data[i]);
     }
+    vec_destroy(self->cores);
     list_destroy_with(self->callbacks.all, &destroy_callback, NULL);
     for (usize_t i = 0; i < CW_OPCODE_LAST + 1; i++)
         list_destroy_with(self->callbacks.opcodes[i], &destroy_callback, NULL);
