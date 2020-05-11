@@ -10,6 +10,21 @@
 #include "my/io.h"
 #include "corewar/corewar.h"
 
+static u32_t next_program_number(const cw_vm_t *self)
+{
+    u32_t prog_num = 0;
+    bool valid = true;
+
+    do {
+        valid = true;
+        for (usize_t i = 0; valid && i < self->prog_count; i++) {
+            valid &= prog_num != self->programs[i].prog_number;
+        }
+        prog_num += valid ? 0 : 1;
+    } while (!valid);
+    return (prog_num);
+}
+
 static bool load_program(cw_vm_t *self, cw_program_t *prog,
     const cw_program_def_t *def)
 {
@@ -27,6 +42,10 @@ static bool load_program(cw_vm_t *self, cw_program_t *prog,
     prog->name = my_cstrdup((const char*) &def->data[name_off]);
     prog_size = *((i32_t*) &prog_size);
     prog->comment = my_cstrdup((const char*) &def->data[comment_off]);
+    if (def->prog_number.is_some)
+        *((u32_t*) &prog->prog_number) = def->prog_number.v;
+    else
+        *((u32_t*) &prog->prog_number) = next_program_number(self);
     my_memcpy(&self->mem[def->load_address.v], &def->data[data_off], prog_size);
     return (false);
 }
@@ -37,13 +56,14 @@ static bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     bool err = false;
     cw_program_def_t def;
 
-    self->prog_count = n;
+    self->prog_count = 0;
     self->programs = my_calloc(n, sizeof(cw_program_t));
     for (usize_t i = 0; !err && i < n; i++) {
         def = defs[i];
         if (!defs[i].load_address.is_some)
             def.load_address = SOME(usize, i * self->config.mem_size / n);
         err = load_program(self, &self->programs[i], &def);
+        self->prog_count += err ? 0 : 1;
     }
     return (err);
 }

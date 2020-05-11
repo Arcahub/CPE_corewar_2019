@@ -83,6 +83,7 @@ Test(vm_ctor, one_program_load)
     vm = cw_vm_new(&DEFAULT_CONFIG, &def, 1);
     cr_assert_arr_eq(&vm->mem[0], &def.data[DATA_OFFSET],
         def.size - DATA_OFFSET);
+    cr_assert_eq(vm->programs[0].prog_number, 0);
     cw_vm_destroy(vm);
 }
 
@@ -111,6 +112,8 @@ Test(vm_ctor, two_program_load)
         def[0].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 2],
         &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
+    cr_assert_eq(vm->programs[0].prog_number, 0);
+    cr_assert_eq(vm->programs[1].prog_number, 1);
     cw_vm_destroy(vm);
 }
 
@@ -129,5 +132,44 @@ Test(vm_ctor, three_program_load)
         &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 3 * 2],
         &def[2].data[DATA_OFFSET], def[2].size - DATA_OFFSET);
+    cr_assert_eq(vm->programs[0].prog_number, 0);
+    cr_assert_eq(vm->programs[1].prog_number, 1);
+    cr_assert_eq(vm->programs[2].prog_number, 2);
+    cw_vm_destroy(vm);
+}
+
+Test(vm_ctor, three_program_load_addr)
+{
+    cw_program_def_t def[3];
+    cw_vm_t *vm = NULL;
+
+    load_prog("tests/champs/tyron.cor", NONE(usize), NONE(u32), &def[0]);
+    load_prog("tests/champs/bill.cor", NONE(usize), NONE(u32), &def[1]);
+    load_prog("tests/champs/42.cor", SOME(usize, 621), NONE(u32), &def[2]);
+    vm = cw_vm_new(&DEFAULT_CONFIG, def, 3);
+    cr_assert_arr_eq(&vm->mem[0], &def[0].data[DATA_OFFSET],
+        def[0].size - DATA_OFFSET);
+    cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 3],
+        &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
+    cr_assert_arr_eq(&vm->mem[621],
+        &def[2].data[DATA_OFFSET], def[2].size - DATA_OFFSET);
+    cr_assert_eq(vm->programs[0].prog_number, 0);
+    cr_assert_eq(vm->programs[1].prog_number, 1);
+    cr_assert_eq(vm->programs[2].prog_number, 2);
+    cw_vm_destroy(vm);
+}
+
+Test(vm_ctor, program_number)
+{
+    cw_program_def_t def[3];
+    cw_vm_t *vm = NULL;
+
+    load_prog("tests/champs/tyron.cor", NONE(usize), SOME(u32, 1), &def[0]);
+    load_prog("tests/champs/bill.cor", NONE(usize), NONE(u32), &def[1]);
+    load_prog("tests/champs/42.cor", NONE(usize), NONE(u32), &def[2]);
+    vm = cw_vm_new(&DEFAULT_CONFIG, def, 3);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
+    cr_assert_eq(vm->programs[1].prog_number, 0);
+    cr_assert_eq(vm->programs[2].prog_number, 2);
     cw_vm_destroy(vm);
 }
