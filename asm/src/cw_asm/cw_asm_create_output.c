@@ -19,7 +19,7 @@ OPT(usize) cw_asm_flush_to_output_buffer(void *user_data, const void *data,
     if (!new_data)
         return (NONE(usize));
     my_memcpy(new_data, buff->data, buff->len);
-    my_memcpy(new_data + buff->len, data, count);
+    my_memcpy((u8_t*) new_data + buff->len, data, count);
     buff->len += count;
     my_free(buff->data);
     buff->data = new_data;
