@@ -8,7 +8,7 @@
 #ifndef COREWAR_CLI_H_
 #define COREWAR_CLI_H_
 
-#include "corewar-cli/corewar.h"
+#include "corewar/corewar.h"
 
 typedef struct {
     list_t *progs_list;

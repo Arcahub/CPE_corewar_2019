@@ -5,7 +5,7 @@
 ** get_champion
 */
 
-#include "corewar-cli/corewar.h"
+#include "corewar/corewar.h"
 #include "corewar-cli/corewar-cli.h"
 #include "my/io.h"
 #include "../priv.h"

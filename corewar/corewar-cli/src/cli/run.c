@@ -6,7 +6,7 @@
 */
 
 #include "corewar-cli/corewar-cli.h"
-#include "corewar-cli/corewar.h"
+#include "corewar/corewar.h"
 #include "corewar-cli/op.h"
 
 static const cw_config_t VM_CONF = {

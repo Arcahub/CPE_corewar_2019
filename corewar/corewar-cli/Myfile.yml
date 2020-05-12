@@ -12,6 +12,7 @@ type: bin
 namespace: corewar-cli
 
 dependencies:
+  - libcorewar=master
   - libmy=master
 
 allowed:
