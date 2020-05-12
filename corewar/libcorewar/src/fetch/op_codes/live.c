@@ -10,8 +10,11 @@
 
 bool cw_fetch_live(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
 {
-    my_memcpy(&(instr->args.live.nb), &(vm->mem[current_core->regs.pc++]),
-        sizeof(u32_t));
-    instr->args.live.nb = u32_be_to_ne(instr->args.live.nb);
+    // my_memcpy(&(instr->args.live.nb), &(vm->mem[current_core->regs.pc++]),
+    //     sizeof(u32_t));
+    // instr->args.live.nb = u32_be_to_ne(instr->args.live.nb);
+    (void)(vm);
+    (void)(current_core);
+    (void)(instr);
     return (false);
 }

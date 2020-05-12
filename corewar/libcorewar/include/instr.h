@@ -37,62 +37,20 @@ OPT_DEFINE(cw_opcode_t, cw_opcode)
 ** Instruction parameters
 */
 
-typedef u8_t cw_val_reg_t;
-typedef u8_t *cw_val_dir_t;
-typedef u8_t *cw_val_ind_t;
-
-/*
-** Right-values (readables)
-*/
-
 typedef enum {
-    CW_RVAL_REG = 1,
-    CW_RVAL_DIR = 2,
-    CW_RVAL_IND = 4,
-} cw_rval_type_t;
+    CW_PARAM_REG = 1,
+    CW_PARAM_DIR = 2,
+    CW_PARAM_IND = 4,
+} cw_param_type_t;
 
 typedef struct {
-    cw_rval_type_t type;
+    cw_param_type_t type;
     union {
-        cw_val_reg_t reg;
-        cw_val_dir_t dir;
-        cw_val_ind_t ind;
+        u8_t reg;
+        u64_t dir;
+        u64_t ind;
     } u;
-} cw_rvalue_t;
-
-/*
-** Left-values (writeables)
-*/
-
-typedef enum {
-    CW_LVAL_REG = CW_RVAL_REG,
-    CW_LVAL_IND = CW_RVAL_IND,
-} cw_lval_type_t;
-
-typedef struct {
-    cw_lval_type_t type;
-    union {
-        cw_val_reg_t reg;
-        cw_val_ind_t ind;
-    } u;
-} cw_lvalue_t;
-
-/*
-** Index values (can't be indirect for some reason)
-*/
-
-typedef enum {
-    CW_IVAL_REG = CW_RVAL_REG,
-    CW_IVAL_DIR = CW_RVAL_DIR,
-} cw_ival_type_t;
-
-typedef struct {
-    cw_ival_type_t type;
-    union {
-        cw_val_reg_t reg;
-        cw_val_dir_t dir;
-    } u;
-} cw_ivalue_t;
+} cw_param_t;
 
 /*
 ** Instruction
@@ -105,68 +63,68 @@ typedef struct {
             u32_t nb;
         } live;
         struct {
-            cw_lvalue_t src;
-            cw_val_reg_t dst;
+            cw_param_t src;
+            cw_param_t dst;
         } ld;
         struct {
-            cw_val_reg_t src;
-            cw_lvalue_t dst;
+            cw_param_t src;
+            cw_param_t dst;
         } st;
         struct {
-            cw_val_reg_t a;
-            cw_val_reg_t b;
-            cw_val_reg_t dst;
+            cw_param_t a;
+            cw_param_t b;
+            cw_param_t dst;
         } add;
         struct {
-            cw_val_reg_t a;
-            cw_val_reg_t b;
-            cw_val_reg_t dst;
+            cw_param_t a;
+            cw_param_t b;
+            cw_param_t dst;
         } sub;
         struct {
-            cw_rvalue_t a;
-            cw_rvalue_t b;
-            cw_val_reg_t dst;
+            cw_param_t a;
+            cw_param_t b;
+            cw_param_t dst;
         } and;
         struct {
-            cw_rvalue_t a;
-            cw_rvalue_t b;
-            cw_val_reg_t dst;
+            cw_param_t a;
+            cw_param_t b;
+            cw_param_t dst;
         } or;
         struct {
-            cw_rvalue_t a;
-            cw_rvalue_t b;
-            cw_val_reg_t dst;
+            cw_param_t a;
+            cw_param_t b;
+            cw_param_t dst;
         } xor;
         struct {
-            cw_val_ind_t addr;
+            cw_param_t addr;
         } zjmp;
         struct {
-            cw_rval_type_t base;
-            cw_ival_type_t ind;
-            cw_val_reg_t dst;
+            cw_param_t base;
+            cw_param_t ind;
+            cw_param_t dst;
         } ldi;
         struct {
-            cw_val_reg_t src;
-            cw_rval_type_t base;
-            cw_ival_type_t ind;
+            cw_param_t src;
+            cw_param_t base;
+            cw_param_t ind;
         } sti;
         struct {
-            cw_val_ind_t addr;
+            cw_param_t addr;
         } fork;
         struct {
-            cw_lvalue_t src;
-            cw_val_reg_t dst;
+            cw_param_t src;
+            cw_param_t dst;
         } lld;
         struct {
-            cw_rval_type_t base;
-            cw_ival_type_t ind;
-            cw_val_reg_t dst;
+            cw_param_t base;
+            cw_param_t ind;
+            cw_param_t dst;
         } lldi;
         struct {
-            cw_val_ind_t addr;
+            cw_param_t addr;
         } lfork;
         struct {
-            cw_val_reg_t reg;
+            cw_param_t reg;
         } aff;
     } args;
 } cw_instr_t;

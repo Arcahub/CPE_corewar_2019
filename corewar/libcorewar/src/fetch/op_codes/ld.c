@@ -10,17 +10,20 @@
 
 bool cw_fetch_ld(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
 {
-    instr->args.ld.src.type = vm->mem[current_core->regs.pc++];
-    switch (instr->args.ld.src.type) {
-    case CW_RVAL_REG:
-        break;
-    case CW_RVAL_DIR:
-        break;
-    case CW_RVAL_IND:
-        break;
-    default:
-        return (true);
-    }
-    instr->args.ld.dst = vm->mem[current_core->regs.pc++];
+    // instr->args.ld.src.type = vm->mem[current_core->regs.pc++];
+    // switch (instr->args.ld.src.type) {
+    // case CW_RVAL_REG:
+    //     break;
+    // case CW_RVAL_DIR:
+    //     break;
+    // case CW_RVAL_IND:
+    //     break;
+    // default:
+    //     return (true);
+    // }
+    // instr->args.ld.dst = vm->mem[current_core->regs.pc++];
+    (void)(vm);
+    (void)(current_core);
+    (void)(instr);
     return (false);
 }

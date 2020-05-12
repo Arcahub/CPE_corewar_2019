@@ -10,5 +10,8 @@
 
 bool cw_fetch_lld(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
 {
+    (void)(vm);
+    (void)(current_core);
+    (void)(instr);
     return (true);
 }

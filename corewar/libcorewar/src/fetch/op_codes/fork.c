@@ -10,7 +10,10 @@
 
 bool cw_fetch_fork(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
 {
-    instr->args.fork.addr =
-        &vm->mem[current_core->regs.pc++ % vm->config.mem_size];
+    // instr->args.fork.addr.u.dir =
+    //     *((u64_t*) &vm->mem[current_core->regs.pc++ % vm->config.mem_size]);
+    (void)(vm);
+    (void)(current_core);
+    (void)(instr);
     return (false);
 }

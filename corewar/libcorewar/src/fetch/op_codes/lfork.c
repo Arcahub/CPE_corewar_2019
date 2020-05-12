@@ -10,7 +10,10 @@
 
 bool cw_fetch_lfork(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
 {
-    instr->args.lfork.addr =
-        &vm->mem[current_core->regs.pc++ % vm->config.mem_size];
+    // instr->args.lfork.addr =
+    //     &vm->mem[current_core->regs.pc++ % vm->config.mem_size];
+    (void)(vm);
+    (void)(current_core);
+    (void)(instr);
     return (false);
 }

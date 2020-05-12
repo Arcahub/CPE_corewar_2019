@@ -35,7 +35,9 @@ src:
   - ./src/fetch/op_codes/xor.c
   - ./src/fetch/op_codes/zjmp.c
   - ./src/fetch/fetch.c
+  - ./src/fetch/pcb.c
   - ./src/fetch/utils.c
   - ./src/lib.c
 
 tests_src:
+  - ./tests/pcb_check.c

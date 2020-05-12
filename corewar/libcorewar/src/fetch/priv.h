@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2020
-** CPE_corewar_2019 [WSL: Ubuntu]
+** CPE_corewar_2019
 ** File description:
 ** priv
 */
@@ -10,11 +10,13 @@
 
 #include "my/types.h"
 #include "corewar/corewar.h"
+#include "corewar/instr.h"
 
 typedef bool (*cw_fetch_fn_t)(cw_vm_t *vm, cw_core_t *current_core,
-        cw_instr_t *instr);
+    cw_instr_t *instr);
 extern const cw_fetch_fn_t FETCH_FUNCTIONS[256];
 
+bool cw_pcb_matches(u8_t pcb, const char *str);
 bool cw_fetch_add(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
 bool cw_fetch_aff(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
 bool cw_fetch_and(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
@@ -33,7 +35,7 @@ bool cw_fetch_xor(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
 bool cw_fetch_zjmp(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
 bool cw_fetch_fallback(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
 
-bool cw_fetch_utils_populate_rvalue(cw_vm_t *vm, cw_core_t *current_core,
-    cw_rvalue_t *r_value);
+bool cw_fetch_utils_populate_param(cw_vm_t *vm, cw_core_t *current_core,
+    cw_param_t *param);
 
 #endif /* !PRIV_H_ */
