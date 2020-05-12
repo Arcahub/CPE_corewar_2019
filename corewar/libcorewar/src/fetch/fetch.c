@@ -5,8 +5,8 @@
 ** fetch
 */
 
-#include "corewar.h"
-#include "instr.h"
+#include "corewar/corewar.h"
+#include "corewar/instr.h"
 #include "priv.h"
 
 const cw_fetch_fn_t FETCH_FUNCTIONS[256] = {
@@ -32,15 +32,14 @@ const cw_fetch_fn_t FETCH_FUNCTIONS[256] = {
 bool cw_instruction_fetch(cw_vm_t *vm, cw_core_t *current_core,
     cw_instr_t *ret_instr)
 {
-    cw_instr_t ret_instr = {0};
-    cw_fetch_fn_t *fn = NULL;
+    cw_fetch_fn_t fn = NULL;
     bool return_code = false;
 
-    ret_instr->opcode = vm->mem[current_core->regs.pc];
+    ret_instr->opcode = vm->mem[current_core->regs.pc++];
     fn = FETCH_FUNCTIONS[ret_instr->opcode];
     if (!fn)
-        return_code = cw_fetch_fallback(vm, current_core, &ret_instr);
+        return_code = cw_fetch_fallback(vm, current_core, ret_instr);
     else
-        return_code = fn(vm, current_core, &ret_instr);
+        return_code = fn(vm, current_core, ret_instr);
     return (return_code);
 }

@@ -9,7 +9,7 @@
 #define FETCH_PRIV_H_
 
 #include "my/types.h"
-#include "corewar.h"
+#include "corewar/corewar.h"
 
 typedef bool (*cw_fetch_fn_t)(cw_vm_t *vm, cw_core_t *current_core,
         cw_instr_t *instr);
@@ -32,5 +32,8 @@ bool cw_fetch_sub(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
 bool cw_fetch_xor(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
 bool cw_fetch_zjmp(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
 bool cw_fetch_fallback(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
+
+bool cw_fetch_utils_populate_rvalue(cw_vm_t *vm, cw_core_t *current_core,
+    cw_rvalue_t *r_value);
 
 #endif /* !PRIV_H_ */
