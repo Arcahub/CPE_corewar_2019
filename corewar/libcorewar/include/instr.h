@@ -171,4 +171,7 @@ typedef struct {
     } args;
 } cw_instr_t;
 
+OPT_DEFINE(cw_instr_t, cw_instr)
+
+
 #endif /* COREWAR_INSTR_H */

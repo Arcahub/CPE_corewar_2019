@@ -50,6 +50,9 @@ typedef struct {
         usize_t timeout;
         u64_t age;
     } state;
+    struct {
+        OPT(cw_instr) instruct;
+    } cache;
 } cw_core_t;
 
 typedef struct cw_vm cw_vm_t;

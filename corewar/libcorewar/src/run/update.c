@@ -15,8 +15,12 @@ OPT(i64) cw_vm_update_core(void *user_data, void *element)
 
     if (core->state.timeout == 0)
         fectch(); // fetch
-    else
-        exec(); // exec = if (timeout-- != 0) return else do instr and pc increase
+    else {
+        if (core->cache.instruct.is_some)
+            exec(); // exec
+        else
+            core->regs.pc++;
+    }
     core->state.age++;
     if (core->state.age == self->cycle_to_die)
         vec_remove_element(self->cores, element, NULL); //kill (need function to free regs);
