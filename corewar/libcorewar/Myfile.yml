@@ -17,6 +17,23 @@ dependencies:
 allowed: malloc realloc free
 
 src:
+  - ./src/exec/instr/add.c
+  - ./src/exec/instr/aff.c
+  - ./src/exec/instr/and.c
+  - ./src/exec/instr/fork.c
+  - ./src/exec/instr/ld.c
+  - ./src/exec/instr/ldi.c
+  - ./src/exec/instr/lfork.c
+  - ./src/exec/instr/live.c
+  - ./src/exec/instr/lld.c
+  - ./src/exec/instr/lldi.c
+  - ./src/exec/instr/or.c
+  - ./src/exec/instr/st.c
+  - ./src/exec/instr/sti.c
+  - ./src/exec/instr/sub.c
+  - ./src/exec/instr/xor.c
+  - ./src/exec/instr/zjmp.c
+  - ./src/exec/exec.c
   - ./src/fetch/op_codes/add.c
   - ./src/fetch/op_codes/aff.c
   - ./src/fetch/op_codes/and.c
