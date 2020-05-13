@@ -66,4 +66,12 @@ void cw_asm_error_list(cw_asm_error_context_t context, char *str, ...);
 void cw_asm_error(cw_asm_error_context_t context,
     cw_asm_error_content_t content);
 
+//utils
+cw_asm_error_context_t cw_asm_error_context_set(int line, int column,
+    char type, char *str_line);
+cw_asm_error_context_t cw_asm_error_context_add(
+    cw_asm_error_context_t *context, char *str_line);
+cw_asm_error_context_t cw_asm_error_context_change_type(
+    cw_asm_error_context_t context, char type);
+
 #endif /* !CW_ASM_ERROR_H_ */

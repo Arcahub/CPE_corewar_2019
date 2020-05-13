@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "asm/cw_asm.h"
 #include "asm/cw_asm_conf.h"
 #include "asm/header/cw_asm_header.h"
@@ -43,6 +44,7 @@ int cw_asm(int argc, char **argv)
     ret = cw_asm_instruct_load(&asm_s->instructs, asm_s->fdin);
     if (ret == 84 ||
     asm_s->header->prog_name[0] == '\0' || asm_s->header->comment[0] == '\0') {
+        write(2, "Error: Abort.\n", 14);
         cw_asm_destroy(asm_s);
         return (84);
     }

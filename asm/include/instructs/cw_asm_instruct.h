@@ -28,7 +28,8 @@ int cw_asm_check_params(cw_asm_instruct_t *instruct);
 int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, bufreader_t *fdin);
 void cw_asm_instruct_write_args(cw_asm_instruct_t *instruct,
 cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw);
-void cw_asm_instruct_load_args(cw_asm_instruct_t *instruct, char **line);
+void cw_asm_instruct_load_args(cw_asm_error_context_t err_context,
+    cw_asm_instruct_t *instruct, char **line);
 void cw_asm_instruct_load_cmd(cw_asm_instruct_t *instruct, char **line);
 void cw_asm_instruct_load_label(cw_asm_instruct_t *instruct, char **line);
 void cw_asm_instructs_compile(cw_asm_instruct_t *instructs_list);
