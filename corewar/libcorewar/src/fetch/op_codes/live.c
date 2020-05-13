@@ -11,7 +11,7 @@
 
 bool cw__fetch_live(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
-    usize_t addr = core->regs.pc;
+    usize_t addr = core->regs.pc + 1;
 
     instr->args[0] = cw__fetch_read_int(vm, 4, &addr);
     instr->end = addr;

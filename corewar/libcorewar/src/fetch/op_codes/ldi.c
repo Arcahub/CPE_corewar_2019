@@ -11,7 +11,7 @@
 
 bool cw__fetch_ldi(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
-    usize_t addr = core->regs.pc;
+    usize_t addr = core->regs.pc + 1;
     cw_pcb_t pcb;
 
     if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
