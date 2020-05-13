@@ -38,17 +38,18 @@ typedef struct {
     char *name;
     char *comment;
     const u32_t prog_number;
-    u64_t age;
 } cw_program_t;
 
 typedef struct {
     struct {
         usize_t pc;
-        u8_t **regs;
+        u64_t regs[256];
         bool zero;
     } regs;
     struct {
         usize_t timeout;
+        cw_instr_t instr;
+        u64_t age;
     } state;
 } cw_core_t;
 
