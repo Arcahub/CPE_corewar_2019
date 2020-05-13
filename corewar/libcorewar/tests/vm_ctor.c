@@ -87,6 +87,20 @@ Test(vm_ctor, one_program_load)
     cw_vm_destroy(vm);
 }
 
+Test(vm_ctor, one_program_load_wrap)
+{
+    cw_program_def_t def;
+    cw_vm_t *vm = NULL;
+
+    load_prog("tests/champs/tyron.cor", SOME(usize, 6139), NONE(u32), &def);
+    vm = cw_vm_new(&DEFAULT_CONFIG, &def, 1);
+    cr_assert_arr_eq(&vm->mem[6139], &def.data[DATA_OFFSET], 4);
+    cr_assert_arr_eq(&vm->mem[0], &def.data[DATA_OFFSET + 5],
+        def.size - DATA_OFFSET - 4);
+    cr_assert_eq(vm->programs[0].prog_number, 0);
+    cw_vm_destroy(vm);
+}
+
 Test(vm_ctor, two_program)
 {
     cw_program_def_t def[2];

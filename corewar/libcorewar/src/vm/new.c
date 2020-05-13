@@ -25,6 +25,17 @@ static u32_t next_program_number(const cw_vm_t *self)
     return (prog_num);
 }
 
+static void copy_program_code(cw_vm_t *self, const cw_program_def_t *def,
+    usize_t prog_size, usize_t data_off)
+{
+    usize_t start = def->load_address.v;
+    usize_t cut = usize_min(start + prog_size, self->config.mem_size);
+    usize_t remaining = prog_size - (cut - start);
+
+    my_memcpy(&self->mem[start], &def->data[data_off], cut - start);
+    my_memcpy(&self->mem[0], &def->data[data_off + cut - start], remaining);
+}
+
 static bool load_program(cw_vm_t *self, cw_program_t *prog,
     const cw_program_def_t *def)
 {
@@ -46,7 +57,7 @@ static bool load_program(cw_vm_t *self, cw_program_t *prog,
         *((u32_t*) &prog->prog_number) = def->prog_number.v;
     else
         *((u32_t*) &prog->prog_number) = next_program_number(self);
-    my_memcpy(&self->mem[def->load_address.v], &def->data[data_off], prog_size);
+    copy_program_code(self, def, prog_size, data_off);
     return (false);
 }
 
