@@ -19,10 +19,9 @@
 # Executables
 *.out
 /target
-/libcorewar.a
+asm
 /unit-tests
 
 # Coverage reports
 *.gcda
 *.gcno
-asm
