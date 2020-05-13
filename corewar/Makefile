@@ -2,21 +2,33 @@
 ## EPITECH PROJECT, 2020
 ## CPE_corewar_2019
 ## File description:
-## Makefile
+## Makefile building the corewar virtual machine CLI
 ##
 
-all:
-	@make -sC corewar-cli
-	@cp corewar-cli/corewar ./
+NAME = corewar
+LIB_ROOT = ./libcorewar
+CLI_ROOT = ./corewar-cli
+CLI_PATH = $(CLI_ROOT)/$(NAME)
+
+all: $(NAME)
+
+$(NAME): $(CLI_PATH)
+	@cp $(CLI_PATH) $(NAME)
+
+$(CLI_PATH):
+	@$(MAKE) -sC $(CLI_ROOT)
 
 clean:
-	@make clean -sC corewar-cli
-	@make clean -sC libcorewar
+	@$(MAKE) -sC $(CLI_ROOT) clean
 
 fclean:
-	@make fclean -sC corewar-cli
-	@make fclean -sC libcorewar
-	@rm -f corewar
+	@$(MAKE) -sC $(CLI_ROOT) fclean
+	@rm -f $(NAME)
 
-re:
-	@make re -sC corewar-cli
+re: fclean all
+
+tests_run:
+	@$(MAKE) -sC $(LIB_ROOT) tests_run
+	@$(MAKE) -sC $(CLI_ROOT) tests_run
+
+.PHONY: all clean fclean re tests_run

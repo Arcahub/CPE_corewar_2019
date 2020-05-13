@@ -100,6 +100,7 @@ void *cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
 ** Utilities
 */
 
+OPT(u64) cw_vm_get_age(const cw_vm_t *self, usize_t load_id);
 usize_t cw_vm_memory_dump(const cw_vm_t *self, u8_t *buf, usize_t count);
 
 #endif /* LIBCOREWAR_H */
