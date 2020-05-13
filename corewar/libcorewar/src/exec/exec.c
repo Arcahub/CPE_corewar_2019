@@ -30,6 +30,17 @@ static exec_instr_fn_t *const CALLBACKS[256] = {
     &cw_vm__exec__aff
 };
 
+const u64_t CW__REG_MASK[8] = {
+    0xFF,
+    0xFFFF,
+    0xFFFFFF,
+    0xFFFFFFFF,
+    0xFFFFFFFFFF,
+    0xFFFFFFFFFFFF,
+    0xFFFFFFFFFFFFFF,
+    0xFFFFFFFFFFFFFFFF,
+};
+
 void cw_vm__exec_instr(cw_vm_t *vm, cw_core_t *core,
     const cw_instr_t *instr)
 {
