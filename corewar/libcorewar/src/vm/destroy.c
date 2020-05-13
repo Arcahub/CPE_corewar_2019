@@ -26,16 +26,19 @@ static OPT(i32) destroy_callback(void *ptr, void *element)
 
 void cw_vm_destroy(cw_vm_t *self)
 {
+    if (self == NULL)
+        return;
     my_free(self->mem);
-    for (usize_t i = 0; i < self->prog_count; i++) {
+    for (usize_t i = 0; self->programs && i < self->prog_count; i++) {
         my_free(self->programs[i].comment);
         my_free(self->programs[i].name);
     }
     my_free(self->programs);
-    for (usize_t i = 0; i < self->cores->len; i++) {
+    for (usize_t i = 0; self->cores && i < self->cores->len; i++) {
         destroy_core(self, self->cores->data[i]);
         my_free(self->cores->data[i]);
     }
+    vec_destroy(self->cores);
     list_destroy_with(self->callbacks.all, &destroy_callback, NULL);
     for (usize_t i = 0; i < CW_OPCODE_LAST + 1; i++)
         list_destroy_with(self->callbacks.opcodes[i], &destroy_callback, NULL);

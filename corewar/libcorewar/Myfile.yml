@@ -42,3 +42,4 @@ src:
 
 tests_src:
   - ./tests/pcb_check.c
+  - ./tests/vm_ctor.c
