@@ -11,7 +11,7 @@
 #include "corewar/corewar.h"
 #include "corewar/instr.h"
 
-bool cw_instruction_fetch(const cw_vm_t *vm, const cw_core_t *core,
+bool cw_vm__fetch_instr(const cw_vm_t *vm, const cw_core_t *core,
     cw_instr_t *ret_instr);
 
 #endif /* LIBCOREWAR_PRIV_H */

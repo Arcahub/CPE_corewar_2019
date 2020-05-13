@@ -30,7 +30,7 @@ cw__fetch_fn_t *const FETCH_FUNCTIONS[256] = {
     &cw__fetch_aff
 };
 
-bool cw_instruction_fetch(const cw_vm_t *vm, const cw_core_t *core,
+bool cw_vm__fetch_instr(const cw_vm_t *vm, const cw_core_t *core,
     cw_instr_t *ret_instr)
 {
     cw__fetch_fn_t *fn = NULL;
