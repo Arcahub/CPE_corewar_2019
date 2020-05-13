@@ -53,10 +53,8 @@ static bool load_program(cw_vm_t *self, cw_program_t *prog,
     prog->name = my_cstrdup((const char*) &def->data[name_off]);
     prog_size = *((i32_t*) &prog_size);
     prog->comment = my_cstrdup((const char*) &def->data[comment_off]);
-    if (def->prog_number.is_some)
-        *((u32_t*) &prog->prog_number) = def->prog_number.v;
-    else
-        *((u32_t*) &prog->prog_number) = next_program_number(self);
+    *((u32_t*) &prog->prog_number) = def->prog_number.is_some ?
+        def->prog_number.v % self->config.mem_size : next_program_number(self);
     copy_program_code(self, def, prog_size, data_off);
     return (false);
 }
