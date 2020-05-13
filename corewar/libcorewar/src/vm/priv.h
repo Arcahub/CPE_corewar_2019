@@ -5,11 +5,11 @@
 ** priv
 */
 
-#ifndef VM_PRIV_H_
-#define VM_PRIV_H_
+#ifndef LIBCOREWAR_VM_PRIV_H_
+#define LIBCOREWAR_VM_PRIV_H_
 
 #include "corewar/corewar.h"
 
-void destroy_program(cw_program_t *prog);
+void cw_vm_destroy_program(cw_program_t *prog);
 
 #endif /* !PRIV_H_ */

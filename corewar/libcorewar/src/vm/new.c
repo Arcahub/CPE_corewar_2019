@@ -38,7 +38,6 @@ static bool load_prog(cw_vm_t *self, cw_program_t *prog,
     usize_t cut = usize_min(start + prog_size, self->config.mem_size);
     usize_t remaining = prog_size - (cut - start);
 
-    prog_size = *((i32_t*) &prog_size); // c quoi ca
     *((u32_t*) &prog->prog_number) = def->prog_number.is_some ?
         def->prog_number.v % self->config.mem_size : next_program_number(self);
     for (usize_t i = start; i < prog_size; i++)
@@ -64,11 +63,10 @@ static bool create_program(cw_vm_t *self, cw_program_t *prog,
     prog->name = my_cstrdup((const char*) &def->data[name_off]);
     prog->comment = my_cstrdup((const char*) &def->data[comment_off]);
     if (!prog->name || !prog->comment || load_prog(self, prog, def, size_off) ||
-    cw_vm_add_core(self, pc, prog->prog_number)) {
-        destroy_program(prog);
+        cw_vm_add_core(self, pc, prog->prog_number)) {
+        cw_vm_destroy_program(prog);
         return (true);
     }
-
     return (false);
 }
 
