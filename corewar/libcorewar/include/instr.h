@@ -173,5 +173,4 @@ typedef struct {
 
 OPT_DEFINE(cw_instr_t, cw_instr)
 
-
 #endif /* COREWAR_INSTR_H */

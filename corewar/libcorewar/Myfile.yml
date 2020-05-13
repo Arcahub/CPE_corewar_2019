@@ -17,6 +17,8 @@ dependencies:
 allowed: malloc realloc free
 
 src:
+  - ./src/run/run.c
+  - ./src/run/update.c
   - ./src/lib.c
 
 tests_src:
