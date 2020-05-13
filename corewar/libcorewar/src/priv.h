@@ -14,4 +14,6 @@
 bool cw_instruction_fetch(const cw_vm_t *vm, const cw_core_t *core,
     cw_instr_t *ret_instr);
 
+bool cw_vm_add_core(cw_vm_t *vm, const usize_t pc, u32_t prog_number);
+
 #endif /* LIBCOREWAR_PRIV_H */

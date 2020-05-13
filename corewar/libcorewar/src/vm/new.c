@@ -9,6 +9,8 @@
 #include "my/my.h"
 #include "my/io.h"
 #include "corewar/corewar.h"
+#include "../priv.h"
+#include "priv.h"
 
 static u32_t next_program_number(const cw_vm_t *self)
 {
@@ -25,37 +27,48 @@ static u32_t next_program_number(const cw_vm_t *self)
     return (prog_num);
 }
 
-static void copy_program_code(cw_vm_t *self, const cw_program_def_t *def,
-    usize_t prog_size, usize_t data_off)
+static bool load_prog(cw_vm_t *self, cw_program_t *prog,
+    const cw_program_def_t *def, usize_t size_off)
 {
+    usize_t comment_len = self->config.comment_length;
+    usize_t comment_off = size_off + 4;
+    usize_t data_off = ((comment_off + comment_len + 1) / 4 + 1) * 4;
     usize_t start = def->load_address.v;
+    u32_t prog_size = u32_be_to_ne(*((u32_t*) &def->data[size_off]));
     usize_t cut = usize_min(start + prog_size, self->config.mem_size);
     usize_t remaining = prog_size - (cut - start);
 
+    prog_size = *((i32_t*) &prog_size); // c quoi ca
+    *((u32_t*) &prog->prog_number) = def->prog_number.is_some ?
+        def->prog_number.v % self->config.mem_size : next_program_number(self);
+    for (usize_t i = start; i < prog_size; i++)
+        if (self->mem[i % self->config.mem_size] != 0)
+            return (true);
     my_memcpy(&self->mem[start], &def->data[data_off], cut - start);
     my_memcpy(&self->mem[0], &def->data[data_off + cut - start], remaining);
+    return (false);
 }
 
-static bool load_program(cw_vm_t *self, cw_program_t *prog,
+static bool create_program(cw_vm_t *self, cw_program_t *prog,
     const cw_program_def_t *def)
 {
     usize_t name_len = self->config.prog_name_length;
-    usize_t comment_len = self->config.comment_length;
     usize_t name_off = 4;
     usize_t size_off = ((name_off + name_len + 1) / 4 + 1) * 4;
     usize_t comment_off = size_off + 4;
-    usize_t data_off = ((comment_off + comment_len + 1) / 4 + 1) * 4;
     u32_t magic = u32_be_to_ne(*((u32_t*) &def->data[0]));
-    u32_t prog_size = u32_be_to_ne(*((u32_t*) &def->data[size_off]));
+    usize_t pc = def->load_address.v % self->config.mem_size;
 
     if (magic != self->config.corewar_exec_magic)
         return (true);
     prog->name = my_cstrdup((const char*) &def->data[name_off]);
-    prog_size = *((i32_t*) &prog_size);
     prog->comment = my_cstrdup((const char*) &def->data[comment_off]);
-    *((u32_t*) &prog->prog_number) = def->prog_number.is_some ?
-        def->prog_number.v % self->config.mem_size : next_program_number(self);
-    copy_program_code(self, def, prog_size, data_off);
+    if (!prog->name || !prog->comment || load_prog(self, prog, def, size_off) ||
+    cw_vm_add_core(self, pc, prog->prog_number)) {
+        destroy_program(prog);
+        return (true);
+    }
+
     return (false);
 }
 
@@ -63,13 +76,6 @@ static bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     usize_t n)
 {
     bool err = false;
-<<<<<<< HEAD
-
-    self->prog_count = n;
-    self->programs = my_calloc(n, sizeof(cw_program_t));
-    for (usize_t i = 0; !err && i < n; i++)
-        err = load_program(self, &self->programs[i], &defs[i]);
-=======
     cw_program_def_t def;
 
     self->prog_count = 0;
@@ -79,10 +85,9 @@ static bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
         def = defs[i];
         if (!defs[i].load_address.is_some)
             def.load_address = SOME(usize, i * self->config.mem_size / n);
-        err = load_program(self, &self->programs[i], &def);
+        err = create_program(self, &self->programs[i], &def);
         self->prog_count += err ? 0 : 1;
     }
->>>>>>> 7b7501eea4a02bc2352cea55285dfa602249ae46
     return (err);
 }
 
