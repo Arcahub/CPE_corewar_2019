@@ -29,12 +29,10 @@ OPT(i64) cw_vm_update_core(void *user_data, void *element)
 
 bool cw_vm_update(cw_vm_t *self)
 {
-    static u64_t cycles = 0;
-
-    cycles++;
+    self->age++;
     vec_for_each(self->cores, &cw_vm_update_core, self);
-    if (cycles == self->config.cycle_to_die) {
-        cycles = 0;
+    if (self->age == self->config.cycle_to_die) {
+        self->age = 0;
         self->cycle_to_die -= u64_min(self->cycle_to_die,
         self->config.cycle_delta);
     }
