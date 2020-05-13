@@ -7,14 +7,13 @@
 
 #include "my/my.h"
 #include "corewar/corewar.h"
+#include "../priv.h"
 
-bool cw_fetch_live(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
+bool cw__fetch_live(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
-    // my_memcpy(&(instr->args.live.nb), &(vm->mem[current_core->regs.pc++]),
-    //     sizeof(u32_t));
-    // instr->args.live.nb = u32_be_to_ne(instr->args.live.nb);
-    (void)(vm);
-    (void)(current_core);
-    (void)(instr);
+    usize_t addr = core->regs.pc;
+
+    instr->args[0] = cw__fetch_read_int(vm, 4, &addr);
+    instr->end = addr;
     return (false);
 }

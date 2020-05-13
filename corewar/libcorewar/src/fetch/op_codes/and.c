@@ -9,20 +9,17 @@
 #include "corewar/corewar.h"
 #include "../priv.h"
 
-bool cw_fetch_and(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
+bool cw__fetch_and(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
-    // u8_t coding = vm->mem[current_core->regs.pc++ % vm->config.mem_size];
+    usize_t addr = core->regs.pc;
+    cw_pcb_t pcb;
 
-    // instr->args.and.a.type = coding & 0xC0;
-    // instr->args.and.b.type = coding & 0x30;
-    // if (cw_fetch_utils_populate_param(vm, current_core, &instr->args.and.a))
-    //     return (true);
-    // if (cw_fetch_utils_populate_param(vm, current_core, &instr->args.and.b))
-    //     return (true);
-    // instr->args.and.dst =
-    //     vm->mem[current_core->regs.pc++ % vm->config.mem_size];
-    (void)(vm);
-    (void)(current_core);
-    (void)(instr);
+    if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
+        cw__pcb_matches(&pcb, "rdi,rdi,r"))
+        return (true);
+    instr->args[0] = cw__fetch_read_param(vm, core, pcb.p[0], &addr);
+    instr->args[1] = cw__fetch_read_param(vm, core, pcb.p[1], &addr);
+    instr->args[2] = cw__fetch_read_param(vm, core, pcb.p[2], &addr);
+    instr->end = addr;
     return (false);
 }

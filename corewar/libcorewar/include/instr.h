@@ -38,18 +38,14 @@ OPT_DEFINE(cw_opcode_t, cw_opcode)
 */
 
 typedef enum {
-    CW_PARAM_REG = 1,
-    CW_PARAM_DIR = 2,
-    CW_PARAM_IND = 4,
+    CW_PARAM_REG = 0,
+    CW_PARAM_DIR = 1,
+    CW_PARAM_IND = 2,
 } cw_param_type_t;
 
 typedef struct {
     cw_param_type_t type;
-    union {
-        u8_t reg;
-        u64_t dir;
-        u64_t ind;
-    } u;
+    u64_t val;
 } cw_param_t;
 
 /*
@@ -58,75 +54,8 @@ typedef struct {
 
 typedef struct {
     cw_opcode_t opcode;
-    union {
-        struct {
-            u32_t nb;
-        } live;
-        struct {
-            cw_param_t src;
-            cw_param_t dst;
-        } ld;
-        struct {
-            cw_param_t src;
-            cw_param_t dst;
-        } st;
-        struct {
-            cw_param_t a;
-            cw_param_t b;
-            cw_param_t dst;
-        } add;
-        struct {
-            cw_param_t a;
-            cw_param_t b;
-            cw_param_t dst;
-        } sub;
-        struct {
-            cw_param_t a;
-            cw_param_t b;
-            cw_param_t dst;
-        } and;
-        struct {
-            cw_param_t a;
-            cw_param_t b;
-            cw_param_t dst;
-        } or;
-        struct {
-            cw_param_t a;
-            cw_param_t b;
-            cw_param_t dst;
-        } xor;
-        struct {
-            cw_param_t addr;
-        } zjmp;
-        struct {
-            cw_param_t base;
-            cw_param_t ind;
-            cw_param_t dst;
-        } ldi;
-        struct {
-            cw_param_t src;
-            cw_param_t base;
-            cw_param_t ind;
-        } sti;
-        struct {
-            cw_param_t addr;
-        } fork;
-        struct {
-            cw_param_t src;
-            cw_param_t dst;
-        } lld;
-        struct {
-            cw_param_t base;
-            cw_param_t ind;
-            cw_param_t dst;
-        } lldi;
-        struct {
-            cw_param_t addr;
-        } lfork;
-        struct {
-            cw_param_t reg;
-        } aff;
-    } args;
+    cw_param_t args[4];
+    usize_t end;
 } cw_instr_t;
 
 #endif /* COREWAR_INSTR_H */

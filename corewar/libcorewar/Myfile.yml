@@ -36,7 +36,7 @@ src:
   - ./src/fetch/op_codes/zjmp.c
   - ./src/fetch/fetch.c
   - ./src/fetch/pcb.c
-  - ./src/fetch/utils.c
+  - ./src/fetch/read_param.c
   - ./src/lib.c
 
 tests_src:

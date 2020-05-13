@@ -7,19 +7,17 @@
 
 #include "my/my.h"
 #include "corewar/corewar.h"
+#include "../priv.h"
 
-bool cw_fetch_aff(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
+bool cw__fetch_aff(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
-    // u8_t pcb = vm->mem[current_core->regs.pc++];
+    usize_t addr = core->regs.pc;
+    cw_pcb_t pcb;
 
-    // if (pcb != 0x40)
-    //     return (true);
-    // current_core->regs.pc++;
-    // instr->args.aff.reg.type = CW_PARAM_REG;
-    // instr->args.aff.reg.u.reg =
-    //     vm->mem[current_core->regs.pc++ % vm->config.mem_size];
-    (void)(vm);
-    (void)(current_core);
-    (void)(instr);
+    if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
+        cw__pcb_matches(&pcb, "r"))
+        return (true);
+    instr->args[0] = cw__fetch_read_param(vm, core, pcb.p[0], &addr);
+    instr->end = addr;
     return (false);
 }

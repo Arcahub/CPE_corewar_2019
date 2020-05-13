@@ -9,36 +9,36 @@
 #include "corewar/instr.h"
 #include "priv.h"
 
-const cw_fetch_fn_t FETCH_FUNCTIONS[256] = {
+cw__fetch_fn_t *const FETCH_FUNCTIONS[256] = {
     NULL,
-    &cw_fetch_live,
-    &cw_fetch_ld,
-    &cw_fetch_st,
-    &cw_fetch_add,
-    &cw_fetch_sub,
-    &cw_fetch_and,
-    &cw_fetch_or,
-    &cw_fetch_xor,
-    &cw_fetch_zjmp,
-    &cw_fetch_ldi,
-    &cw_fetch_sti,
-    &cw_fetch_fork,
-    &cw_fetch_lld,
-    &cw_fetch_lldi,
-    &cw_fetch_lfork,
-    &cw_fetch_aff
+    &cw__fetch_live,
+    &cw__fetch_ld,
+    &cw__fetch_st,
+    &cw__fetch_add,
+    &cw__fetch_sub,
+    &cw__fetch_and,
+    &cw__fetch_or,
+    &cw__fetch_xor,
+    &cw__fetch_zjmp,
+    &cw__fetch_ldi,
+    &cw__fetch_sti,
+    &cw__fetch_fork,
+    &cw__fetch_lld,
+    &cw__fetch_lldi,
+    &cw__fetch_lfork,
+    &cw__fetch_aff
 };
 
 bool cw_instruction_fetch(cw_vm_t *vm, cw_core_t *current_core,
     cw_instr_t *ret_instr)
 {
-    cw_fetch_fn_t fn = NULL;
+    cw__fetch_fn_t *fn = NULL;
     bool return_code = false;
 
     ret_instr->opcode = vm->mem[current_core->regs.pc++];
     fn = FETCH_FUNCTIONS[ret_instr->opcode];
     if (!fn)
-        return_code = cw_fetch_fallback(vm, current_core, ret_instr);
+        return_code = cw__fetch_fallback(vm, current_core, ret_instr);
     else
         return_code = fn(vm, current_core, ret_instr);
     return (return_code);

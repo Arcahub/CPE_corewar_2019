@@ -7,23 +7,18 @@
 
 #include "my/my.h"
 #include "corewar/corewar.h"
+#include "../priv.h"
 
-bool cw_fetch_ld(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
+bool cw__fetch_ld(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
-    // instr->args.ld.src.type = vm->mem[current_core->regs.pc++];
-    // switch (instr->args.ld.src.type) {
-    // case CW_RVAL_REG:
-    //     break;
-    // case CW_RVAL_DIR:
-    //     break;
-    // case CW_RVAL_IND:
-    //     break;
-    // default:
-    //     return (true);
-    // }
-    // instr->args.ld.dst = vm->mem[current_core->regs.pc++];
-    (void)(vm);
-    (void)(current_core);
-    (void)(instr);
+    usize_t addr = core->regs.pc;
+    cw_pcb_t pcb;
+
+    if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
+        cw__pcb_matches(&pcb, "di,r"))
+        return (true);
+    instr->args[0] = cw__fetch_read_param(vm, core, pcb.p[0], &addr);
+    instr->args[1] = cw__fetch_read_param(vm, core, pcb.p[1], &addr);
+    instr->end = addr;
     return (false);
 }

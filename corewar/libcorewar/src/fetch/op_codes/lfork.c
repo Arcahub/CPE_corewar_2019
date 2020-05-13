@@ -7,13 +7,14 @@
 
 #include "my/my.h"
 #include "corewar/corewar.h"
+#include "../priv.h"
 
-bool cw_fetch_lfork(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr)
+bool cw__fetch_lfork(const cw_vm_t *vm, const cw_core_t *core,
+    cw_instr_t *instr)
 {
-    // instr->args.lfork.addr =
-    //     &vm->mem[current_core->regs.pc++ % vm->config.mem_size];
-    (void)(vm);
-    (void)(current_core);
-    (void)(instr);
+    usize_t addr = core->regs.pc;
+
+    instr->args[0] = cw__fetch_read_param(vm, core, CW_PARAM_IND, &addr);
+    instr->end = addr;
     return (false);
 }

@@ -12,30 +12,38 @@
 #include "corewar/corewar.h"
 #include "corewar/instr.h"
 
-typedef bool (*cw_fetch_fn_t)(cw_vm_t *vm, cw_core_t *current_core,
+typedef struct {
+    u8_t raw;
+    usize_t count;
+    cw_param_type_t p[4];
+} cw_pcb_t;
+
+typedef bool (cw__fetch_fn_t)(const cw_vm_t *vm, const cw_core_t *core,
     cw_instr_t *instr);
-extern const cw_fetch_fn_t FETCH_FUNCTIONS[256];
+extern cw__fetch_fn_t *const FETCH_FUNCTIONS[256];
 
-bool cw_pcb_matches(u8_t pcb, const char *str);
-bool cw_fetch_add(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_aff(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_and(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_fork(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_ld(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_ldi(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_lfork(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_live(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_lld(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_lldi(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_or(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_st(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_sti(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_sub(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_xor(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_zjmp(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
-bool cw_fetch_fallback(cw_vm_t *vm, cw_core_t *current_core, cw_instr_t *instr);
+bool cw__pcb_parse(cw_pcb_t *pcb, u8_t raw);
+bool cw__pcb_matches(const cw_pcb_t *pcb, const char *str);
+cw__fetch_fn_t cw__fetch_add;
+cw__fetch_fn_t cw__fetch_aff;
+cw__fetch_fn_t cw__fetch_and;
+cw__fetch_fn_t cw__fetch_fork;
+cw__fetch_fn_t cw__fetch_ld;
+cw__fetch_fn_t cw__fetch_ldi;
+cw__fetch_fn_t cw__fetch_lfork;
+cw__fetch_fn_t cw__fetch_live;
+cw__fetch_fn_t cw__fetch_lld;
+cw__fetch_fn_t cw__fetch_lldi;
+cw__fetch_fn_t cw__fetch_or;
+cw__fetch_fn_t cw__fetch_st;
+cw__fetch_fn_t cw__fetch_sti;
+cw__fetch_fn_t cw__fetch_sub;
+cw__fetch_fn_t cw__fetch_xor;
+cw__fetch_fn_t cw__fetch_zjmp;
+cw__fetch_fn_t cw__fetch_fallback;
 
-bool cw_fetch_utils_populate_param(cw_vm_t *vm, cw_core_t *current_core,
-    cw_param_t *param);
+cw_param_t cw__fetch_read_int(const cw_vm_t *vm, usize_t size, usize_t *addr);
+cw_param_t cw__fetch_read_param(const cw_vm_t *vm, const cw_core_t *core,
+    cw_param_type_t type, usize_t *addr);
 
 #endif /* !PRIV_H_ */
