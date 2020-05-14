@@ -18,7 +18,7 @@ cw_asm_error_context_t cw_asm_error_context_set(int line, int column,
     context.column = column;
     context.type = type;
     context.str_line = str_line;
-    return context;
+    return (context);
 }
 
 cw_asm_error_context_t cw_asm_error_context_add(
@@ -26,12 +26,12 @@ cw_asm_error_context_t cw_asm_error_context_add(
 {
     context->line++;
     context->str_line = str_line;
-    return *context;
+    return (*context);
 }
 
 cw_asm_error_context_t cw_asm_error_context_change_type(
     cw_asm_error_context_t context, char type)
 {
     context.type = type;
-    return context;
+    return (context);
 }

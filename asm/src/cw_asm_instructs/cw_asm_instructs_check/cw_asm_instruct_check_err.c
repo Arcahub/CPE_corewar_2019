@@ -22,7 +22,7 @@ void cw_asm_instruct_check_args_type_err(char *parameter,
     str_type = (type == T_IND) ? "an indirect" : str_type;
     str_type = (type == T_REG) ? "a register" : str_type;
     cw_asm_error_list(cw_asm_error_context_change_type(err_context, ERROR),
-            "%s is %s which is not a valid type.\n"\
-            "    Allowed types are :%s%s%s", parameter, str_type, str_valid[0],
-            str_valid[1], str_valid[2]);
+        "%s is %s which is not a valid type.\n"\
+        "    Allowed types are :%s%s%s", parameter, str_type, str_valid[0],
+        str_valid[1], str_valid[2]);
 }
