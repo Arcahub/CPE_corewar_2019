@@ -19,7 +19,6 @@ static void update_core(cw_vm_t *self, cw_core_t *core)
     core->state.age++;
     core->state.timeout = core->state.timeout == 0 ?
         core->state.timeout : core->state.timeout - 1;
-    my_printf("cycle: %d, timeout: %d, pc: %x\n", core->state.age, core->state.timeout, core->regs.pc);
     if (core->state.timeout > 0)
         return;
     if (core->cache.instruct.is_some) {
