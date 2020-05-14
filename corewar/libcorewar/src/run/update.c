@@ -21,7 +21,7 @@ static void update_core(cw_vm_t *self, cw_core_t *core)
     if (core->state.timeout > 0)
         return;
     if (core->cache.instruct.is_some) {
-        cw_vm__exec_instr(self, core, &core->cache.instruct.v);
+        // TODO: cw_vm__exec_instr(self, core, &core->cache.instruct.v);
     } else
         core->regs.pc++;
     core->state.timeout = 1;
