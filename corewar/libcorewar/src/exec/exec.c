@@ -46,6 +46,9 @@ void cw_vm__exec_instr(cw_vm_t *vm, cw_core_t *core,
 {
     exec_instr_fn_t *fn = CALLBACKS[instr->opcode];
 
-    if (fn != NULL)
+    my_printf("exec: cycle: %d\n", core->state.age);
+    if (fn != NULL) {
         fn(vm, core, instr);
+        cw_vm__trigger_callbacks(vm, core, instr);
+    }
 }

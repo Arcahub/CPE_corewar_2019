@@ -32,7 +32,7 @@ static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,
     // exit_status = cw_vm_run(vm, self->dump_cycles);
     while (exit_status) {
         //cw_vm_memory_dump(vm, dump, MEM_SIZE);
-        // exit_status = cw_vm_run(vm, self->dump_cycles);
+        exit_status = cw_vm_run(vm, self->dump_cycles);
         exit_status = false;
     }
     cw_vm_destroy(vm);
@@ -47,7 +47,7 @@ static u64_t cw_corewar_cli_run_without_dump_cycles(cw_corewar_cli_t *self,
     bool exit_status = true;
 
     (void) self;
-    // exit_status = cw_vm_run(vm, self->dump_cycles);
+    exit_status = cw_vm_run(vm, self->dump_cycles);
     cw_vm_destroy(vm);
     if (exit_status)
         return (0);
@@ -66,6 +66,7 @@ cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
     LIST_FOR_EACH(cli->progs_list, iter) {
         prog = iter.v;
         progs_list[index] = *prog;
+        index++;
     }
     return (cw_vm_new(&VM_CONF, progs_list, cli->progs_list->len));
 }
@@ -76,6 +77,7 @@ u64_t cw_corewar_cli_run(cw_corewar_cli_t *self)
 
     if (vm == NULL)
         return (84);
+    cw_corewar_cli_setup_callbacks(vm);
     if (self->dump_cycles.is_some)
         return (cw_corewar_cli_run_with_dump_cycles(self, vm));
     else

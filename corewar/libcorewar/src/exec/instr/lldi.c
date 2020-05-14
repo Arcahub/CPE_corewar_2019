@@ -18,10 +18,11 @@ void cw_vm__exec__lldi(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
         u64_t u64;
         u8_t bytes[8];
     } val = {0};
+    u64_t j = 0;
 
     for (usize_t i = core->regs.pc; i < core->regs.pc + vm->config.reg_size;
-        i++)
-        val.bytes[i] = vm->mem[(s + i) % vm->config.mem_size];
+        i++, j++)
+        val.bytes[j] = vm->mem[(s + i) % vm->config.mem_size];
     val.u64 = u64_be_to_ne(val.u64);
     core->regs.zero = 0 == s;
     core->regs.regs[instr->args[2].u.reg] = val.u64 & reg_mask(vm);

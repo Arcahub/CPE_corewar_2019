@@ -21,6 +21,7 @@ bool cw__fetch_ldi(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
     pcb.p[1] = pcb.p[1] == CW_PARAM_DIR ? CW_PARAM_IND : pcb.p[1];
     instr->args[0] = cw__fetch_read_param(vm, pcb.p[0], &addr);
     instr->args[1] = cw__fetch_read_param(vm, pcb.p[1], &addr);
+    instr->args[2] = cw__fetch_read_param(vm, pcb.p[2], &addr);
     instr->end = addr;
     return (false);
 }
