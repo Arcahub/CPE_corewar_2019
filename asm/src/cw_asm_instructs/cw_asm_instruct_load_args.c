@@ -9,6 +9,20 @@
 #include "asm/cw_asm_tools.h"
 #include "my/my.h"
 
+void cw_asm_instruct_check_args_len_err(cw_asm_instruct_t *instruct,
+    cw_asm_error_context_t err_context, op_t op, int i)
+{
+    if (instruct->instruct_code - 1 < 0)
+        return;
+    if (i < op.nbr_args) {
+        cw_asm_error_list(cw_asm_error_context_change_type(err_context, ERROR),
+            "Not enough arguments", op.mnemonique);
+    } else {
+        cw_asm_error_list(cw_asm_error_context_change_type(err_context, ERROR),
+            "Too many arguments", op.mnemonique);
+    }
+}
+
 static char *cw_asm_instruct_clean_arg(char *arg)
 {
     char *str = NULL;
@@ -25,22 +39,24 @@ static char *cw_asm_instruct_clean_arg(char *arg)
     return (arg);
 }
 
-void cw_asm_instruct_load_args(cw_asm_instruct_t *instruct, char **line)
+void cw_asm_instruct_load_args(cw_asm_error_context_t err_context,
+    cw_asm_instruct_t *instruct, char **line)
 {
     char **args = str_to_word_array_sep(*line, SEPARATOR_CHAR);
-    int nbr_args = op_tab[instruct->instruct_code - 1].nbr_args;
+    op_t op = op_tab[instruct->instruct_code - 1];
     int i = 0;
 
     if (args == NULL)
         return;
     for (; args[i]; i++);
-    if (i != nbr_args || nbr_args > MAX_ARGS_NUMBER) {
+    if (i != op.nbr_args || op.nbr_args > MAX_ARGS_NUMBER) {
+        cw_asm_instruct_check_args_len_err(instruct, err_context, op, i);
         for (i = 0; args[i]; i++)
             my_free(args[i]);
         my_free(args);
         return;
     }
-    for (i = 0; i < nbr_args; i++) {
+    for (i = 0; i < op.nbr_args; i++) {
         instruct->parameters[i] = cw_asm_instruct_clean_arg(args[i]);
         my_free(args[i]);
     }

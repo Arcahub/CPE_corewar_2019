@@ -11,21 +11,30 @@
 #include "asm/error/cw_asm_error.h"
 #include <unistd.h>
 
+static void cw_asm_instruct_load_err_instruct(
+    cw_asm_error_context_t err_context)
+{
+    cw_asm_error_list(cw_asm_error_context_change_type(err_context, ERROR),
+            "Unknown instruction");
+}
+
 static cw_asm_instruct_t *cw_asm_instruct_load_compute_line(
     cw_asm_error_context_t err_context,
     cw_asm_instruct_t *last, char *line)
 {
     cw_asm_instruct_t *instruct = cw_asm_instruct_create(last);
 
+    cw_asm_error_context_add(&err_context, line);
     if (!instruct)
         return (NULL);
     cw_asm_instruct_load_label(instruct, &line);
     cw_asm_instruct_load_cmd(instruct, &line);
     if (instruct->label == NULL && instruct->instruct_code == -1) {
+        cw_asm_instruct_load_err_instruct(err_context);
         cw_asm_instruct_destroy(instruct, NULL);
         return (NULL);
     }
-    cw_asm_instruct_load_args(instruct, &line);
+    cw_asm_instruct_load_args(err_context, instruct, &line);
     if (cw_asm_instruct_check_args(err_context, instruct)) {
         cw_asm_instruct_destroy(instruct, NULL);
         return (NULL);
@@ -53,7 +62,6 @@ int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, bufreader_t *fdin)
         if (tmp == NULL)
             return (84);
         *instructs_list = tmp;
-        err_context.line++;
     }
     return (0);
 }

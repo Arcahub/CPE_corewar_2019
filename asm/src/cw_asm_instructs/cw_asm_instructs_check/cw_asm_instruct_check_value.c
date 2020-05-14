@@ -24,8 +24,7 @@ int cw_asm_instruct_check_value(cw_asm_error_context_t context,
     bool test = is_only_numeric(parameter);
 
     if (!test) {
-        cw_asm_error_list((cw_asm_error_context_t){context.line,
-            context.column, ERROR, context.str_line},
+        cw_asm_error_list(cw_asm_error_context_change_type(context, ERROR),
             "%s is not a number", parameter);
     }
     return (test);
