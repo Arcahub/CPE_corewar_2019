@@ -26,6 +26,7 @@ typedef struct {
     u64_t cycle_to_die;
     u64_t cycle_delta;
     u64_t nbr_live;
+    u64_t max_checks;
 } cw_config_t;
 
 typedef struct {
@@ -49,9 +50,11 @@ typedef struct {
     } regs;
     struct {
         usize_t timeout;
-        cw_instr_t instr;
         u64_t age;
     } state;
+    struct {
+        OPT(cw_instr) instruct;
+    } cache;
 } cw_core_t;
 
 OPT_DEFINE(cw_core_t, cw_core)
@@ -70,6 +73,12 @@ struct cw_vm {
     usize_t prog_count;
     cw_program_t *programs;
     vec_t *cores;
+    vec_t *new_cores;
+    struct {
+        u64_t check_countdown;
+        u64_t live_calls;
+        u64_t checks_passed;
+    } state;
     struct {
         list_t *all;
         list_t *opcodes[CW_OPCODE_LAST + 1];

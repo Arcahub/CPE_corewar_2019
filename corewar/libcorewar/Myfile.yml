@@ -17,8 +17,6 @@ dependencies:
 allowed: malloc realloc free write
 
 src:
-  - ./src/vm/destroy.c
-  - ./src/vm/new.c
   - ./src/fetch/op_codes/add.c
   - ./src/fetch/op_codes/aff.c
   - ./src/fetch/op_codes/and.c
@@ -39,6 +37,8 @@ src:
   - ./src/fetch/fetch.c
   - ./src/fetch/pcb.c
   - ./src/fetch/read_param.c
+  - ./src/run/run.c
+  - ./src/run/update.c
   - ./src/vm/destroy.c
   - ./src/vm/new.c
   - ./src/vm/create_core.c

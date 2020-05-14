@@ -58,4 +58,6 @@ typedef struct {
     usize_t end;
 } cw_instr_t;
 
+OPT_DEFINE(cw_instr_t, cw_instr)
+
 #endif /* COREWAR_INSTR_H */
