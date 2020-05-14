@@ -10,7 +10,7 @@
 #include "my/io.h"
 
 static int args_parser_exec_bind(args_parser_t *self, char **argv,
-usize_t *index)
+    usize_t *index)
 {
     arg_bind_t *bind = NULL;
     bool exit_status = false;
