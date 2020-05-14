@@ -19,5 +19,27 @@ allowed: malloc realloc free
 src:
   - ./src/vm/destroy.c
   - ./src/vm/new.c
-
+  - ./src/fetch/op_codes/add.c
+  - ./src/fetch/op_codes/aff.c
+  - ./src/fetch/op_codes/and.c
+  - ./src/fetch/op_codes/fallback.c
+  - ./src/fetch/op_codes/fork.c
+  - ./src/fetch/op_codes/ld.c
+  - ./src/fetch/op_codes/ldi.c
+  - ./src/fetch/op_codes/lfork.c
+  - ./src/fetch/op_codes/live.c
+  - ./src/fetch/op_codes/lld.c
+  - ./src/fetch/op_codes/lldi.c
+  - ./src/fetch/op_codes/or.c
+  - ./src/fetch/op_codes/st.c
+  - ./src/fetch/op_codes/sti.c
+  - ./src/fetch/op_codes/sub.c
+  - ./src/fetch/op_codes/xor.c
+  - ./src/fetch/op_codes/zjmp.c
+  - ./src/fetch/fetch.c
+  - ./src/fetch/pcb.c
+  - ./src/fetch/read_param.c
+  - ./src/lib.c
+  
 tests_src:
+  - ./tests/pcb_check.c
