@@ -55,7 +55,7 @@ typedef struct {
 
 typedef struct cw_vm cw_vm_t;
 
-typedef bool (*cw_instr_callback_fn_t)(void*, cw_vm_t*, cw_core_t *core,
+typedef bool (cw_instr_callback_fn_t)(void*, cw_vm_t*, cw_core_t *core,
     const cw_instr_t*);
 
 typedef struct {
