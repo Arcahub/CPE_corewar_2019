@@ -19,7 +19,7 @@ static u64_t read_int(const cw_vm_t *vm, usize_t *addr, usize_t n)
 
     for (usize_t i = 0; i < n; i++)
         val.bytes[i] = vm->mem[(*addr + i) % vm->config.mem_size];
-    addr += n;
+    *addr += n;
     return (u64_be_to_ne(val.u64));
 }
 
@@ -41,7 +41,7 @@ cw_param_t cw__fetch_read_param(const cw_vm_t *vm, cw_param_type_t type,
     switch (type) {
     case CW_PARAM_REG:
         param.u.reg = vm->mem[*addr % vm->config.mem_size];
-        addr++;
+        (*addr)++;
         break;
     case CW_PARAM_DIR:
         param.u.val = read_int(vm, addr, vm->config.dir_size);

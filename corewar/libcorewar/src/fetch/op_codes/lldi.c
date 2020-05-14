@@ -15,7 +15,7 @@ bool cw__fetch_lldi(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
     cw_pcb_t pcb;
 
     if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
-        cw__pcb_matches(&pcb, "rdi,dr,r"))
+        !cw__pcb_matches(&pcb, "rdi,dr,r"))
         return (true);
     pcb.p[0] = pcb.p[0] == CW_PARAM_DIR ? CW_PARAM_IND : pcb.p[0];
     pcb.p[1] = pcb.p[1] == CW_PARAM_DIR ? CW_PARAM_IND : pcb.p[1];

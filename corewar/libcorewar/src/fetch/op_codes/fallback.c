@@ -14,5 +14,5 @@ bool cw__fetch_fallback(const cw_vm_t *vm, const cw_core_t *core,
     (void)(vm);
     (void)(core);
     (void)(instr);
-    return (false);
+    return (true);
 }

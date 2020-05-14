@@ -17,19 +17,21 @@ static const usize_t INSTR_TIMEOUT[256] = {
 static void update_core(cw_vm_t *self, cw_core_t *core)
 {
     core->state.age++;
-    core->state.timeout--;
+    core->state.timeout = core->state.timeout == 0 ?
+        core->state.timeout : core->state.timeout - 1;
+    my_printf("cycle: %d, timeout: %d, pc: %x\n", core->state.age, core->state.timeout, core->regs.pc);
     if (core->state.timeout > 0)
         return;
     if (core->cache.instruct.is_some) {
         cw_vm__exec_instr(self, core, &core->cache.instruct.v);
-    } else
-        core->regs.pc++;
+    }
     core->state.timeout = 1;
     core->cache.instruct = NONE(cw_instr);
     if (!cw_vm__fetch_instr(self, core, &core->cache.instruct.v)) {
         core->cache.instruct.is_some = true;
         core->state.timeout = INSTR_TIMEOUT[core->cache.instruct.v.opcode];
-    }
+    } else
+        core->regs.pc++;
 }
 
 static void do_check(cw_vm_t *self)
