@@ -21,7 +21,7 @@ void cw_vm__exec__ldi(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 
     for (usize_t i = core->regs.pc; i < core->regs.pc + vm->config.reg_size;
         i++)
-        val.bytes[i] = vm->mem[(s % vm->config.idx_mod + i ) %
+        val.bytes[i] = vm->mem[(s % vm->config.idx_mod + i) %
             vm->config.mem_size];
     val.u64 = u64_be_to_ne(val.u64);
     core->regs.zero = s == 0;
