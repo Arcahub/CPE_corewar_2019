@@ -14,7 +14,9 @@
 extern const u64_t CW__REG_MASK[8];
 typedef void (exec_instr_fn_t)(cw_vm_t*, cw_core_t*, const cw_instr_t*);
 
-u64_t cw_vm__exec__pget(const cw_core_t *core, const cw_param_t *param);
+u64_t cw_vm__exec_pget(const cw_core_t *core, const cw_param_t *param);
+u64_t cw_vm__exec_pval(const cw_vm_t *vm, const cw_core_t *core,
+    const cw_param_t *param, usize_t size);
 
 exec_instr_fn_t cw_vm__exec__add;
 exec_instr_fn_t cw_vm__exec__aff;
