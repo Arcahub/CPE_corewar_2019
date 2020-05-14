@@ -60,8 +60,8 @@ u64_t cw_vm__exec_pval(const cw_vm_t *vm, const cw_core_t *core,
     case CW_PARAM_IND:
         size = usize_min(size, 8);
         for (usize_t i = core->regs.pc; i < core->regs.pc + size; i++) {
-            index = (param->u.val + i) %
-                vm->config.idx_mod % vm->config.mem_size;
+            index = (param->u.val % vm->config.idx_mod + i) %
+                vm->config.mem_size;
             val.bytes[i] = vm->mem[index];
         }
         return (val.u64);
