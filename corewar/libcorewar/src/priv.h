@@ -13,5 +13,7 @@
 
 bool cw_instruction_fetch(const cw_vm_t *vm, const cw_core_t *core,
     cw_instr_t *ret_instr);
+bool cw_vm__trigger_callbacks(cw_vm_t *vm, cw_core_t *core,
+    const cw_instr_t *instr);
 
 #endif /* LIBCOREWAR_PRIV_H */

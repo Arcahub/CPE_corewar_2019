@@ -53,3 +53,20 @@ bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     }
     return (false);
 }
+
+bool cw_vm__trigger_callbacks(cw_vm_t *vm, cw_core_t *core,
+    const cw_instr_t *instr)
+{
+    bool err = false;
+    cw_instr_callback_t *cb = NULL;
+
+    LIST_FOR_EACH_AND(vm->callbacks.all, iter, !err) {
+        cb = iter.v;
+        err = cb->fn(cb->data, vm, core, instr);
+    }
+    LIST_FOR_EACH_AND(vm->callbacks.opcodes[instr->opcode], iter, !err) {
+        cb = iter.v;
+        err = cb->fn(cb->data, vm, core, instr);
+    }
+    return (err);
+}
