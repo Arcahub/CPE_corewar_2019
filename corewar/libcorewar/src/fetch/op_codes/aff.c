@@ -17,7 +17,7 @@ bool cw__fetch_aff(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
     if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
         cw__pcb_matches(&pcb, "r"))
         return (true);
-    instr->args[0] = cw__fetch_read_param(vm, core, pcb.p[0], &addr);
+    instr->args[0] = cw__fetch_read_param(vm, pcb.p[0], &addr);
     instr->end = addr;
     return (false);
 }

@@ -75,8 +75,8 @@ struct cw_vm {
     u8_t *mem;
     usize_t prog_count;
     cw_program_t *programs;
-    vec_t *cores;
     vec_t *new_cores;
+    vec_t *cores;
     struct {
         u64_t check_countdown;
         u64_t live_calls;

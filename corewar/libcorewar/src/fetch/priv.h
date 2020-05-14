@@ -43,7 +43,7 @@ cw__fetch_fn_t cw__fetch_zjmp;
 cw__fetch_fn_t cw__fetch_fallback;
 
 cw_param_t cw__fetch_read_int(const cw_vm_t *vm, usize_t size, usize_t *addr);
-cw_param_t cw__fetch_read_param(const cw_vm_t *vm, const cw_core_t *core,
-    cw_param_type_t type, usize_t *addr);
+cw_param_t cw__fetch_read_param(const cw_vm_t *vm, cw_param_type_t type,
+    usize_t *addr);
 
 #endif /* !PRIV_H_ */

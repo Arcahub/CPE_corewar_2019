@@ -14,7 +14,7 @@ bool cw__fetch_zjmp(const cw_vm_t *vm, const cw_core_t *core,
 {
     usize_t addr = core->regs.pc + 1;
 
-    instr->args[0] = cw__fetch_read_param(vm, core, CW_PARAM_IND, &addr);
+    instr->args[0] = cw__fetch_read_param(vm, CW_PARAM_IND, &addr);
     instr->end = addr;
     return (false);
 }

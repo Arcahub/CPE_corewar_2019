@@ -45,7 +45,10 @@ typedef enum {
 
 typedef struct {
     cw_param_type_t type;
-    u64_t val;
+    union {
+        u64_t val;
+        u8_t reg;
+    } u;
 } cw_param_t;
 
 /*
