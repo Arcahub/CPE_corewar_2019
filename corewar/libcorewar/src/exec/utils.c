@@ -9,6 +9,7 @@
 #include "corewar/corewar.h"
 #include "corewar/instr.h"
 #include "priv.h"
+#include "my/my.h"
 
 u64_t cw_vm__exec__pget(const cw_core_t *core, const cw_param_t *param)
 {
@@ -39,7 +40,7 @@ u64_t cw_vm__exec_plval(const cw_vm_t *vm, const cw_core_t *core,
             index = (param->u.val + i) % vm->config.mem_size;
             val.bytes[i] = vm->mem[index];
         }
-        return (val.u64);
+        return (u64_be_to_ne(val.u64));
     case CW_PARAM_DIR:
         return (param->u.val);
     }
@@ -64,7 +65,7 @@ u64_t cw_vm__exec_pval(const cw_vm_t *vm, const cw_core_t *core,
                 vm->config.mem_size;
             val.bytes[i] = vm->mem[index];
         }
-        return (val.u64);
+        return (u64_be_to_ne(val.u64));
     case CW_PARAM_DIR:
         return (param->u.val);
     }

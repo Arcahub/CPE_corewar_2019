@@ -23,6 +23,7 @@ void cw_vm__exec__ldi(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
         i++)
         val.bytes[i] = vm->mem[(s % vm->config.idx_mod + i ) %
             vm->config.mem_size];
+    val.u64 = u64_be_to_ne(val.u64);
     core->regs.zero = s == 0;
     core->regs.regs[instr->args[2].u.reg] = val.u64 & reg_mask(vm);
     core->regs.pc = instr->end;
