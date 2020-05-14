@@ -33,6 +33,17 @@ bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     return (false);
 }
 
+bool (list_find_fn_t)(void *user_data, void *element);
+static bool find_callback(void *user_data, void *element)
+{
+    cw_instr_callback_fn_t *fn = user_data;
+    cw_instr_callback_t *callback = element;
+
+    if (callback->fn == fn)
+        return (true);
+    return (false);
+}
+
 bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     cw_instr_callback_fn_t *fn)
 {
@@ -46,10 +57,6 @@ bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
         callback_list = self->callbacks.opcodes[opcode_filter.v];
     } else
         callback_list = self->callbacks.all;
-    LIST_FOR_EACH(callback_list, iter) {
-        callback = iter.v;
-        if (callback->fn == fn)
-            list_remove(self->callbacks.opcodes[opcode_filter.v], index);
-    }
+    list_remove_element(callback_list, fn, &find_callback);
     return (false);
 }
