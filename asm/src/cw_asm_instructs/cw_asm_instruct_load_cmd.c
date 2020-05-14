@@ -28,8 +28,8 @@ void cw_asm_instruct_load_cmd(cw_asm_instruct_t *instruct, char **line)
     for (; is_only_alphanumc((*line)[i]); i++);
     if ((*line)[i] != ' ' && (*line)[i] != '\t')
         return;
-    for (; op_tab[j].mnemonique && !cmd_exist; j++) {
-        if (!my_cstrncmp(op_tab[j].mnemonique, *line, i))
+    for (; OP_TAB[j].mnemonique && !cmd_exist; j++) {
+        if (!my_cstrncmp(OP_TAB[j].mnemonique, *line, i))
             cmd_exist = true;
     }
     if (cmd_exist) {
