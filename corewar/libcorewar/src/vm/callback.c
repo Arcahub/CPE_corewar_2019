@@ -20,7 +20,7 @@ bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     callback->fn = fn;
     callback->data = user_data;
     if (opcode_filter.is_some) {
-        if (opcode_filter.v > 0 || opcode_filter.v <= CW_INSTR_AFF ||
+        if (opcode_filter.v == 0 || opcode_filter.v > CW_INSTR_AFF ||
             list_push_front(self->callbacks.opcodes[opcode_filter.v],
             callback)) {
             my_free(callback);
