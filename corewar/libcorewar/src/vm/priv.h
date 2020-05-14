@@ -11,5 +11,6 @@
 #include "corewar/corewar.h"
 
 void cw_vm_destroy_program(cw_program_t *prog);
+bool cw_vm_check_prog(cw_vm_t *self, cw_program_def_t *def);
 
 #endif /* !PRIV_H_ */

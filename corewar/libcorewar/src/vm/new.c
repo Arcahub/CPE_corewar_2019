@@ -67,6 +67,7 @@ static bool create_program(cw_vm_t *self, cw_program_t *prog,
         cw_vm_destroy_program(prog);
         return (true);
     }
+    ((cw_core_t *) vec_get(self->cores, 0).v)->regs.regs[0] = 0;
     return (false);
 }
 
@@ -81,6 +82,8 @@ static bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     err = self->programs == NULL;
     for (usize_t i = 0; !err && i < n; i++) {
         def = defs[i];
+        if (cw_vm_check_prog(self, &def))
+            return (true);
         if (!defs[i].load_address.is_some)
             def.load_address = SOME(usize, i * self->config.mem_size / n);
         err = create_program(self, &self->programs[i], &def);
