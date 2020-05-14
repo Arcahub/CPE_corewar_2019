@@ -14,6 +14,8 @@
 extern const u64_t CW__REG_MASK[8];
 typedef void (exec_instr_fn_t)(cw_vm_t*, cw_core_t*, const cw_instr_t*);
 
+u64_t cw_vm__exec__pget(const cw_core_t *core, const cw_param_t *param);
+
 exec_instr_fn_t cw_vm__exec__add;
 exec_instr_fn_t cw_vm__exec__aff;
 exec_instr_fn_t cw_vm__exec__and;
@@ -30,5 +32,10 @@ exec_instr_fn_t cw_vm__exec__sti;
 exec_instr_fn_t cw_vm__exec__sub;
 exec_instr_fn_t cw_vm__exec__xor;
 exec_instr_fn_t cw_vm__exec__zjmp;
+
+static inline u64_t reg_mask(const cw_vm_t *vm)
+{
+    return (CW__REG_MASK[vm->config.reg_size]);
+}
 
 #endif /* LIBCOREWAR_EXEC_PRIV */

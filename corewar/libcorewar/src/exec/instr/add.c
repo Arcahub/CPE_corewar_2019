@@ -11,10 +11,8 @@
 
 void cw_vm__exec__add(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    u64_t mask = CW__REG_MASK[vm->config.reg_size];
-    u64_t a = core->regs.regs[instr->args[0].u.reg] & mask;
-    u64_t b = core->regs.regs[instr->args[1].u.reg] & mask;
-    u64_t *c = &core->regs.regs[instr->args[2].u.reg];
+    u64_t a = cw_vm__exec__pget(core, &instr->args[0]);
+    u64_t b = cw_vm__exec__pget(core, &instr->args[1]);
 
-    *c = (a + b) & mask;
+    core->regs.regs[instr->args[2].u.reg] = (a + b) & reg_mask(vm);
 }
