@@ -37,6 +37,7 @@ src:
   - ./src/fetch/fetch.c
   - ./src/fetch/pcb.c
   - ./src/fetch/read_param.c
+  - ./src/vm/callback.c
   - ./src/lib.c
 
 tests_src:

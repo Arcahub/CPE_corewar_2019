@@ -55,8 +55,11 @@ typedef struct {
 
 typedef struct cw_vm cw_vm_t;
 
+typedef bool (*cw_instr_callback_fn_t)(void*, cw_vm_t*, cw_core_t *core,
+    const cw_instr_t*);
+
 typedef struct {
-    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*);
+    cw_instr_callback_fn_t *fn;
     void *data;
 } cw_instr_callback_t;
 
@@ -91,10 +94,10 @@ bool cw_vm_run(cw_vm_t *self, OPT(u64) cycle_count);
 ** Callbacks
 */
 
-void cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
-    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*), void*);
-void *cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
-    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*));
+bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
+    cw_instr_callback_fn_t *fn, void*);
+bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
+    cw_instr_callback_fn_t *fn);
 
 /*
 ** Utilities
