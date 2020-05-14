@@ -5,8 +5,8 @@
 ** cw_asm_get_prog_size
 */
 
-#include "cw_asm.h"
-#include "instructs/cw_asm_instruct.h"
+#include "asm/cw_asm.h"
+#include "asm/instructs/cw_asm_instruct.h"
 
 void cw_asm_get_prog_size(cw_asm_t *self)
 {

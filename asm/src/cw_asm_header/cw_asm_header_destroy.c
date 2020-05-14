@@ -5,12 +5,12 @@
 ** cw_asm_destroy
 */
 
-#include "header/cw_asm_header.h"
-#include <stdlib.h>
+#include "asm/header/cw_asm_header.h"
+#include "my/my.h"
 
 void cw_asm_header_destroy(cw_asm_header_t *self)
 {
     if (!self)
         return;
-    free(self);
+    my_free(self);
 }

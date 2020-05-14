@@ -1,0 +1,83 @@
+##
+## EPITECH PROJECT, 2020
+## CPE_corewar_2019
+## File description:
+## This file describes the project's dependencies and allowed functions.
+##
+
+name: asm
+
+type: bin
+
+namespace: asm
+
+dependencies:
+  - libmy=master
+
+allowed: write malloc free open close read
+
+main: ./src/main.c
+
+src:
+  - ./src/op.c
+  - ./src/cw_asm.c
+  - ./src/tools/my_getnbr.c
+  - ./src/tools/my_trimline.c
+  - ./src/tools/str_to_word_array_sep.c
+  - ./src/tools/nblen.c
+  - ./src/tools/itoa.c
+  - ./src/cw_asm/cw_asm_create_output.c
+  - ./src/cw_asm/cw_asm_create.c
+  - ./src/cw_asm/cw_asm_destroy.c
+  - ./src/cw_asm/cw_asm_get_prog_size.c
+  - ./src/cw_asm/cw_asm_input_open.c
+  - ./src/cw_asm/cw_asm_is_line_useless.c
+  - ./src/cw_asm/cw_asm_write.c
+  - ./src/cw_asm_header/cw_asm_header_create.c
+  - ./src/cw_asm_header/cw_asm_header_destroy.c
+  - ./src/cw_asm_header/cw_asm_header_load.c
+  - ./src/cw_asm_header/cw_asm_header_write.c
+  - ./src/cw_asm_instructs/cw_asm_instruct_create.c
+  - ./src/cw_asm_instructs/cw_asm_instruct_destroy.c
+  - ./src/cw_asm_instructs/cw_asm_instruct_load.c
+  - ./src/cw_asm_instructs/cw_asm_instruct_load_args.c
+  - ./src/cw_asm_instructs/cw_asm_instruct_load_cmd.c
+  - ./src/cw_asm_instructs/cw_asm_instruct_load_label.c
+  - ./src/cw_asm_instructs/cw_asm_instruct_write_args.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_compile.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_compile/cw_asm_instruct_compile_fork.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_compile/cw_asm_instruct_compile_global.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_compile/cw_asm_instruct_compile_lfork.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_compile/cw_asm_instruct_compile_live.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_compile/cw_asm_instruct_compile_lldi.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_compile/cw_asm_instruct_compile_sti_ldi.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_compile/cw_asm_instruct_compile_zjump.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_add_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_aff_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_and_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_fork_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_ld_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_ldi_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_lfork_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_live_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_lld_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_lldi_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_or_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_st_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_sti_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_sub_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_xor_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_write/cw_asm_instruct_zjump_write.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_args.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_dir_ind.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_label.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_reg.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_value.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_err.c
+  - ./src/cw_asm_error/cw_asm_error.c
+  - ./src/cw_asm_error/cw_asm_error_display.c
+  - ./src/cw_asm_error/cw_asm_error_color.c
+  - ./src/cw_asm_error/cw_asm_error_context.c
+
+tests_src:

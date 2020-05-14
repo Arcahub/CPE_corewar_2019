@@ -5,41 +5,60 @@
 ** cw_asm_compile_instructs
 */
 
-#include "my.h"
-#include "cw_asm.h"
-#include "instructs/cw_asm_instruct.h"
+#include "my/my.h"
+#include "asm/cw_asm.h"
+#include "asm/instructs/cw_asm_instruct.h"
+#include "asm/error/cw_asm_error.h"
 #include <unistd.h>
-#include <stdlib.h>
+
+static void cw_asm_instruct_load_err_instruct(
+    cw_asm_error_context_t err_context)
+{
+    cw_asm_error_list(cw_asm_error_context_change_type(err_context, ERROR),
+            "Unknown instruction");
+}
 
 static cw_asm_instruct_t *cw_asm_instruct_load_compute_line(
-cw_asm_instruct_t *last, char *line)
+    cw_asm_error_context_t err_context,
+    cw_asm_instruct_t *last, char *line)
 {
     cw_asm_instruct_t *instruct = cw_asm_instruct_create(last);
 
+    cw_asm_error_context_add(&err_context, line);
     if (!instruct)
         return (NULL);
     cw_asm_instruct_load_label(instruct, &line);
     cw_asm_instruct_load_cmd(instruct, &line);
     if (instruct->label == NULL && instruct->instruct_code == -1) {
+        cw_asm_instruct_load_err_instruct(err_context);
         cw_asm_instruct_destroy(instruct, NULL);
         return (NULL);
     }
-    cw_asm_instruct_load_args(instruct, &line);
+    cw_asm_instruct_load_args(err_context, instruct, &line);
+    if (cw_asm_instruct_check_args(err_context, instruct)) {
+        cw_asm_instruct_destroy(instruct, NULL);
+        return (NULL);
+    }
     return (instruct);
 }
 
-int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, FILE *fdin)
+int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, bufreader_t *fdin)
 {
-    char *line = my_get_line(fdin);
+    char *line = bufreader_read_line(fdin);
     cw_asm_instruct_t *tmp = NULL;
+    cw_asm_error_context_t err_context = {-1, -1, 0, 0};
+    int last_char = 0;
 
-    for (; line; line = my_get_line(fdin)) {
+    for (; line; line = bufreader_read_line(fdin)) {
+        last_char = my_cstrlen(line) - 1;
+        line[last_char] = (line[last_char] == '\n') ? '\0' : line[last_char];
         if (cw_asm_is_line_useless(line)) {
-            free(line);
+            my_free(line);
             continue;
         }
-        tmp = cw_asm_instruct_load_compute_line(*instructs_list, line);
-        free(line);
+        tmp = cw_asm_instruct_load_compute_line(err_context,
+            *instructs_list, line);
+        my_free(line);
         if (tmp == NULL)
             return (84);
         *instructs_list = tmp;

@@ -5,40 +5,34 @@
 ** cw_asm_create_output
 */
 
-#include <stdlib.h>
-#include <unistd.h>
+#include "my/my.h"
+#include "my/io.h"
+#include "asm/cw_asm.h"
 #include <fcntl.h>
-#include "my.h"
 
-static char *cw_asm_compute_output_path(char *old_path)
+OPT(usize) cw_asm_flush_to_output_buffer(void *user_data, const void *data,
+    usize_t count)
 {
-    char *path = NULL;
-    char *tmp = NULL;
-    int length = my_strlen(old_path);
+    cw_asm_output_buff_t *buff = user_data;
+    void *new_data = my_malloc(sizeof(u8_t) * (buff->len + count));
 
-    if (length > 2)
-        if (old_path[length - 1] == 's' && old_path[length - 2] == '.')
-            length = length - 2;
-    tmp = my_strndup(old_path, length);
-    if (tmp == NULL)
-        return (NULL);
-    path = my_strcat(tmp, ".cor");
-    free(tmp);
-    if (path == NULL)
-        return (NULL);
-    return (path);
+    if (!new_data)
+        return (NONE(usize));
+    my_memcpy(new_data, buff->data, buff->len);
+    my_memcpy((u8_t*) new_data + buff->len, data, count);
+    buff->len += count;
+    my_free(buff->data);
+    buff->data = new_data;
+    return (SOME(usize, count));
 }
 
-int cw_asm_output_create(char *raw_path)
+bufwriter_t *cw_asm_output_create(cw_asm_output_buff_t *buff)
 {
-    char *path = cw_asm_compute_output_path(raw_path);
-    int fd = 0;
+    bufwriter_t *bw = bufwriter_new(512);
 
-    if (path == NULL)
-        return (-1);
-    fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
-    free(path);
-    if (fd < 0)
-        return (-1);
-    return (fd);
+    if (bw == NULL)
+        return (NULL);
+    bw->user_data = buff;
+    bw->write_cb = &cw_asm_flush_to_output_buffer;
+    return (bw);
 }
