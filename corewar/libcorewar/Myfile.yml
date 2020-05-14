@@ -40,6 +40,7 @@ src:
   - ./src/vm/destroy.c
   - ./src/vm/new.c
   - ./src/vm/create_core.c
+  - ./src/vm/check_prog.c
 
 tests_src:
   - ./tests/pcb_check.c

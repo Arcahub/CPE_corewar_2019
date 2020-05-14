@@ -54,6 +54,8 @@ typedef struct {
     } state;
 } cw_core_t;
 
+OPT_DEFINE(cw_core_t, cw_core)
+
 typedef struct cw_vm cw_vm_t;
 
 typedef struct {
