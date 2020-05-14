@@ -173,17 +173,24 @@ Test(vm_ctor, three_program_load_addr)
     cw_vm_destroy(vm);
 }
 
-Test(vm_ctor, program_number)
+Test(vm_ctor, overlap)
 {
-    cw_program_def_t def[3];
+    cw_program_def_t def[2];
     cw_vm_t *vm = NULL;
 
-    load_prog("tests/champs/tyron.cor", NONE(usize), SOME(u32, 1), &def[0]);
-    load_prog("tests/champs/bill.cor", NONE(usize), NONE(u32), &def[1]);
-    load_prog("tests/champs/42.cor", NONE(usize), NONE(u32), &def[2]);
-    vm = cw_vm_new(&DEFAULT_CONFIG, def, 3);
-    cr_assert_eq(vm->programs[0].prog_number, 1);
-    cr_assert_eq(vm->programs[1].prog_number, 0);
-    cr_assert_eq(vm->programs[2].prog_number, 2);
-    cw_vm_destroy(vm);
+    load_prog("tests/champs/tyron.cor", SOME(usize, 1), NONE(u32), &def[0]);
+    load_prog("tests/champs/bill.cor", SOME(usize, 1), NONE(u32), &def[1]);
+    vm = cw_vm_new(&DEFAULT_CONFIG, def, 2);
+    cr_assert_eq(vm, NULL);
 }
+
+Test(vm_ctor, invalid_size)
+{
+    cw_program_def_t def[1];
+    cw_vm_t *vm = NULL;
+
+    load_prog("tests/champs/invalid_size.cor", SOME(usize, 1), NONE(u32), &def[0]);
+    vm = cw_vm_new(&DEFAULT_CONFIG, def, 1);
+    cr_assert_eq(vm, NULL);
+}
+
