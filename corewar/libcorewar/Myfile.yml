@@ -14,7 +14,7 @@ namespace: corewar
 dependencies:
   - libmy=master
 
-allowed: malloc realloc free
+allowed: malloc realloc free write
 
 src:
   - ./src/exec/instr/add.c
@@ -34,6 +34,8 @@ src:
   - ./src/exec/instr/xor.c
   - ./src/exec/instr/zjmp.c
   - ./src/exec/exec.c
+  - ./src/vm/destroy.c
+  - ./src/vm/new.c
   - ./src/fetch/op_codes/add.c
   - ./src/fetch/op_codes/aff.c
   - ./src/fetch/op_codes/and.c
@@ -54,7 +56,11 @@ src:
   - ./src/fetch/fetch.c
   - ./src/fetch/pcb.c
   - ./src/fetch/read_param.c
-  - ./src/lib.c
+  - ./src/vm/destroy.c
+  - ./src/vm/new.c
+  - ./src/vm/create_core.c
+  - ./src/vm/check_prog.c
 
 tests_src:
   - ./tests/pcb_check.c
+  - ./tests/vm_ctor.c

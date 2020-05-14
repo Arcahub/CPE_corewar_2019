@@ -1,12 +1,10 @@
 /*
-** op.h for  korewar
-**
-** Made by Astek
-** Login   <astek@epitech.net>
-**
-** Started on  Mon Mar 30 11:14:31 2009 Astek
-** Last update Tue Mar 22 16:44:20 2011 Astek
+** EPITECH PROJECT, 2020
+** CPE_corewar_2019
+** File description:
+** op
 */
+
 #ifndef _OP_H_
 # define _OP_H_
 # define MEM_SIZE                (6*1024)
@@ -56,7 +54,7 @@ typedef struct op_s     op_t;
 */
 # define PROG_NAME_LENGTH        128
 # define COMMENT_LENGTH          2048
-# define COREWAR_EXEC_MAGIC      0xF383EA00        /* why not */
+# define COREWAR_EXEC_MAGIC      0x00ea83f3        /* why not */
 
 struct header_s {
     int  magic;
@@ -64,7 +62,6 @@ struct header_s {
     int  prog_size;
     char comment[COMMENT_LENGTH + 1];
 };
-typedef struct header_s header_t;
 /*
 ** live
 */
