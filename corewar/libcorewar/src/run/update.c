@@ -53,7 +53,7 @@ static void do_check(cw_vm_t *self)
     self->state.live_calls = 0;
 }
 
-bool cw_vm_update(cw_vm_t *self)
+bool cw_vm__update(cw_vm_t *self)
 {
     for (usize_t i = 0; i < self->cores->len; i++)
         update_core(self, self->cores->data[i]);
