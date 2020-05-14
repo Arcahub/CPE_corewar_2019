@@ -12,7 +12,6 @@
 void cw_vm__exec__live(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
     (void)(vm);
-    (void)(core);
-    (void)(instr);
+    core->state.age = 0;
     core->regs.pc = instr->end;
 }

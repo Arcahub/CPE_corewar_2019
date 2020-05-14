@@ -10,7 +10,7 @@
 #include "corewar/instr.h"
 #include "priv.h"
 
-u64_t cw_vm__exec__pval(const cw_core_t *core, const cw_param_t *param)
+u64_t cw_vm__exec__pget(const cw_core_t *core, const cw_param_t *param)
 {
     switch (param->type) {
     case CW_PARAM_REG:
