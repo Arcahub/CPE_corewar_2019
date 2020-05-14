@@ -11,7 +11,7 @@
 #include <fcntl.h>
 
 bool cw_corewar_cli_add_prog(cw_corewar_cli_t *self, OPT(u32) prog_number,
-OPT(usize) load_address, const char *filepath)
+    OPT(usize) load_address, const char *filepath)
 {
     cw_program_def_t *prog = my_malloc(sizeof(cw_program_def_t));
     bufreader_t *bf = filereader_open(filepath, 1);

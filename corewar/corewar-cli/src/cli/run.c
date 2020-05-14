@@ -10,21 +10,21 @@
 #include "corewar-cli/op.h"
 
 static const cw_config_t VM_CONF = {
-    .prog_name_length=PROG_NAME_LENGTH,
-    .comment_length=COMMENT_LENGTH,
-    .corewar_exec_magic=COREWAR_EXEC_MAGIC,
-    .reg_size=REG_SIZE,
-    .idx_mod=IDX_MOD,
-    .ind_size=IND_SIZE,
-    .dir_size=DIR_SIZE,
-    .mem_size=MEM_SIZE,
-    .cycle_to_die=CYCLE_TO_DIE,
-    .cycle_delta=CYCLE_DELTA,
-    .nbr_live=NBR_LIVE
+    .prog_name_length = PROG_NAME_LENGTH,
+    .comment_length = COMMENT_LENGTH,
+    .corewar_exec_magic = COREWAR_EXEC_MAGIC,
+    .reg_size = REG_SIZE,
+    .idx_mod = IDX_MOD,
+    .ind_size = IND_SIZE,
+    .dir_size = DIR_SIZE,
+    .mem_size = MEM_SIZE,
+    .cycle_to_die = CYCLE_TO_DIE,
+    .cycle_delta = CYCLE_DELTA,
+    .nbr_live = NBR_LIVE
 };
 
 static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,
-cw_vm_t *vm)
+    cw_vm_t *vm)
 {
     bool exit_status = true;
     u8_t dump[MEM_SIZE];
@@ -42,13 +42,12 @@ cw_vm_t *vm)
 }
 
 static u64_t cw_corewar_cli_run_without_dump_cycles(cw_corewar_cli_t *self,
-cw_vm_t *vm)
+    cw_vm_t *vm)
 {
     bool exit_status = true;
 
     (void) self;
     // exit_status = cw_vm_run(vm, self->dump_cycles);
-    write(1, vm->mem, MEM_SIZE);
     cw_vm_destroy(vm);
     if (exit_status)
         return (0);
@@ -58,7 +57,7 @@ cw_vm_t *vm)
 cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
 {
     cw_program_def_t *progs_list = my_malloc(sizeof(cw_program_def_t) *
-    cli->progs_list->len);
+        cli->progs_list->len);
     cw_program_def_t *prog = NULL;
     usize_t index = 0;
 

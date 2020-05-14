@@ -11,7 +11,7 @@
 #include "../priv.h"
 
 static u64_t cw_corewar_cli_get_load_address(char **argv,
-usize_t *index, my_opt__usize_t *load_address)
+    usize_t *index, my_opt__usize_t *load_address)
 {
     for (u64_t i = *index; i < 4 && argv[i] != NULL; i++) {
         if (my_cstreq(argv[i], "-a") &&
@@ -27,7 +27,7 @@ usize_t *index, my_opt__usize_t *load_address)
 }
 
 static u64_t cw_corewar_cli_get_prog_number(char **argv,
-usize_t *index, my_opt__u32_t *prog_number)
+    usize_t *index, my_opt__u32_t *prog_number)
 {
     for (u64_t i = *index; i < 4 && argv[i] != NULL; i++) {
         if (my_cstreq(argv[i], "-n") &&
@@ -42,7 +42,8 @@ usize_t *index, my_opt__u32_t *prog_number)
     return (0);
 }
 
-bool cw_corewar_cli_get_champion_with_args(char **argv, usize_t *index, void *data)
+bool cw_corewar_cli_get_champion_with_args(char **argv, usize_t *index,
+    void *data)
 {
     u64_t index_offset = 0;
     u64_t exit_status = 0;

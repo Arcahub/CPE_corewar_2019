@@ -9,7 +9,7 @@
 #include "my/my.h"
 
 bool args_parser_add_bind(args_parser_t *self, char *arg,
-arg_callback_t *callback, void *data)
+    arg_callback_t *callback, void *data)
 {
     arg_bind_t *bind = my_malloc(sizeof(arg_bind_t));
 

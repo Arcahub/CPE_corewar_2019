@@ -12,13 +12,13 @@
 
 typedef struct {
     list_t *progs_list;
-    my_opt__u64_t dump_cycles;
+    OPT(u64) dump_cycles;
 } cw_corewar_cli_t;
 
 cw_corewar_cli_t *cw_corewar_cli_init();
 u64_t cw_corewar_cli_parse(cw_corewar_cli_t *self, char **argv, usize_t argc);
 bool cw_corewar_cli_add_prog(cw_corewar_cli_t *self, OPT(u32) prog_number,
-OPT(usize) load_address, const char *filepath);
+    OPT(usize) load_address, const char *filepath);
 u64_t cw_corewar_cli_run(cw_corewar_cli_t *self);
 void cw_corewar_cli_destroy(cw_corewar_cli_t *self);
 

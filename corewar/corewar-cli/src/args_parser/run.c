@@ -9,7 +9,8 @@
 #include "my/my.h"
 #include "my/io.h"
 
-static int args_parser_exec_bind(args_parser_t *self, char **argv, usize_t *index)
+static int args_parser_exec_bind(args_parser_t *self, char **argv,
+usize_t *index)
 {
     arg_bind_t *bind = NULL;
     bool exit_status = false;
@@ -25,7 +26,7 @@ static int args_parser_exec_bind(args_parser_t *self, char **argv, usize_t *inde
 }
 
 usize_t args_parser_run(args_parser_t *self, char **argv, u64_t argc,
-u64_t start)
+    u64_t start)
 {
     u64_t exit_status = 0;
 
