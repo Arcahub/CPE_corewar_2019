@@ -33,7 +33,6 @@ bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     return (false);
 }
 
-bool (list_find_fn_t)(void *user_data, void *element);
 static bool find_callback(void *user_data, void *element)
 {
     cw_instr_callback_fn_t *fn = user_data;
