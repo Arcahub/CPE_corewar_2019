@@ -19,7 +19,8 @@ static int is_only_numeric(char *str)
     return (1);
 }
 
-int cw_asm_instruct_check_reg(char *parameter)
+int cw_asm_instruct_check_reg(cw_asm_error_context_t context,
+    char *parameter)
 {
     int nb = 0;
 
@@ -27,7 +28,12 @@ int cw_asm_instruct_check_reg(char *parameter)
         return (0);
     nb = my_getnbr(&(parameter[1]));
     if (!is_only_numeric(&(parameter[1]))
-        || nb < 1 || nb > REG_NUMBER)
+        || nb < 1 || nb > REG_NUMBER) {
+        cw_asm_error_list(cw_asm_error_context_change_type(context, ERROR),
+            "%s is not a valid register.\n"\
+            "    You can use the registers from r1 to r%d", parameter,
+            REG_NUMBER);
         return (2);
+    }
     return (1);
 }

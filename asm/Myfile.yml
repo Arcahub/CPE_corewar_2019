@@ -73,8 +73,10 @@ src:
   - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_label.c
   - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_reg.c
   - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_value.c
+  - ./src/cw_asm_instructs/cw_asm_instructs_check/cw_asm_instruct_check_err.c
   - ./src/cw_asm_error/cw_asm_error.c
   - ./src/cw_asm_error/cw_asm_error_display.c
   - ./src/cw_asm_error/cw_asm_error_color.c
+  - ./src/cw_asm_error/cw_asm_error_context.c
 
 tests_src:

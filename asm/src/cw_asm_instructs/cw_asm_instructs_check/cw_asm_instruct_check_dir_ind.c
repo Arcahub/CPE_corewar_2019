@@ -17,7 +17,8 @@ char cw_asm_instruct_check_dir_ind(cw_asm_error_context_t err_context,
     bool direct = (parameter[0] == DIRECT_CHAR);
 
     if (parameter[direct] == LABEL_CHAR)
-        return (cw_asm_instruct_check_label(&(parameter[direct + 1]))
+        return (cw_asm_instruct_check_label(err_context,
+            &(parameter[direct + 1]))
             * IND_DIR[direct]);
     return (cw_asm_instruct_check_value(err_context, &(parameter[direct]))
         * IND_DIR[direct]);
