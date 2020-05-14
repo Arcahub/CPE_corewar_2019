@@ -34,7 +34,7 @@ char **str_to_word_array_sep(char *str, char sep)
     if (str[0] != sep)
         count_word++;
     for (int i = 1; str[i] != '\0'; i++) {
-        if (str[i] > 32 &&  str[i] < 123 && (str[i - 1] == sep))
+        if ((str[i - 1] == sep))
             count_word++;
     }
     array = malloc(sizeof(char *) * (count_word + 1));
