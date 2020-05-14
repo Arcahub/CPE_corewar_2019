@@ -53,10 +53,19 @@ static void do_check(cw_vm_t *self)
     self->state.live_calls = 0;
 }
 
+static void merge_core(cw_vm_t *self, cw_core_t *core)
+{
+    core->state.timeout = 1;
+    core->cache.instruct = NONE(cw_instr);
+    vec_push(self->cores, core);
+}
+
 bool cw_vm__update(cw_vm_t *self)
 {
     for (usize_t i = 0; i < self->cores->len; i++)
         update_core(self, self->cores->data[i]);
+    while (self->new_cores->len > 0)
+        merge_core(self, vec_pop(self->new_cores).v);
     self->state.check_countdown--;
     if (self->state.check_countdown == 0) {
         do_check(self);
