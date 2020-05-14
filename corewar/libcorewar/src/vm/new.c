@@ -104,8 +104,9 @@ cw_vm_t *cw_vm_new(const cw_config_t *config, const cw_program_def_t *defs,
     self->cycle_to_die = self->config.cycle_to_die;
     self->mem = my_calloc(self->config.mem_size, sizeof(u8_t));
     self->cores = vec_new();
+    self->new_cores = vec_new();
     self->callbacks.all = list_new();
-    err = !self->mem || !self->cores || !self->callbacks.all;
+    err = !(self->mem && self->cores && self->new_cores && self->callbacks.all);
     for (usize_t i = 0; !err && i < CW_OPCODE_LAST + 1; i++) {
         self->callbacks.opcodes[i] = list_new();
         err |= self->callbacks.opcodes[i] == NULL;

@@ -5,10 +5,10 @@
 ** "sti" instruction implementation
 */
 
+#include "my/my.h"
 #include "corewar/corewar.h"
 #include "corewar/instr.h"
 #include "../priv.h"
-#include "my/math.h"
 
 void cw_vm__exec__sti(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
@@ -24,7 +24,7 @@ void cw_vm__exec__sti(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 
     val.u64 = cw_vm__exec_pget(core, &instr->args[0]);
     val.u64 = u64_ne_to_be(val.u64);
-    for (u64_t i = core->regs.pc + (a + b) % vm->config.idx_mod; i < size;
+    for (u64_t i = core->regs.pc + (a + b) % vm->config.idx_mod; i < max;
         i++, j++)
         vm->mem[i % vm->config.mem_size] = val.bytes[j];
     core->regs.pc = instr->end;

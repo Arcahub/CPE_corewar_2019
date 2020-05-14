@@ -26,6 +26,7 @@ typedef struct {
     u64_t cycle_to_die;
     u64_t cycle_delta;
     u64_t nbr_live;
+    u64_t max_checks;
 } cw_config_t;
 
 typedef struct {
@@ -49,17 +50,22 @@ typedef struct {
     } regs;
     struct {
         usize_t timeout;
-        cw_instr_t instr;
         u64_t age;
     } state;
+    struct {
+        OPT(cw_instr) instruct;
+    } cache;
 } cw_core_t;
 
 OPT_DEFINE(cw_core_t, cw_core)
 
 typedef struct cw_vm cw_vm_t;
 
+typedef bool (cw_instr_callback_fn_t)(void*, cw_vm_t*, cw_core_t *core,
+    const cw_instr_t*);
+
 typedef struct {
-    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*);
+    cw_instr_callback_fn_t *fn;
     void *data;
 } cw_instr_callback_t;
 
@@ -71,6 +77,11 @@ struct cw_vm {
     cw_program_t *programs;
     vec_t *new_cores;
     vec_t *cores;
+    struct {
+        u64_t check_countdown;
+        u64_t live_calls;
+        u64_t checks_passed;
+    } state;
     struct {
         list_t *all;
         list_t *opcodes[CW_OPCODE_LAST + 1];
@@ -95,10 +106,10 @@ bool cw_vm_run(cw_vm_t *self, OPT(u64) cycle_count);
 ** Callbacks
 */
 
-void cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
-    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*), void*);
-void *cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
-    bool (*fn)(void*, cw_vm_t*, cw_core_t *core, const cw_instr_t*));
+bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
+    cw_instr_callback_fn_t *fn, void*);
+bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
+    cw_instr_callback_fn_t *fn);
 
 /*
 ** Utilities

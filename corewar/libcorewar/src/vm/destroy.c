@@ -38,6 +38,9 @@ void cw_vm_destroy(cw_vm_t *self)
     for (usize_t i = 0; self->cores && i < self->cores->len; i++)
         cw_vm_destroy_core(self->cores->data[i]);
     vec_destroy(self->cores);
+    for (usize_t i = 0; self->new_cores && i < self->new_cores->len; i++)
+        cw_vm_destroy_core(self->new_cores->data[i]);
+    vec_destroy(self->new_cores);
     list_destroy_with(self->callbacks.all, &destroy_callback, NULL);
     for (usize_t i = 0; i < CW_OPCODE_LAST + 1; i++)
         list_destroy_with(self->callbacks.opcodes[i], &destroy_callback, NULL);

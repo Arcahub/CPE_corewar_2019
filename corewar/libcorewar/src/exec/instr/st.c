@@ -5,6 +5,7 @@
 ** "st" instruction implementation
 */
 
+#include "my/my.h"
 #include "corewar/corewar.h"
 #include "corewar/instr.h"
 #include "../priv.h"
