@@ -12,8 +12,7 @@ void cw_asm_get_prog_size(cw_asm_t *self)
 {
     for (cw_asm_instruct_t *tmp = self->instructs; tmp; tmp = tmp->next) {
         if (tmp->instruct_code == -1)
-            return;
-        self->header->prog_size += 2;
+            continue;
         self->header->prog_size += tmp->instruct_size;
     }
 }

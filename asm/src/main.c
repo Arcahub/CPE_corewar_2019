@@ -9,6 +9,5 @@
 
 int main(int argc, char **argv)
 {
-    printf("%d\n", sizeof(char));
     return (cw_asm(argc, argv));
 }
