@@ -11,8 +11,21 @@
 
 void cw_vm__exec__ldi(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    (void)(vm);
-    (void)(core);
-    (void)(instr);
+    u64_t a = cw_vm__exec_pval(vm, core, &instr->args[0], vm->config.ind_size,
+        false);
+    u64_t b = cw_vm__exec_pval(vm, core, &instr->args[1], vm->config.ind_size,
+        false);
+    u64_t s = a + b;
+    union {
+        u64_t u64;
+        u8_t bytes[8];
+    } val = {0};
+
+    for (usize_t i = core->regs.pc; i < core->regs.pc + vm->config.reg_size;
+        i++)
+        val.bytes[i] = vm->mem[(s + i) % vm->config.mem_size %
+            vm->config.idx_mod];
+    core->regs.zero = s == 0;
+    core->regs.regs[instr->args[2].u.reg] = val.u64 & reg_mask(vm);
     core->regs.pc = instr->end;
 }

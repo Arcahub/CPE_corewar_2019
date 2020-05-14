@@ -8,7 +8,7 @@
 #include "corewar/corewar.h"
 #include "my/collections/vec.h"
 
-bool cw_vm_add_core(cw_vm_t *self, const usize_t pc, OPT(cw_core) parent)
+bool cw_vm__add_core(cw_vm_t *self, const usize_t pc, OPT(cw_core) parent)
 {
     cw_core_t *core = my_calloc(1, sizeof(cw_core_t));
 

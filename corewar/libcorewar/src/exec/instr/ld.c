@@ -11,8 +11,9 @@
 
 void cw_vm__exec__ld(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    (void)(vm);
-    (void)(core);
-    (void)(instr);
+    u64_t a = cw_vm__exec_pval(vm, core, &instr->args[0], vm->config.reg_size,
+        false);
+
+    core->regs.regs[instr->args[1].u.reg] = a & reg_mask(vm);
     core->regs.pc = instr->end;
 }

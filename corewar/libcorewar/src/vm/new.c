@@ -63,7 +63,7 @@ static bool create_program(cw_vm_t *self, cw_program_t *prog,
     prog->name = my_cstrdup((const char*) &def->data[name_off]);
     prog->comment = my_cstrdup((const char*) &def->data[comment_off]);
     if (!prog->name || !prog->comment || load_prog(self, prog, def, size_off) ||
-        cw_vm_add_core(self, pc, prog->prog_number)) {
+        cw_vm__add_core(self, pc, NONE(cw_core))) {
         cw_vm_destroy_program(prog);
         return (true);
     }

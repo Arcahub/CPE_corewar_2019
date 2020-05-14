@@ -11,8 +11,8 @@
 
 void cw_vm__exec__lfork(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    (void)(vm);
-    (void)(core);
-    (void)(instr);
+    u64_t a = cw_vm__exec_pget(core, &instr->args[0]);
+
+    cw_vm__add_core(vm, core->regs.pc + a, SOME(cw_core, *core));
     core->regs.pc = instr->end;
 }
