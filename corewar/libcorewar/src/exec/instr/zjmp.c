@@ -11,8 +11,8 @@
 
 void cw_vm__exec__zjmp(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    (void)(vm);
-    (void)(core);
-    (void)(instr);
-    core->regs.pc = instr->end;
+    u64_t a = cw_vm__exec_pget(core, &instr->args[0]);
+
+    core->regs.pc = (core->regs.pc + a % vm->config.idx_mod) %
+        vm->config.mem_size;
 }

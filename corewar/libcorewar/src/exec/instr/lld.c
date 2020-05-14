@@ -11,8 +11,7 @@
 
 void cw_vm__exec__lld(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    u64_t a = cw_vm__exec_pval(vm, core, &instr->args[0], vm->config.reg_size,
-        true);
+    u64_t a = cw_vm__exec_plval(vm, core, &instr->args[0], vm->config.reg_size);
 
     core->regs.zero = a == 0;
     core->regs.regs[instr->args[1].u.reg] = a & reg_mask(vm);

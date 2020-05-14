@@ -11,10 +11,8 @@
 
 void cw_vm__exec__or(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    u64_t a = cw_vm__exec_pval(vm, core, &instr->args[0], vm->config.reg_size,
-        false);
-    u64_t b = cw_vm__exec_pval(vm, core, &instr->args[1], vm->config.reg_size,
-        false);
+    u64_t a = cw_vm__exec_pval(vm, core, &instr->args[0], vm->config.reg_size);
+    u64_t b = cw_vm__exec_pval(vm, core, &instr->args[1], vm->config.reg_size);
     u64_t or = a | b;
 
     core->regs.zero = or == 0;
