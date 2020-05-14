@@ -16,7 +16,8 @@ static void fill_array(char **array, char *str)
 
     while (*str != '\0') {
         for (; (*str == ' ' || *str == '\t') && *str != '\0'; str = str +1);
-        for (size = 0; *(str + size) != ' ' && *(str + size) != '\t' && *(str + size) != '\0'; size++);
+        for (size = 0; *(str + size) != ' ' && *(str + size) != '\t' &&
+        *(str + size) != '\0'; size++);
         if (size != 0) {
             array[index] = my_strndup(str, size);
             index++;
@@ -33,7 +34,8 @@ char **str_to_word_array(char *str)
     if (str[0] != ' ' && str[0] != '\t')
         count_word++;
     for (int i = 1; str[i] != '\0'; i++) {
-        if (str[i] > 32 &&  str[i] < 123 && (str[i - 1] == ' ' || str[i - 1] == '\t'))
+        if (str[i] > 32 &&  str[i] < 123 && (str[i - 1] == ' ' ||
+        str[i - 1] == '\t'))
             count_word++;
     }
     array = malloc(sizeof(char *) * (count_word + 1));
