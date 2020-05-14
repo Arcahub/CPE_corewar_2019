@@ -16,7 +16,7 @@ bool cw_vm__fetch_instr(const cw_vm_t *vm, const cw_core_t *core,
 bool cw_vm__trigger_callbacks(cw_vm_t *vm, cw_core_t *core,
     const cw_instr_t *instr);
 
-bool cw_vm_add_core(cw_vm_t *vm, const usize_t pc, u32_t prog_number);
+bool cw_vm__add_core(cw_vm_t *vm, const usize_t pc, OPT(cw_core) parent);
 void cw_vm_destroy_core(cw_core_t *core);
 
 #endif /* LIBCOREWAR_PRIV_H */
