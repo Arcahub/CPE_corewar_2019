@@ -38,11 +38,9 @@ bool cw_vm__fetch_instr(const cw_vm_t *vm, const cw_core_t *core,
 
     ret_instr->opcode = vm->mem[core->regs.pc];
     fn = FETCH_FUNCTIONS[ret_instr->opcode];
-    my_printf("valid_opcode fectch: %s, %d\n", fn ? "yes" : "no", core->regs.pc);
     if (!fn)
         return (true);
     else
         return_code = fn(vm, core, ret_instr);
-    my_printf("return_code fectch: %s\n", return_code ? "yes" : "no");
     return (return_code);
 }
