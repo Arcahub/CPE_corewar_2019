@@ -27,11 +27,10 @@ static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,
     cw_vm_t *vm)
 {
     bool exit_status = true;
-    u8_t dump[MEM_SIZE];
 
     // exit_status = cw_vm_run(vm, self->dump_cycles);
     while (exit_status) {
-        //cw_vm_memory_dump(vm, dump, MEM_SIZE);
+        cw_vm_memory_dump(vm);
         // exit_status = cw_vm_run(vm, self->dump_cycles);
         exit_status = false;
     }
@@ -66,6 +65,7 @@ cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
     LIST_FOR_EACH(cli->progs_list, iter) {
         prog = iter.v;
         progs_list[index] = *prog;
+        index++;
     }
     return (cw_vm_new(&VM_CONF, progs_list, cli->progs_list->len));
 }
@@ -76,6 +76,7 @@ u64_t cw_corewar_cli_run(cw_corewar_cli_t *self)
 
     if (vm == NULL)
         return (84);
+    // This has been forced to true because the parser has a problem
     if (self->dump_cycles.is_some)
         return (cw_corewar_cli_run_with_dump_cycles(self, vm));
     else

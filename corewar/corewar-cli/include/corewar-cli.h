@@ -21,5 +21,6 @@ bool cw_corewar_cli_add_prog(cw_corewar_cli_t *self, OPT(u32) prog_number,
     OPT(usize) load_address, const char *filepath);
 u64_t cw_corewar_cli_run(cw_corewar_cli_t *self);
 void cw_corewar_cli_destroy(cw_corewar_cli_t *self);
+void cw_vm_memory_dump(cw_vm_t *vm);
 
 #endif /* !COREWAR_CLI_H_ */
