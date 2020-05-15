@@ -64,7 +64,7 @@ bool cw_vm__update(cw_vm_t *self)
         do_check(self);
         self->state.cycles_since_check = 0;
     }
-    if (self->cycle_to_die == 0)
+    if (self->cycle_to_die == 0 || self->cores->len < 2)
         return (true);
     return (false);
 }
