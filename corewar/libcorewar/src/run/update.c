@@ -70,8 +70,10 @@ bool cw_vm__update(cw_vm_t *self)
     self->state.check_countdown--;
     if (self->state.check_countdown == 0) {
         do_check(self);
+        self->cycle_to_die -= u64_min(self->cycle_to_die, self->config.cycle_delta);
         self->state.check_countdown = self->cycle_to_die;
     }
+    my_printf("cycles_to_die: %d\n", self->cycle_to_die);
     if (self->cycle_to_die == 0)
         return (true);
     return (false);
