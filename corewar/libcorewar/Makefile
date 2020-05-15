@@ -33,7 +33,7 @@ MAINSRC	:=	$(call readcfg,main)
 
 SRC		:=	$(call readcfg,src)
 
-NAME	?=	$(call readcfg,name)
+NAME	:=	$(call readcfg,name)
 
 NAMESPC :=	$(call readcfg,namespace)
 
@@ -189,7 +189,7 @@ run: $(NAME)
 
 tests_run: $(TEST)
 	@printf '\r  \033[K\033[0;32m  Running\033[0m `$(TEST)`\n'
-	@./$(TEST)
+	@./$(TEST) $(ARGS)
 
 clean:
 	@$(call makelibs,clean)
