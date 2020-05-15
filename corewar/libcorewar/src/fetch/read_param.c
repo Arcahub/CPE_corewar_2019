@@ -32,23 +32,23 @@ cw_param_t cw__fetch_read_int(const cw_vm_t *vm, usize_t size, usize_t *addr)
     return (param);
 }
 
-cw_param_t cw__fetch_read_param(const cw_vm_t *vm, cw_param_type_t type,
-    usize_t *addr)
+bool cw__fetch_read_param(const cw_vm_t *vm, cw_param_type_t type,
+    usize_t *addr, cw_param_t *param)
 {
-    cw_param_t param;
-
-    param.type = type;
+    param->type = type;
     switch (type) {
     case CW_PARAM_REG:
-        param.u.reg = vm->mem[*addr % vm->config.mem_size];
+        param->u.reg = vm->mem[*addr % vm->config.mem_size];
         (*addr)++;
+        if (param->u.reg < 1 && param->u.reg > vm->config.reg_count)
+            return (true);
         break;
     case CW_PARAM_DIR:
-        param.u.val = read_int(vm, addr, vm->config.dir_size);
+        param->u.val = read_int(vm, addr, vm->config.dir_size);
         break;
     case CW_PARAM_IND:
-        param.u.val = read_int(vm, addr, vm->config.ind_size);
+        param->u.val = read_int(vm, addr, vm->config.ind_size);
         break;
     }
-    return (param);
+    return (false);
 }
