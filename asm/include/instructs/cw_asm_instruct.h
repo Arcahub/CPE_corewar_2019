@@ -39,5 +39,7 @@ int cw_asm_instruct_check_args(cw_asm_error_context_t err_context,
 int cw_asm_instruct_write_arg_direct(cw_asm_instruct_t *instruct,
 cw_asm_instruct_t *instructs_list,
 int offset, int i);
+int cw_asm_instruct_write_arg_indirect(char *arg,
+    cw_asm_instruct_t *instructs_list, int offset);
 
 #endif /* !CW_ASM_INSTRUCT_H_ */
