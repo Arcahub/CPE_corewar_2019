@@ -15,7 +15,7 @@ u64_t cw_corewar_cli_parse(cw_corewar_cli_t *self, char **argv, u64_t argc)
     self);
     u64_t exit_status = 0;
 
-    args_parser_add_bind(parser, "-d", &cw_corewar_cli_get_dump_cycles,
+    args_parser_add_bind(parser, "-dump", &cw_corewar_cli_get_dump_cycles,
     &self->dump_cycles);
     args_parser_add_bind(parser, "-a", &cw_corewar_cli_get_champion_with_args,
     self);

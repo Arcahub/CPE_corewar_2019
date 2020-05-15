@@ -33,5 +33,5 @@ bool cw_corewar_cli_add_prog(cw_corewar_cli_t *self, OPT(u32) prog_number,
         prog->size += 1;
     }
     bufreader_free(bf);
-    return (list_push_front(self->progs_list, prog));
+    return (!list_push_front(self->progs_list, prog));
 }
