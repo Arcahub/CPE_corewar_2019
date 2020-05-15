@@ -19,7 +19,7 @@ typedef struct {
     u32_t corewar_exec_magic;
     usize_t reg_size;
     usize_t reg_count;
-    usize_t idx_mod;
+    i64_t idx_mod;
     usize_t ind_size;
     usize_t dir_size;
     usize_t mem_size;
