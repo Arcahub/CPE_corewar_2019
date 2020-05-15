@@ -67,7 +67,8 @@ static bool create_program(cw_vm_t *self, cw_program_t *prog,
         cw_vm_destroy_program(prog);
         return (true);
     }
-    ((cw_core_t *) vec_get(self->cores, 0).v)->regs.regs[0] = prog->prog_number;
+    ((cw_core_t *) vec_get(self->cores, self->cores->len - 1).v)->regs.regs[0] =
+    prog->prog_number;
     return (false);
 }
 
