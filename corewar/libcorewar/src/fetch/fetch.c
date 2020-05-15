@@ -11,6 +11,7 @@
 #include "priv.h"
 
 cw__fetch_fn_t *const FETCH_FUNCTIONS[256] = {
+    NULL,
     &cw__fetch_live,
     &cw__fetch_ld,
     &cw__fetch_st,
