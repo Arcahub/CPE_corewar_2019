@@ -20,7 +20,7 @@ static u64_t read_int(const cw_vm_t *vm, usize_t *addr, usize_t n)
     for (usize_t i = 0; i < n; i++)
         val.bytes[i] = vm->mem[(*addr + i) % vm->config.mem_size];
     *addr += n;
-    return (u64_be_to_ne(val.u64));
+    return (u64_be_to_ne(val.u64) >> (64 - 8 * n));
 }
 
 cw_param_t cw__fetch_read_int(const cw_vm_t *vm, usize_t size, usize_t *addr)

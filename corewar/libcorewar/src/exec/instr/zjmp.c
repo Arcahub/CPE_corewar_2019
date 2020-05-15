@@ -11,7 +11,7 @@
 
 void cw_vm__exec__zjmp(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    u64_t a = cw_vm__exec_pget(core, &instr->args[0]);
+    i16_t a = cw_vm__exec_pget(core, &instr->args[0]);
 
     if (!core->regs.zero) {
         core->regs.pc = instr->end;
