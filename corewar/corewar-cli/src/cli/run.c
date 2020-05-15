@@ -66,6 +66,7 @@ cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
     LIST_FOR_EACH(cli->progs_list, iter) {
         prog = iter.v;
         progs_list[index] = *prog;
+        index++;
     }
     return (cw_vm_new(&VM_CONF, progs_list, cli->progs_list->len));
 }
