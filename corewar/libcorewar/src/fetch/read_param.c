@@ -38,9 +38,9 @@ bool cw__fetch_read_param(const cw_vm_t *vm, cw_param_type_t type,
     param->type = type;
     switch (type) {
     case CW_PARAM_REG:
-        param->u.reg = vm->mem[*addr % vm->config.mem_size];
+        param->u.reg = vm->mem[*addr % vm->config.mem_size] - 1;
         (*addr)++;
-        if (param->u.reg < 1 && param->u.reg > vm->config.reg_count)
+        if (param->u.reg >= vm->config.reg_count)
             return (true);
         break;
     case CW_PARAM_DIR:

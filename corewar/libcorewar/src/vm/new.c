@@ -89,7 +89,6 @@ static bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
         err = create_program(self, &self->programs[i], &def);
         self->prog_count += err ? 0 : 1;
     }
-    self->state.check_countdown = self->config.cycle_to_die;
     return (err);
 }
 

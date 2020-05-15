@@ -44,14 +44,6 @@ static void do_check(cw_vm_t *self)
             i--;
         }
     }
-    if (self->state.live_calls >= self->config.nbr_live ||
-        self->state.checks_passed >= self->config.max_checks) {
-        self->cycle_to_die -= u64_min(self->cycle_to_die,
-            self->config.cycle_delta);
-        self->state.checks_passed = 0;
-    } else
-        self->state.checks_passed++;
-    self->state.live_calls = 0;
 }
 
 static void merge_core(cw_vm_t *self, cw_core_t *core)
@@ -67,13 +59,11 @@ bool cw_vm__update(cw_vm_t *self)
         update_core(self, self->cores->data[i]);
     while (self->new_cores->len > 0)
         merge_core(self, vec_pop(self->new_cores).v);
-    self->state.check_countdown--;
-    if (self->state.check_countdown == 0) {
+    self->state.cycles_since_check++;
+    if (self->state.cycles_since_check >= self->cycle_to_die) {
         do_check(self);
-        self->cycle_to_die -= u64_min(self->cycle_to_die, self->config.cycle_delta);
-        self->state.check_countdown = self->cycle_to_die;
+        self->state.cycles_since_check = 0;
     }
-    my_printf("cycles_to_die: %d\n", self->cycle_to_die);
     if (self->cycle_to_die == 0)
         return (true);
     return (false);
