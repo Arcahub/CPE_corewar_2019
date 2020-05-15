@@ -14,13 +14,14 @@ static const cw_config_t VM_CONF = {
     .comment_length = COMMENT_LENGTH,
     .corewar_exec_magic = COREWAR_EXEC_MAGIC,
     .reg_size = REG_SIZE,
+    .reg_count = REG_NUMBER,
     .idx_mod = IDX_MOD,
     .ind_size = IND_SIZE,
     .dir_size = DIR_SIZE,
     .mem_size = MEM_SIZE,
     .cycle_to_die = CYCLE_TO_DIE,
     .cycle_delta = CYCLE_DELTA,
-    .nbr_live = NBR_LIVE
+    .nbr_live = NBR_LIVE,
 };
 
 static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,

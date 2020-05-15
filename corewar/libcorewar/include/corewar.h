@@ -26,7 +26,6 @@ typedef struct {
     u64_t cycle_to_die;
     u64_t cycle_delta;
     u64_t nbr_live;
-    u64_t max_checks;
 } cw_config_t;
 
 typedef struct {
@@ -78,9 +77,8 @@ struct cw_vm {
     vec_t *new_cores;
     vec_t *cores;
     struct {
-        u64_t check_countdown;
+        u64_t cycles_since_check;
         u64_t live_calls;
-        u64_t checks_passed;
     } state;
     struct {
         list_t *all;
