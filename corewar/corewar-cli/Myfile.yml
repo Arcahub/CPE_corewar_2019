@@ -27,6 +27,7 @@ src:
   - ./src/args_parser/run.c
   - ./src/cli/init.c
   - ./src/cli/destroy.c
+  - ./src/cli/dump.c
   - ./src/cli/add_prog.c
   - ./src/cli/run.c
   - ./src/cli/parse/parse.c
