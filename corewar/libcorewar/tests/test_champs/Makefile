@@ -9,6 +9,7 @@ AS = ./asm
 
 SRC = \
 	./src/aff.s \
+	./src/circular.s \
 	./src/overrider.s \
 
 src2cor = ./$(patsubst %.s,%.cor,$(notdir $(1)))
