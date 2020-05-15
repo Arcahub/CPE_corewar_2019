@@ -29,11 +29,9 @@ static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,
 {
     bool exit_status = true;
 
-    // exit_status = cw_vm_run(vm, self->dump_cycles);
     while (exit_status) {
-        //cw_vm_memory_dump(vm, dump, MEM_SIZE);
+        cw_vm_memory_dump(vm);
         exit_status = cw_vm_run(vm, self->dump_cycles);
-        exit_status = false;
     }
     cw_vm_destroy(vm);
     if (exit_status)
@@ -46,7 +44,7 @@ static u64_t cw_corewar_cli_run_without_dump_cycles(cw_corewar_cli_t *self,
 {
     bool exit_status = true;
 
-    (void) self;
+    (void)(self);
     exit_status = cw_vm_run(vm, self->dump_cycles);
     cw_vm_destroy(vm);
     if (exit_status)
