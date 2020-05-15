@@ -5,7 +5,7 @@
 ## Makefile to build the project
 ##
 
-CC		?=	gcc
+CC		=	gcc
 
 SHELL	=	/bin/sh
 
@@ -25,7 +25,7 @@ dep2branch = $(shell echo $(1) | sed -En 's/^lib[^=]+=(.+)/\1/p')
 
 ALLOWED ?=	$(call readcfg,allowed)
 
-BINTYPE	:=	$(call readcfg,type)
+BINTYPE	?=	$(call readcfg,type)
 
 DEPS	:=	$(call readcfg,dependencies)
 
@@ -33,7 +33,7 @@ MAINSRC	:=	$(call readcfg,main)
 
 SRC		:=	$(call readcfg,src)
 
-NAME	:=	$(call readcfg,name)
+NAME	?=	$(call readcfg,name)
 
 NAMESPC :=	$(call readcfg,namespace)
 
@@ -210,6 +210,12 @@ re: fclean all
 retest: fclean tests_run
 
 rerun: re run
+
+wasm: CFLAGS += -s WASM=1 -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]' -s EXPORT_ALL=1 -s LINKABLE=1
+wasm: CC = emcc
+wasm: NAME = libcorewar.wasm
+wasm: BINTYPE = bin
+wasm: $(NAME)
 
 .PHONY: all info run tests_run clean fclean re retest rerun
 
