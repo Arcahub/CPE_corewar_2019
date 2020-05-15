@@ -11,7 +11,7 @@
 #include "../priv.h"
 
 static u64_t cw_corewar_cli_get_load_address(char **argv,
-    usize_t *index, usize_t *load_address)
+    usize_t *index, my_opt__usize_t *load_address)
 {
     for (u64_t i = *index; i < 4 && argv[i] != NULL; i++) {
         if (my_cstreq(argv[i], "-a") &&
@@ -19,7 +19,7 @@ static u64_t cw_corewar_cli_get_load_address(char **argv,
             my_printf("Invalid argument after -a\n");
             return (84);
         } else if (my_cstreq(argv[i], "-a")) {
-            *load_address = my_cstr_getnbr(argv[i + 1]);
+            *load_address = SOME(usize, my_cstr_getnbr(argv[i + 1]));
             return (1);
         }
     }
@@ -27,7 +27,7 @@ static u64_t cw_corewar_cli_get_load_address(char **argv,
 }
 
 static u64_t cw_corewar_cli_get_prog_number(char **argv,
-    usize_t *index, u32_t *prog_number)
+    usize_t *index, my_opt__u32_t *prog_number)
 {
     for (u64_t i = *index; i < 4 && argv[i] != NULL; i++) {
         if (my_cstreq(argv[i], "-n") &&
@@ -35,7 +35,7 @@ static u64_t cw_corewar_cli_get_prog_number(char **argv,
             my_printf("Invalid argument after -n\n");
             return (84);
         } else if (my_cstreq(argv[i], "-n")) {
-            *prog_number = my_cstr_getnbr(argv[i + 1]);
+            *prog_number = SOME(u32, my_cstr_getnbr(argv[i + 1]));
             return (1);
         }
     }
@@ -47,8 +47,8 @@ bool cw_corewar_cli_get_champion_with_args(char **argv, usize_t *index,
 {
     u64_t index_offset = 0;
     u64_t exit_status = 0;
-    usize_t load_address = 0;
-    u32_t prog_number = 0;
+    my_opt__usize_t load_address = NONE(usize);
+    my_opt__u32_t prog_number = NONE(u32);
 
     exit_status = cw_corewar_cli_get_load_address(argv, index, &load_address);
     if (exit_status == 84)
@@ -63,6 +63,6 @@ bool cw_corewar_cli_get_champion_with_args(char **argv, usize_t *index,
         my_printf("Champion Name is missing\n");
         return (false);
     }
-    return (cw_corewar_cli_add_prog(data, SOME(u32, prog_number),
-    SOME(usize, load_address), argv[*index]));
+    return (cw_corewar_cli_add_prog(data, prog_number, load_address,
+    argv[*index]));
 }
