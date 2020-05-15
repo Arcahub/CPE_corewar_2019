@@ -77,7 +77,7 @@ u64_t cw_corewar_cli_run(cw_corewar_cli_t *self)
     if (vm == NULL)
         return (84);
     // This has been forced to true because the parser has a problem
-    if (true)
+    if (self->dump_cycles.is_some)
         return (cw_corewar_cli_run_with_dump_cycles(self, vm));
     else
         return (cw_corewar_cli_run_without_dump_cycles(self, vm));
