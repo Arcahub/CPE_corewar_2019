@@ -31,8 +31,8 @@ static const cw_config_t DEFAULT_CONFIG = {
 
 static const usize_t DATA_OFFSET = 0x890;
 
-static bool load_prog(const char *path, OPT(usize) load_addr,
-    OPT(u32) prog_num, cw_program_def_t *def)
+static bool load_prog(const char *path, OPT(usize) load_addr, OPT(u32) prog_num,
+    cw_program_def_t *def)
 {
     fd_t file = open(path, O_RDONLY);
     u8_t buffer[1024];

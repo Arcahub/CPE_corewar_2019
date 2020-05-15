@@ -67,4 +67,5 @@ tests_src:
   - ./tests/callbacks.c
   - ./tests/pcb_check.c
   - ./tests/rw_int.c
+  - ./tests/test_champs.c
   - ./tests/vm_ctor.c
