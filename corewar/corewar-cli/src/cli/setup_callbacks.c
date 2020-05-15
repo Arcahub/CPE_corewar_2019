@@ -29,13 +29,30 @@ static const char *OPCODE_NAMES[] = {
     "aff",
 };
 
+static const usize_t OPCODE_ARGS[] = {
+    0, 1, 2, 2, 3, 3, 3, 3, 3, 1, 3, 3, 1, 2, 3, 1, 1,
+};
+
 bool print_instruct(void *user_data, cw_vm_t *vm, cw_core_t *core,
     const cw_instr_t *instr)
 {
     (void)(user_data);
     (void)(vm);
-    my_printf("opcode: %s, pc: %x\n", OPCODE_NAMES[instr->opcode],
-        core->regs.pc);
+    my_printf("%.8x: %-5s ", core->regs.pc, OPCODE_NAMES[instr->opcode]);
+    for (usize_t i = 0; i < OPCODE_ARGS[instr->opcode]; i++) {
+        switch (instr->args[i].type) {
+        case CW_PARAM_REG:
+            my_printf("r%u", instr->args[i].u.reg + 1);
+            break;
+        case CW_PARAM_DIR:
+            my_printf("%%%ld", (i64_t) instr->args[i].u.val);
+            break;
+        case CW_PARAM_IND:
+            my_printf("%ld", (i64_t) instr->args[i].u.val);
+            break;
+        }
+        my_putchar(i + 1 == OPCODE_ARGS[instr->opcode] ? '\n' : ',');
+    }
     return (false);
 }
 

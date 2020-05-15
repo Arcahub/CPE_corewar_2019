@@ -21,7 +21,7 @@ static void display_row(cw_vm_t *vm, usize_t start_address, usize_t max_add_len)
     my_putcstr("\n");
 }
 
-void cw_vm_memory_dump(cw_vm_t *vm)
+void cw_corewar_cli_dump(cw_vm_t *vm)
 {
     char *max_mem_size = my_format("%x", vm->config.mem_size);
     usize_t max_add_len = my_cstrlen(max_mem_size);
