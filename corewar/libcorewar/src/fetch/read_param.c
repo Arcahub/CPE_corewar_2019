@@ -10,16 +10,6 @@
 #include "corewar/instr.h"
 #include "priv.h"
 
-cw_param_t cw__fetch_read_int(const cw_vm_t *vm, usize_t size, usize_t *addr)
-{
-    cw_param_t param;
-
-    param.type = CW_PARAM_DIR;
-    param.u.val = cw_vm__read_int(vm, *addr, size);
-    *addr += size;
-    return (param);
-}
-
 bool cw__fetch_read_param(const cw_vm_t *vm, cw_param_type_t type,
     usize_t *addr, cw_param_t *param)
 {

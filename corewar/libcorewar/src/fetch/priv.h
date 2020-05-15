@@ -42,7 +42,6 @@ cw__fetch_fn_t cw__fetch_sub;
 cw__fetch_fn_t cw__fetch_xor;
 cw__fetch_fn_t cw__fetch_zjmp;
 
-cw_param_t cw__fetch_read_int(const cw_vm_t *vm, usize_t size, usize_t *addr);
 bool cw__fetch_read_param(const cw_vm_t *vm, cw_param_type_t type,
     usize_t *addr, cw_param_t *param);
 bool cw__fetch_read_sparam(const cw_vm_t *vm, cw_param_type_t type,
