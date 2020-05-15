@@ -7,6 +7,7 @@
 
 #include "corewar/corewar.h"
 #include "my/my.h"
+#include "my/io.h"
 
 static const char *OPCODE_NAMES[] = {
     NULL,
@@ -29,10 +30,13 @@ static const char *OPCODE_NAMES[] = {
 };
 
 bool print_instruct(void *user_data, cw_vm_t *vm, cw_core_t *core,
-    const cw_instr_t*instr)
+    const cw_instr_t *instr)
 {
+    (void)(user_data);
+    (void)(vm);
     my_printf("opcode: %s, pc: %x\n", OPCODE_NAMES[instr->opcode],
-    core->regs.pc);
+        core->regs.pc);
+    return (false);
 }
 
 void cw_corewar_cli_setup_callbacks(cw_vm_t *vm)
