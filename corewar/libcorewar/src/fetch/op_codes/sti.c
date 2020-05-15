@@ -15,14 +15,12 @@ bool cw__fetch_sti(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
     cw_pcb_t pcb;
     bool err = false;
 
-    if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
+    if (cw__pcb_parse(&pcb, vm->mem[addr++ % vm->config.mem_size]) ||
         !cw__pcb_matches(&pcb, "r,rdi,rd"))
         return (true);
-    pcb.p[1] = pcb.p[1] == CW_PARAM_DIR ? CW_PARAM_IND : pcb.p[1];
-    pcb.p[2] = pcb.p[2] == CW_PARAM_DIR ? CW_PARAM_IND : pcb.p[2];
-    err |= cw__fetch_read_param(vm, pcb.p[0], &addr, &instr->args[0]);
-    err |= cw__fetch_read_param(vm, pcb.p[1], &addr, &instr->args[1]);
-    err |= cw__fetch_read_param(vm, pcb.p[2], &addr, &instr->args[2]);
+    err |= cw__fetch_read_sparam(vm, pcb.p[0], &addr, &instr->args[0]);
+    err |= cw__fetch_read_sparam(vm, pcb.p[1], &addr, &instr->args[1]);
+    err |= cw__fetch_read_sparam(vm, pcb.p[2], &addr, &instr->args[2]);
     instr->end = addr;
     return (err);
 }

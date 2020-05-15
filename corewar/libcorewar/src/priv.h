@@ -11,6 +11,8 @@
 #include "corewar/corewar.h"
 #include "corewar/instr.h"
 
+i64_t cw_vm__read_int(const cw_vm_t *vm, i64_t addr, usize_t n);
+void cw_vm__write_int(cw_vm_t *vm, i64_t val, i64_t addr, usize_t n);
 bool cw_vm__fetch_instr(const cw_vm_t *vm, const cw_core_t *core,
     cw_instr_t *ret_instr);
 void cw_vm__exec_instr(cw_vm_t *vm, cw_core_t *core,

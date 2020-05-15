@@ -15,7 +15,7 @@ bool cw__fetch_sub(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
     cw_pcb_t pcb;
     bool err = false;
 
-    if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
+    if (cw__pcb_parse(&pcb, vm->mem[addr++ % vm->config.mem_size]) ||
         !cw__pcb_matches(&pcb, "r,r,r"))
         return (true);
     err |= cw__fetch_read_param(vm, pcb.p[0], &addr, &instr->args[0]);

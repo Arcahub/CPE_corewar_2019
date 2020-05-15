@@ -44,7 +44,7 @@ typedef struct {
 typedef struct {
     struct {
         usize_t pc;
-        u64_t regs[256];
+        i64_t regs[256];
         bool zero;
     } regs;
     struct {

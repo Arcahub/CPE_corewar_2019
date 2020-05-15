@@ -11,7 +11,6 @@
 #include "priv.h"
 
 cw__fetch_fn_t *const FETCH_FUNCTIONS[256] = {
-    NULL,
     &cw__fetch_live,
     &cw__fetch_ld,
     &cw__fetch_st,
@@ -31,16 +30,13 @@ cw__fetch_fn_t *const FETCH_FUNCTIONS[256] = {
 };
 
 bool cw_vm__fetch_instr(const cw_vm_t *vm, const cw_core_t *core,
-    cw_instr_t *ret_instr)
+    cw_instr_t *instr)
 {
     cw__fetch_fn_t *fn = NULL;
-    bool return_code = false;
 
-    ret_instr->opcode = vm->mem[core->regs.pc];
-    fn = FETCH_FUNCTIONS[ret_instr->opcode];
-    if (!fn)
-        return (true);
-    else
-        return_code = fn(vm, core, ret_instr);
-    return (return_code);
+    instr->opcode = vm->mem[core->regs.pc];
+    fn = FETCH_FUNCTIONS[instr->opcode];
+    if (fn)
+        return (fn(vm, core, instr));
+    return (true);
 }

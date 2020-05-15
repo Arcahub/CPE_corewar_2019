@@ -38,7 +38,6 @@ src:
   - ./src/fetch/op_codes/add.c
   - ./src/fetch/op_codes/aff.c
   - ./src/fetch/op_codes/and.c
-  - ./src/fetch/op_codes/fallback.c
   - ./src/fetch/op_codes/fork.c
   - ./src/fetch/op_codes/ld.c
   - ./src/fetch/op_codes/ldi.c
@@ -62,6 +61,7 @@ src:
   - ./src/vm/create_core.c
   - ./src/vm/destroy.c
   - ./src/vm/new.c
+  - ./src/rw_int.c
 
 tests_src:
   - ./tests/callbacks.c
