@@ -50,6 +50,7 @@ typedef struct {
     struct {
         usize_t timeout;
         u64_t age;
+        u64_t owner;
     } state;
     struct {
         OPT(cw_instr) instruct;
@@ -81,10 +82,29 @@ struct cw_vm {
         u64_t live_calls;
     } state;
     struct {
-        list_t *all;
+        list_t *ops;
         list_t *opcodes[CW_OPCODE_LAST + 1];
+        list_t *io_events;
     } callbacks;
 };
+
+typedef enum {
+    CW_IO_WRITE,
+    CW_IO_READ
+} cw_io_event_type_t;
+
+typedef struct {
+    cw_io_event_type_t type;
+    usize_t size;
+    usize_t addr;
+} cw_io_event_t;
+
+typedef bool (cw_io_event_callback_fn)(cw_vm_t*, void*, cw_io_event_t*);
+
+typedef struct {
+    cw_io_event_callback_fn *fn;
+    void *data;
+} cw_io_event_callback_t;
 
 /*
 ** Creating and destroying the VM
@@ -108,6 +128,15 @@ bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     cw_instr_callback_fn_t *fn, void*);
 bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     cw_instr_callback_fn_t *fn);
+
+/*
+** IO Callbacks
+*/
+
+bool cw_vm_add_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
+    cw_io_event_callback_fn *fn, void*);
+bool cw_vm_remove_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
+    cw_io_event_callback_fn *fn);
 
 /*
 ** Utilities
