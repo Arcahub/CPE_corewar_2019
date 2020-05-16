@@ -94,25 +94,32 @@ typedef enum {
 } cw_io_event_type_t;
 
 typedef struct {
-    cw_io_event_type_t type;
     usize_t size;
     usize_t addr;
 } cw_io_event_t;
 
-typedef bool (cw_io_event_callback_fn)(cw_vm_t*, void*, cw_io_event_t*);
+typedef bool (cw_io_event_callback_fn_t)(cw_vm_t*, void*, cw_core_t *,
+    cw_io_event_t*);
 
-typedef struct {
-    cw_io_event_callback_fn *fn;
+typedef struct cw_io_event_callback{
+    cw_io_event_callback_fn_t *fn;
     void *data;
+    cw_io_event_type_t type;
 } cw_io_event_callback_t;
 
 /*
 ** Creating and destroying the VM
 */
 
-cw_vm_t *cw_vm_new(const cw_config_t *config, const cw_program_def_t *defs,
-    usize_t prog_count);
+cw_vm_t *cw_vm_new(const cw_config_t *config);
 void cw_vm_destroy(cw_vm_t *self);
+
+/*
+** Load Programms in the vm;
+*/
+
+bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
+    usize_t n);
 
 /*
 ** Running the VM
@@ -134,9 +141,9 @@ bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
 */
 
 bool cw_vm_add_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
-    cw_io_event_callback_fn *fn, void*);
+    cw_io_event_callback_fn_t *fn, void*);
 bool cw_vm_remove_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
-    cw_io_event_callback_fn *fn);
+    cw_io_event_callback_fn_t *fn);
 
 /*
 ** Utilities
