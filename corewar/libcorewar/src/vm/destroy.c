@@ -27,6 +27,7 @@ static OPT(i32) destroy_callback(void *ptr, void *element)
     return (NONE(i32));
 }
 
+CW_EXPORT
 void cw_vm_destroy(cw_vm_t *self)
 {
     if (self == NULL)

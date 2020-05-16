@@ -666,8 +666,8 @@ var wasmMemory;
 // In the wasm backend, we polyfill the WebAssembly object,
 // so this creates a (non-native-wasm) table for us.
 var wasmTable = new WebAssembly.Table({
-  'initial': 2,
-  'maximum': 2 + 0,
+  'initial': 34,
+  'maximum': 34 + 0,
   'element': 'anyfunc'
 });
 
@@ -1289,11 +1289,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5244576,
+    STACK_BASE = 5247824,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 1696,
-    DYNAMIC_BASE = 5244576,
-    DYNAMICTOP_PTR = 1536;
+    STACK_MAX = 4944,
+    DYNAMIC_BASE = 5247824,
+    DYNAMICTOP_PTR = 4784;
 
 
 
@@ -1773,7 +1773,7 @@ var ASM_CONSTS = {
 
 
 
-// STATICTOP = STATIC_BASE + 672;
+// STATICTOP = STATIC_BASE + 3920;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -1821,7 +1821,7 @@ var ASM_CONSTS = {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 1536;
+      return 4784;
     }
 
   function _emscripten_memcpy_big(dest, src, num) {
@@ -1930,6 +1930,26 @@ var ___wasm_call_ctors = Module["___wasm_call_ctors"] = function() {
 };
 
 /** @type {function(...*):?} */
+var _cw_vm_run = Module["_cw_vm_run"] = function() {
+  return (_cw_vm_run = Module["_cw_vm_run"] = Module["asm"]["cw_vm_run"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_add_instr_callback = Module["_cw_vm_add_instr_callback"] = function() {
+  return (_cw_vm_add_instr_callback = Module["_cw_vm_add_instr_callback"] = Module["asm"]["cw_vm_add_instr_callback"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_remove_instr_callback = Module["_cw_vm_remove_instr_callback"] = function() {
+  return (_cw_vm_remove_instr_callback = Module["_cw_vm_remove_instr_callback"] = Module["asm"]["cw_vm_remove_instr_callback"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_destroy = Module["_cw_vm_destroy"] = function() {
+  return (_cw_vm_destroy = Module["_cw_vm_destroy"] = Module["asm"]["cw_vm_destroy"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
 var _cw_vm_new = Module["_cw_vm_new"] = function() {
   return (_cw_vm_new = Module["_cw_vm_new"] = Module["asm"]["cw_vm_new"]).apply(null, arguments);
 };
@@ -1972,6 +1992,11 @@ var __growWasmMemory = Module["__growWasmMemory"] = function() {
 /** @type {function(...*):?} */
 var dynCall_viii = Module["dynCall_viii"] = function() {
   return (dynCall_viii = Module["dynCall_viii"] = Module["asm"]["dynCall_viii"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var dynCall_iiii = Module["dynCall_iiii"] = function() {
+  return (dynCall_iiii = Module["dynCall_iiii"] = Module["asm"]["dynCall_iiii"]).apply(null, arguments);
 };
 
 

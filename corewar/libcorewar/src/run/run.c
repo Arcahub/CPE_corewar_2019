@@ -8,6 +8,7 @@
 #include "corewar/corewar.h"
 #include "priv.h"
 
+CW_EXPORT
 bool cw_vm_run(cw_vm_t *self, OPT(u64) cycle_count)
 {
     bool vm_ended = false;
