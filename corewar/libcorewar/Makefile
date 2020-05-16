@@ -116,10 +116,13 @@ endif
 
 ifneq ($(WASM),)
 	CC = emcc
+	CFLAGS += -O1
 	CFLAGS += -s WASM=1
+	CFLAGS += -s ALLOW_MEMORY_GROWTH=1
 	CFLAGS += -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]'
 	CFLAGS += -s EXPORT_ALL=1
 	CFLAGS += -s LINKABLE=1
+	CFLAGS += -s ASSERTIONS=1
 	NAME = libcorewar.$(WASM)
 	BINTYPE = bin
 	TARGET = wasm
