@@ -25,3 +25,7 @@
 # Coverage reports
 *.gcda
 *.gcno
+
+# Files from the future
+/libcorewar.js
+/libcorewar.wasm
