@@ -26,17 +26,29 @@ do_test() {
 
     echo -n "TESTING WITH: "
     echo $filepath
-    ./$REF_BINARY $filepath
+    ./$REF_BINARY $filepath 2>/dev/null
     exit_code_ref=`echo $?`
-    mv `echo -n $filepath | sed 's/\.s/.cor/g' | awk -F'/' '{print $3}'` ref
-    ./$MY_BINARY $filepath
+    if [ -f $filepath ]
+    then
+        mv `echo -n $filepath | sed 's/\.s/.cor/g' | awk -F'/' '{print $3}'` ref 2>/dev/null
+    fi
+    ./$MY_BINARY $filepath 2>/dev/null
     exit_code_my=`echo $?`
-    mv `echo $filepath | sed 's/\.s/.cor/g'` my
+    if [ -f $filepath ]
+    then
+        mv `echo $filepath | sed 's/\.s/.cor/g'` my 2>/dev/null
+    fi
 
     if [ $exit_code_ref != $exit_code_my ]
     then
         echo -e "$RED KO: exit code diff (my: $exit_code_my != ref: $exit_code_ref)"
         EXIT_STATUS=1
+    fi
+    if [ $exit_code_ref = 84 ] && [ $exit_code_my = 84 ]
+    then
+        echo -e "$GREEN OK: Test passed"
+        echo -ne "\e[0m"
+        return 0
     fi
     diff my ref
     if [ $? != 0 ]
