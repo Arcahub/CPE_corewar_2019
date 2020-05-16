@@ -30,8 +30,8 @@ static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,
     bool exit_status = true;
 
     while (exit_status) {
-        cw_corewar_cli_dump(vm);
         exit_status = cw_vm_run(vm, self->dump_cycles);
+        cw_corewar_cli_dump(vm);
     }
     cw_vm_destroy(vm);
     if (exit_status)

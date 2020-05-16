@@ -16,7 +16,8 @@ void cw_vm__exec__st(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 
     switch (instr->args[1].type) {
     case CW_PARAM_IND:
-        cw_vm__write_int(vm, val, instr->args[1].u.val, vm->config.reg_size);
+        cw_vm__write_int(vm, val, core->regs.pc + instr->args[1].u.val,
+            vm->config.reg_size);
         break;
     case CW_PARAM_REG:
         core->regs.regs[instr->args[1].u.reg] = val;

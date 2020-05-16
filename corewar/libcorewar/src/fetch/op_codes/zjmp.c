@@ -12,7 +12,7 @@
 bool cw__fetch_zjmp(const cw_vm_t *vm, const cw_core_t *core,
     cw_instr_t *instr)
 {
-    usize_t addr = core->regs.pc + 1;
+    isize_t addr = core->regs.pc + 1;
     bool err = false;
 
     err |= cw__fetch_read_sparam(vm, CW_PARAM_DIR, &addr, &instr->args[0]);

@@ -56,6 +56,7 @@ src:
   - ./src/fetch/read_param.c
   - ./src/run/run.c
   - ./src/run/update.c
+  - ./src/vm/compute_addr.c
   - ./src/vm/callback.c
   - ./src/vm/check_prog.c
   - ./src/vm/create_core.c

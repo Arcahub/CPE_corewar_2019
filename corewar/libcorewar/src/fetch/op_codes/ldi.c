@@ -15,7 +15,7 @@ bool cw__fetch_ldi(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
     cw_pcb_t pcb;
     bool err = false;
 
-    if (cw__pcb_parse(&pcb, vm->mem[addr++ % vm->config.mem_size]) ||
+    if (cw__pcb_parse(&pcb, vm->mem[cw_vm_compute_addr(vm, addr++)]) ||
         cw__pcb_matches(&pcb, "rdi,rd,r"))
         return (true);
     err |= cw__fetch_read_sparam(vm, pcb.p[0], &addr, &instr->args[0]);

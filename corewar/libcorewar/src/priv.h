@@ -23,4 +23,7 @@ bool cw_vm__trigger_callbacks(cw_vm_t *vm, cw_core_t *core,
     const cw_instr_t *instr);
 void cw_vm_destroy_core(cw_core_t *core);
 
+isize_t cw_vm_compute_addr(const cw_vm_t *vm, isize_t addr);
+
+
 #endif /* LIBCOREWAR_PRIV_H */
