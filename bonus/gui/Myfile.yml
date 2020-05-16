@@ -1,0 +1,39 @@
+##
+## EPITECH PROJECT, 2020
+## CPE_corewar_2019
+## File description:
+## This file describes the project's dependencies and allowed functions.
+##
+
+name: corewar-gui
+
+type: bin
+
+namespace: corewar-gui
+
+dependencies:
+  - libcorewar=master
+  - libmy=master
+
+allowed:
+  - malloc free
+  - write read open close
+
+src:
+  - ./src/main.c
+  - ./src/args_parser/add_bind.c
+  - ./src/args_parser/init.c
+  - ./src/args_parser/destroy.c
+  - ./src/args_parser/run.c
+  - ./src/cli/init.c
+  - ./src/cli/destroy.c
+  - ./src/cli/dump.c
+  - ./src/cli/add_prog.c
+  - ./src/cli/run.c
+  - ./src/cli/setup_callbacks.c
+  - ./src/cli/parse/parse.c
+  - ./src/cli/parse/parse_functions/get_champion_with_args.c
+  - ./src/cli/parse/parse_functions/get_champion.c
+  - ./src/cli/parse/parse_functions/get_dump_cycles.c
+
+tests_src:

@@ -11,7 +11,7 @@
 #include "my/types.h"
 #include "my/collections/vec.h"
 #include "my/collections/list.h"
-#include "corewar/instr.h"
+#include "instr.h"
 
 typedef struct {
     usize_t prog_name_length;
