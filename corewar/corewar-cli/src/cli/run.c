@@ -41,7 +41,7 @@ void cw_corewar_cli_print_winner(cw_vm_t *vm)
     }
     if (count != 0)
         return;
-    my_printf("The player %d(%s) has won.\n", prog_number + 1,
+    my_printf("The player %d(%s)has won.\n", prog_number + 1,
         vm->programs[prog_number].name);
 }
 
