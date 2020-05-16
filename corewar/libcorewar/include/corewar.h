@@ -39,6 +39,7 @@ typedef struct {
     char *name;
     char *comment;
     const u32_t prog_number;
+    usize_t last_live;
 } cw_program_t;
 
 typedef struct {
@@ -79,6 +80,7 @@ struct cw_vm {
     struct {
         u64_t cycles_since_check;
         u64_t live_calls;
+        usize_t cycles;
     } state;
     struct {
         list_t *all;

@@ -55,6 +55,7 @@ static void merge_core(cw_vm_t *self, cw_core_t *core)
 
 bool cw_vm__update(cw_vm_t *self)
 {
+    self->state.cycles += 1;
     for (usize_t i = 0; i < self->cores->len; i++)
         update_core(self, self->cores->data[i]);
     while (self->new_cores->len > 0)
