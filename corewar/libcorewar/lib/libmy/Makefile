@@ -67,7 +67,7 @@ $(NAME): $(OUTNAME)
 	@cp $< $@
 
 $(OUTNAME): $(OBJ)
-	@llvm-ar -rc $@ $(OBJ)
+	@ar -rc $@ $(OBJ)
 	@printf '\r  \033[K\033[0;32m Finished\033[0m `%s`\n' "$@"
 
 $(OUTDIR)/%.o: %.c | $(OUTDIR)
