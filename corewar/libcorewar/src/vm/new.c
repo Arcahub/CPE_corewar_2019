@@ -11,7 +11,6 @@
 #include "corewar/corewar.h"
 #include "../priv.h"
 #include "priv.h"
-#include "emscripten.h"
 
 static u32_t next_program_number(const cw_vm_t *self)
 {
@@ -94,7 +93,7 @@ static bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     return (err);
 }
 
-EMSCRIPTEN_KEEPALIVE
+CW_EXPORT
 cw_vm_t *cw_vm_new(const cw_config_t *config, const cw_program_def_t *defs,
     usize_t prog_count)
 {

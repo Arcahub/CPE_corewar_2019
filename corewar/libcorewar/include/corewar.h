@@ -11,6 +11,7 @@
 #include "my/types.h"
 #include "my/collections/vec.h"
 #include "my/collections/list.h"
+#include "corewar/target.h"
 #include "corewar/instr.h"
 
 typedef struct {
