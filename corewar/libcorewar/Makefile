@@ -7,6 +7,8 @@
 
 CC		?=	gcc
 
+AR		?=	ar
+
 SHELL	=	/bin/sh
 
 MYFILE	=	Myfile.yml
@@ -122,6 +124,7 @@ ifneq ($(WASM),)
 	CFLAGS += -s NO_EXIT_RUNTIME=1
 	NAME = libcorewar.$(WASM)
 	BINTYPE = bin
+	AR = llvm-ar
 	TARGET = wasm
 endif
 
