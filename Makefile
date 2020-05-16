@@ -5,17 +5,6 @@
 ## Makefile
 ##
 
-all:
-	@make -sC ./asm/
-
-debug:
-	@make debug -sC ./asm
-
-clean:
-	@make clean -sC ./asm
-
-fclean:
-	@make fclean -sC ./asm
-
-re:
-	@make re -sC ./asm
+all clean fclean re:
+	@$(MAKE) $@ $(1) $(2) -sC ./asm/
+	@$(MAKE) $@ $(1) $(2) -sC ./corewar

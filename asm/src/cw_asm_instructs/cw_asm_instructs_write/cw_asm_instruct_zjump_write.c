@@ -28,7 +28,8 @@ cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw)
             bufwriter_write(bw, &value, IND_SIZE);
             break;
         default:
-            value = u16_ne_to_be(my_getnbr(zjump->parameters[i]));
+            value = cw_asm_instruct_write_arg_indirect(zjump->parameters[i],
+            *instructs_list, *offset);
             bufwriter_write(bw, &value, IND_SIZE);
         }
     }

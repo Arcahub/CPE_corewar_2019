@@ -27,4 +27,3 @@ void cw_asm_instruct_compile_lldii(cw_asm_instruct_t *instruct)
     }
     instruct->instruct_size += 2;
 }
-

@@ -42,6 +42,20 @@ int cw_asm_instruct_write_arg_direct(cw_asm_instruct_t *instruct,
     return (u32_ne_to_be(value));
 }
 
+int cw_asm_instruct_write_arg_indirect(char *arg,
+    cw_asm_instruct_t *instructs_list, int offset)
+{
+    int value = 0;
+
+    if (*arg != LABEL_CHAR) {
+        value = u16_ne_to_be(my_getnbr(arg));
+        return (value);
+    }
+    value = cw_asm_instruct_get_label_offset(arg, instructs_list, offset);
+    value = u16_ne_to_be(value);
+    return (value);
+}
+
 void cw_asm_instruct_write_args(cw_asm_instruct_t *instruct,
     cw_asm_instruct_t **instructs_list, int *offset, bufwriter_t *bw)
 {
@@ -59,7 +73,8 @@ void cw_asm_instruct_write_args(cw_asm_instruct_t *instruct,
             bufwriter_write(bw, &value + 4 - DIR_SIZE, DIR_SIZE);
             break;
         default:
-            value = u16_ne_to_be(my_getnbr(instruct->parameters[i]));
+            value = cw_asm_instruct_write_arg_indirect(instruct->parameters[i],
+            *instructs_list, *offset);
             bufwriter_write(bw, &value, IND_SIZE);
         }
     }

@@ -54,7 +54,9 @@ LIBS	=	$(foreach dep,$(DEPS),$(call dep2lib,$(dep)))
 
 TEST	=	unit-tests
 
-OUTDIR	=	./target/$(if $(DEBUG),debug,release)
+TARGET	=	release
+
+OUTDIR	=	./target/$(TARGET)
 
 OUTNAME	=	$(OUTDIR)/$(notdir $(NAME))
 
@@ -64,7 +66,7 @@ CPPDEPS	=	$(SRC:%.c=$(OUTDIR)/%.d)
 
 DEPSARC	=	$(foreach dep,$(DEPS),$(LIBDIR)/$(call dep2ar,$(dep)))
 
-MAINOBJ	:=	$(MAINSRC:%.c=$(OUTDIR)/%.o)
+MAINOBJ	=	$(MAINSRC:%.c=$(OUTDIR)/%.o)
 
 OBJ		=	$(SRC:%.c=$(OUTDIR)/%.o)
 
@@ -86,28 +88,45 @@ define makelibs
 endef
 
 define info_deps_head
-	@echo -n " ╭──────────────────────┬"
-	@echo -n "──────────────────────┬"
-	@echo "──────────────────────┬────────────╮"
-	@printf " │ %-20s │ %-20s │ %-20s │ %-10s │\n" 'Definition' 'CC argument' \
+	@echo -n " ╭──────────────────┬"
+	@echo -n "──────────────────┬"
+	@echo "──────────────────┬────────────╮"
+	@printf " │ %-16s │ %-16s │ %-16s │ %-10s │\n" 'Definition' 'CC argument' \
 		'File name' 'Branch'
-	@echo -n " ├──────────────────────┼"
-	@echo -n "──────────────────────┼"
-	@echo "──────────────────────┼────────────┤"
+	@echo -n " ├──────────────────┼"
+	@echo -n "──────────────────┼"
+	@echo "──────────────────┼────────────┤"
 endef
 
 define info_dep_line
-	@printf " │ %-20s │ %-20s │ %-20s │ %-10s │\n" '$(1)' \
+	@printf " │ %-16s │ %-16s │ %-16s │ %-10s │\n" '$(1)' \
 		'$(call dep2lib,$(1))' '$(call dep2ar,$(1))' '$(call dep2branch,$(1))'
 
 endef
 
 define info_deps_end
-	@echo -n " ╰──────────────────────┴"
-	@echo -n "──────────────────────┴"
-	@echo "──────────────────────┴────────────╯"
+	@echo -n " ╰──────────────────┴"
+	@echo -n "──────────────────┴"
+	@echo "──────────────────┴────────────╯"
 endef
 
+ifneq ($(DEBUG),)
+	TARGET = debug
+endif
+
+ifneq ($(WASM),)
+	CC = emcc
+	CFLAGS += -O1
+	CFLAGS += -s WASM=1
+	CFLAGS += -s ALLOW_MEMORY_GROWTH=1
+	CFLAGS += -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]'
+	CFLAGS += -s EXPORT_ALL=1
+	CFLAGS += -s LINKABLE=1
+	CFLAGS += -s ASSERTIONS=1
+	NAME = libcorewar.$(WASM)
+	BINTYPE = bin
+	TARGET = wasm
+endif
 
 export CC
 
@@ -189,7 +208,7 @@ run: $(NAME)
 
 tests_run: $(TEST)
 	@printf '\r  \033[K\033[0;32m  Running\033[0m `$(TEST)`\n'
-	@./$(TEST)
+	@./$(TEST) $(ARGS)
 
 clean:
 	@$(call makelibs,clean)

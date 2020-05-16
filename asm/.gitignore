@@ -19,7 +19,7 @@
 # Executables
 *.out
 /target
-/asm
+asm
 /unit-tests
 
 # Coverage reports
