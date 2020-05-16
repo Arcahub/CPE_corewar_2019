@@ -19,14 +19,13 @@ typedef struct {
     u32_t corewar_exec_magic;
     usize_t reg_size;
     usize_t reg_count;
-    usize_t idx_mod;
+    i64_t idx_mod;
     usize_t ind_size;
     usize_t dir_size;
     usize_t mem_size;
     u64_t cycle_to_die;
     u64_t cycle_delta;
     u64_t nbr_live;
-    u64_t max_checks;
 } cw_config_t;
 
 typedef struct {
@@ -45,7 +44,7 @@ typedef struct {
 typedef struct {
     struct {
         usize_t pc;
-        u64_t regs[256];
+        i64_t regs[256];
         bool zero;
     } regs;
     struct {
@@ -78,9 +77,8 @@ struct cw_vm {
     vec_t *new_cores;
     vec_t *cores;
     struct {
-        u64_t check_countdown;
+        u64_t cycles_since_check;
         u64_t live_calls;
-        u64_t checks_passed;
     } state;
     struct {
         list_t *all;

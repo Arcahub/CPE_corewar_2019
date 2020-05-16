@@ -10,6 +10,7 @@
 
 #include "corewar/corewar.h"
 #include "corewar/instr.h"
+#include "../priv.h"
 
 extern const u64_t CW__REG_MASK[8];
 typedef void (exec_instr_fn_t)(cw_vm_t*, cw_core_t*, const cw_instr_t*);
@@ -37,9 +38,12 @@ exec_instr_fn_t cw_vm__exec__sub;
 exec_instr_fn_t cw_vm__exec__xor;
 exec_instr_fn_t cw_vm__exec__zjmp;
 
-static inline u64_t reg_mask(const cw_vm_t *vm)
+static inline i64_t reg_mask(const cw_vm_t *vm, i64_t val)
 {
-    return (CW__REG_MASK[vm->config.reg_size]);
+    u64_t abs = val > 0 ? val : -val;
+
+    abs &= CW__REG_MASK[vm->config.reg_size];
+    return (val > 0 ? (i64_t) abs : -((i64_t) abs));
 }
 
 #endif /* LIBCOREWAR_EXEC_PRIV */

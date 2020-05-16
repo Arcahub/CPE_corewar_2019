@@ -13,8 +13,9 @@ bool cw__fetch_lfork(const cw_vm_t *vm, const cw_core_t *core,
     cw_instr_t *instr)
 {
     usize_t addr = core->regs.pc + 1;
+    bool err = false;
 
-    instr->args[0] = cw__fetch_read_param(vm, CW_PARAM_IND, &addr);
+    err |= cw__fetch_read_sparam(vm, CW_PARAM_DIR, &addr, &instr->args[0]);
     instr->end = addr;
-    return (false);
+    return (err);
 }

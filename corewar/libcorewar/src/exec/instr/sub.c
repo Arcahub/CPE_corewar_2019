@@ -11,11 +11,11 @@
 
 void cw_vm__exec__sub(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    u64_t a = cw_vm__exec_pget(core, &instr->args[0]);
-    u64_t b = cw_vm__exec_pget(core, &instr->args[1]);
-    u64_t s = (a - b) & reg_mask(vm);
+    i64_t a = cw_vm__exec_pget(core, &instr->args[0]);
+    i64_t b = cw_vm__exec_pget(core, &instr->args[1]);
+    i64_t s = reg_mask(vm, a - b);
 
-    core->regs.regs[instr->args[2].u.reg] = s;
     core->regs.zero = s == 0;
+    core->regs.regs[instr->args[2].u.reg] = s;
     core->regs.pc = instr->end;
 }

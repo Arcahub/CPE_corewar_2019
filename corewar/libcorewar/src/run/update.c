@@ -17,19 +17,20 @@ static const usize_t INSTR_TIMEOUT[256] = {
 static void update_core(cw_vm_t *self, cw_core_t *core)
 {
     core->state.age++;
-    core->state.timeout--;
+    core->state.timeout = core->state.timeout == 0 ?
+        core->state.timeout : core->state.timeout - 1;
     if (core->state.timeout > 0)
         return;
     if (core->cache.instruct.is_some) {
         cw_vm__exec_instr(self, core, &core->cache.instruct.v);
-    } else
-        core->regs.pc++;
+    }
     core->state.timeout = 1;
     core->cache.instruct = NONE(cw_instr);
     if (!cw_vm__fetch_instr(self, core, &core->cache.instruct.v)) {
         core->cache.instruct.is_some = true;
         core->state.timeout = INSTR_TIMEOUT[core->cache.instruct.v.opcode];
-    }
+    } else
+        core->regs.pc++;
 }
 
 static void do_check(cw_vm_t *self)
@@ -43,14 +44,6 @@ static void do_check(cw_vm_t *self)
             i--;
         }
     }
-    if (self->state.live_calls >= self->config.nbr_live ||
-        self->state.checks_passed >= self->config.max_checks) {
-        self->cycle_to_die -= u64_min(self->cycle_to_die,
-            self->config.cycle_delta);
-        self->state.checks_passed = 0;
-    } else
-        self->state.checks_passed++;
-    self->state.live_calls = 0;
 }
 
 static void merge_core(cw_vm_t *self, cw_core_t *core)
@@ -66,12 +59,12 @@ bool cw_vm__update(cw_vm_t *self)
         update_core(self, self->cores->data[i]);
     while (self->new_cores->len > 0)
         merge_core(self, vec_pop(self->new_cores).v);
-    self->state.check_countdown--;
-    if (self->state.check_countdown == 0) {
+    self->state.cycles_since_check++;
+    if (self->state.cycles_since_check >= self->cycle_to_die) {
         do_check(self);
-        self->state.check_countdown = self->cycle_to_die;
+        self->state.cycles_since_check = 0;
     }
-    if (self->cycle_to_die == 0)
+    if (self->cycle_to_die == 0 || self->cores->len < 2)
         return (true);
     return (false);
 }

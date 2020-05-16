@@ -22,7 +22,7 @@ static int args_parser_exec_bind(args_parser_t *self, char **argv,
             return ((exit_status) ? 0 : 84);
         }
     }
-    return (true);
+    return (1);
 }
 
 usize_t args_parser_run(args_parser_t *self, char **argv, u64_t argc,
@@ -34,7 +34,7 @@ usize_t args_parser_run(args_parser_t *self, char **argv, u64_t argc,
         exit_status = args_parser_exec_bind(self, argv, &i);
         if (exit_status == 84)
             return (84);
-        else if(exit_status == 1)
+        else if (exit_status == 1)
             self->default_exec.callback(argv, &i, self->default_exec.data);
     }
     return (0);

@@ -13,15 +13,14 @@ bool cw__fetch_lldi(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
     usize_t addr = core->regs.pc + 1;
     cw_pcb_t pcb;
+    bool err = false;
 
-    if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
-        cw__pcb_matches(&pcb, "rdi,dr,r"))
+    if (cw__pcb_parse(&pcb, vm->mem[cw_vm_compute_addr(vm, addr++)]) ||
+        !cw__pcb_matches(&pcb, "rdi,dr,r"))
         return (true);
-    pcb.p[0] = pcb.p[0] == CW_PARAM_DIR ? CW_PARAM_IND : pcb.p[0];
-    pcb.p[1] = pcb.p[1] == CW_PARAM_DIR ? CW_PARAM_IND : pcb.p[1];
-    instr->args[0] = cw__fetch_read_param(vm, pcb.p[0], &addr);
-    instr->args[1] = cw__fetch_read_param(vm, pcb.p[1], &addr);
-    instr->args[2] = cw__fetch_read_param(vm, pcb.p[2], &addr);
+    err |= cw__fetch_read_sparam(vm, pcb.p[0], &addr, &instr->args[0]);
+    err |= cw__fetch_read_sparam(vm, pcb.p[1], &addr, &instr->args[1]);
+    err |= cw__fetch_read_sparam(vm, pcb.p[2], &addr, &instr->args[2]);
     instr->end = addr;
-    return (false);
+    return (err);
 }

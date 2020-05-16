@@ -38,7 +38,6 @@ src:
   - ./src/fetch/op_codes/add.c
   - ./src/fetch/op_codes/aff.c
   - ./src/fetch/op_codes/and.c
-  - ./src/fetch/op_codes/fallback.c
   - ./src/fetch/op_codes/fork.c
   - ./src/fetch/op_codes/ld.c
   - ./src/fetch/op_codes/ldi.c
@@ -57,13 +56,17 @@ src:
   - ./src/fetch/read_param.c
   - ./src/run/run.c
   - ./src/run/update.c
+  - ./src/vm/compute_addr.c
   - ./src/vm/callback.c
   - ./src/vm/check_prog.c
   - ./src/vm/create_core.c
   - ./src/vm/destroy.c
   - ./src/vm/new.c
+  - ./src/rw_int.c
 
 tests_src:
   - ./tests/callbacks.c
   - ./tests/pcb_check.c
+  - ./tests/rw_int.c
+  - ./tests/test_champs.c
   - ./tests/vm_ctor.c

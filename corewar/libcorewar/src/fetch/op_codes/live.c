@@ -11,9 +11,8 @@
 
 bool cw__fetch_live(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
-    usize_t addr = core->regs.pc + 1;
-
-    instr->args[0] = cw__fetch_read_int(vm, 4, &addr);
-    instr->end = addr;
+    instr->args[0].type = CW_PARAM_DIR;
+    instr->args[0].u.val = cw_vm__read_int(vm, core->regs.pc + 1, 4);
+    instr->end = core->regs.pc + 5;
     return (false);
 }

@@ -13,7 +13,7 @@
 static u64_t cw_corewar_cli_get_load_address(char **argv,
     usize_t *index, my_opt__usize_t *load_address)
 {
-    for (u64_t i = *index; i < 4 && argv[i] != NULL; i++) {
+    for (u64_t i = *index; i < *index + 4 && argv[i] != NULL; i++) {
         if (my_cstreq(argv[i], "-a") &&
         (argv[i + 1] == NULL || !my_cstr_isnum(argv[i + 1]))) {
             my_printf("Invalid argument after -a\n");
@@ -29,7 +29,7 @@ static u64_t cw_corewar_cli_get_load_address(char **argv,
 static u64_t cw_corewar_cli_get_prog_number(char **argv,
     usize_t *index, my_opt__u32_t *prog_number)
 {
-    for (u64_t i = *index; i < 4 && argv[i] != NULL; i++) {
+    for (u64_t i = *index; i < *index + 4 && argv[i] != NULL; i++) {
         if (my_cstreq(argv[i], "-n") &&
         (argv[i + 1] == NULL || !my_cstr_isnum(argv[i + 1]))) {
             my_printf("Invalid argument after -n\n");

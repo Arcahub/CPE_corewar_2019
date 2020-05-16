@@ -13,13 +13,14 @@ bool cw__fetch_xor(const cw_vm_t *vm, const cw_core_t *core, cw_instr_t *instr)
 {
     usize_t addr = core->regs.pc + 1;
     cw_pcb_t pcb;
+    bool err = false;
 
-    if (cw__pcb_parse(&pcb, vm->mem[addr++]) ||
-        cw__pcb_matches(&pcb, "rdi,rdi,r"))
+    if (cw__pcb_parse(&pcb, vm->mem[cw_vm_compute_addr(vm, addr++)]) ||
+        !cw__pcb_matches(&pcb, "rdi,rdi,r"))
         return (true);
-    instr->args[0] = cw__fetch_read_param(vm, pcb.p[0], &addr);
-    instr->args[1] = cw__fetch_read_param(vm, pcb.p[1], &addr);
-    instr->args[2] = cw__fetch_read_param(vm, pcb.p[2], &addr);
+    err |= cw__fetch_read_param(vm, pcb.p[0], &addr, &instr->args[0]);
+    err |= cw__fetch_read_param(vm, pcb.p[1], &addr, &instr->args[1]);
+    err |= cw__fetch_read_param(vm, pcb.p[2], &addr, &instr->args[2]);
     instr->end = addr;
-    return (false);
+    return (err);
 }

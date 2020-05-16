@@ -12,20 +12,11 @@
 
 void cw_vm__exec__sti(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 {
-    u64_t a = cw_vm__exec_pval(vm, core, &instr->args[1], vm->config.ind_size);
-    u64_t b = cw_vm__exec_pval(vm, core, &instr->args[2], vm->config.ind_size);
-    union {
-        u64_t u64;
-        u8_t bytes[8];
-    } val = {0};
-    u64_t size = u64_min(vm->config.reg_size, 8);
-    u64_t max = core->regs.pc + (a + b) % vm->config.idx_mod + size;
-    u64_t j = 0;
+    i64_t val = cw_vm__exec_pget(core, &instr->args[0]);
+    i64_t a = cw_vm__exec_pval(vm, core, &instr->args[1], vm->config.ind_size);
+    i64_t b = cw_vm__exec_pval(vm, core, &instr->args[2], vm->config.ind_size);
+    i64_t dst = core->regs.pc + (a + b) % vm->config.idx_mod;
 
-    val.u64 = cw_vm__exec_pget(core, &instr->args[0]);
-    val.u64 = u64_ne_to_be(val.u64);
-    for (u64_t i = core->regs.pc + (a + b) % vm->config.idx_mod; i < max;
-        i++, j++)
-        vm->mem[i % vm->config.mem_size] = val.bytes[j];
+    cw_vm__write_int(vm, val, dst, vm->config.reg_size);
     core->regs.pc = instr->end;
 }

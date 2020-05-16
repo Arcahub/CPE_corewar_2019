@@ -15,7 +15,7 @@ all: $(NAME)
 $(NAME): $(CLI_PATH)
 	@cp $(CLI_PATH) $(NAME)
 
-$(CLI_PATH):
+$(CLI_PATH): $(LIB_ROOT)
 	@$(MAKE) -sC $(CLI_ROOT)
 
 clean:
