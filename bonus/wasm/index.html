@@ -9,8 +9,16 @@
         Welcome to the future.
         <script src="./libcorewar.js"></script>
         <script>
-            Module.onRuntimeInitialized = _ => {
+            Module.onRuntimeInitialized = async _ => {
+                const cw = {
+                    vm: {
+                        new: Module.cwrap("cw_vm_new", "number",
+                            ["number", "number", "number"]),
+                        destroy: Module.cwrap("cw_vm_new", null, ["number"]),
+                    }
+                };
                 console.log("LOADED!!");
+                console.log(cw);
             };
         </script>
     </body>
