@@ -63,8 +63,6 @@ bool print_instruct(void *user_data, cw_vm_t *vm, cw_core_t *core,
 {
     (void)(user_data);
     (void)(vm);
-    if (core->regs.regs[0] == 1)
-        return (false);
     my_printf("%.8x: %-5s ", core->regs.pc, OPCODE_NAMES[instr->opcode]);
     for (usize_t i = 0; i < OPCODE_ARGS[instr->opcode]; i++) {
         switch (instr->args[i].type) {

@@ -32,7 +32,6 @@ void cw_vm__write_int(cw_vm_t *vm, i64_t val, i64_t addr, usize_t n)
 
     u.i64 = u64_ne_to_be(val);
     for (usize_t i = 0; i < n; i++) {
-        my_printf("addr: %ld, i: %d, res: %ld\n", addr, i, cw_vm_compute_addr(vm, addr + i));
         vm->mem[cw_vm_compute_addr(vm, (addr + i))] = u.bytes[8 - n + i];
     }
 }

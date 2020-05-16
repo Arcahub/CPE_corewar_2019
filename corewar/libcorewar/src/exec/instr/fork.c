@@ -16,7 +16,5 @@ void cw_vm__exec__fork(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
 
     cw_vm__add_core(vm, cw_vm_compute_addr(vm, core->regs.pc + a %
         vm->config.idx_mod), SOME(cw_core, *core));
-    if (core->regs.regs[0] == 0)
-        return (false);
     core->regs.pc = instr->end;
 }
