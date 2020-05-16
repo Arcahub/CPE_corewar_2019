@@ -17,9 +17,12 @@ jobs:
         working-directory: ./asm
         run: make
 
-      - name: Test
+      - name: Test U
         working-directory: ./asm
         run: make tests_run
+
+      - name: Test F
+        run: ./asm/tests/test.sh
 
   vm:
 
