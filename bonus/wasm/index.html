@@ -7,6 +7,11 @@
     </head>
     <body>
         Welcome to the future.
-        <script type="text/javascript" src="./libcorewar.js"></script>
+        <script src="./libcorewar.js"></script>
+        <script>
+            Module.onRuntimeInitialized = _ => {
+                console.log("LOADED!!");
+            };
+        </script>
     </body>
 </html>

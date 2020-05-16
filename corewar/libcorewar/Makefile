@@ -122,11 +122,11 @@ endif
 ifneq ($(WASM),)
 	CC = emcc
 	CFLAGS += -O1
-	CFLAGS += -s WASM=1
+	CFLAGS += -s ALLOW_MEMORY_GROWTH=1
 	CFLAGS += -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]'
-	NAME = libcorewar.$(WASM)
+	NAME = libcorewar.js
 	BINTYPE = bin
-	AR = llvm-ar
+	AR = emar
 	TARGET = wasm
 endif
 
@@ -205,7 +205,7 @@ $(OUTTEST): LIBS += -lcriterion
 $(OUTTEST): $(DEPSARC) $(OBJ) $(TESTOBJ)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(TESTOBJ) $(LIBDIR:%=-L%) $(LIBS)
 	@printf '\r  \033[K\033[0;32m Finished\033[0m %s test build\n' \
-		$(if $(DEBUG),'debug','release')
+		$(TARGET)
 
 run: $(NAME)
 	@printf '\r  \033[K\033[0;32m  Running\033[0m `$(strip $(NAME) $(ARGS))`\n'

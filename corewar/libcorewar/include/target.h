@@ -9,7 +9,7 @@
 #define LIBCOREWAR_TARGET_H
 
 #ifdef MY_TARGET_WASM
-    #include "emscripten.h"
+    #include <emscripten.h>
     #define CW_EXPORT EMSCRIPTEN_KEEPALIVE
 #else
     #define CW_EXPORT
