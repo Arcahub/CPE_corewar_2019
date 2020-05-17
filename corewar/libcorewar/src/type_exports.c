@@ -7,6 +7,18 @@
 
 #include "corewar/corewar.h"
 
+CW_EXPORT_TYPENAME(OPT(u32), my_opt_u32)
+CW_EXPORT_TYPENAME_FIELD(OPT(u32), my_opt_u32, is_some, bool)
+CW_EXPORT_TYPENAME_FIELD(OPT(u32), my_opt_u32, v, u32_t)
+
+CW_EXPORT_TYPENAME(OPT(usize), my_opt_usize)
+CW_EXPORT_TYPENAME_FIELD(OPT(usize), my_opt_usize, is_some, bool)
+CW_EXPORT_TYPENAME_FIELD(OPT(usize), my_opt_usize, v, usize_t)
+
+CW_EXPORT_TYPENAME(OPT(cw_instr), my_opt_cw_instr)
+CW_EXPORT_TYPENAME_FIELD(OPT(cw_instr), my_opt_cw_instr, is_some, bool)
+CW_EXPORT_TYPENAME_FIELD(OPT(cw_instr), my_opt_cw_instr, v, cw_instr_t)
+
 CW_EXPORT_TYPE(cw_config)
 CW_EXPORT_TYPE_FIELD(cw_config, prog_name_length, usize_t)
 CW_EXPORT_TYPE_FIELD(cw_config, comment_length, usize_t)

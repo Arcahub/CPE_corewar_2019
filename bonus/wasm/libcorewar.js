@@ -1974,6 +1974,111 @@ var _cw_vm_new = Module["_cw_vm_new"] = function() {
 };
 
 /** @type {function(...*):?} */
+var _my_opt_u32_sizeof = Module["_my_opt_u32_sizeof"] = function() {
+  return (_my_opt_u32_sizeof = Module["_my_opt_u32_sizeof"] = Module["asm"]["my_opt_u32_sizeof"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_u32_alloc = Module["_my_opt_u32_alloc"] = function() {
+  return (_my_opt_u32_alloc = Module["_my_opt_u32_alloc"] = Module["asm"]["my_opt_u32_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_u32_free = Module["_my_opt_u32_free"] = function() {
+  return (_my_opt_u32_free = Module["_my_opt_u32_free"] = Module["asm"]["my_opt_u32_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_u32_set_is_some = Module["_my_opt_u32_set_is_some"] = function() {
+  return (_my_opt_u32_set_is_some = Module["_my_opt_u32_set_is_some"] = Module["asm"]["my_opt_u32_set_is_some"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_u32_get_is_some = Module["_my_opt_u32_get_is_some"] = function() {
+  return (_my_opt_u32_get_is_some = Module["_my_opt_u32_get_is_some"] = Module["asm"]["my_opt_u32_get_is_some"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_u32_set_v = Module["_my_opt_u32_set_v"] = function() {
+  return (_my_opt_u32_set_v = Module["_my_opt_u32_set_v"] = Module["asm"]["my_opt_u32_set_v"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_u32_get_v = Module["_my_opt_u32_get_v"] = function() {
+  return (_my_opt_u32_get_v = Module["_my_opt_u32_get_v"] = Module["asm"]["my_opt_u32_get_v"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_usize_sizeof = Module["_my_opt_usize_sizeof"] = function() {
+  return (_my_opt_usize_sizeof = Module["_my_opt_usize_sizeof"] = Module["asm"]["my_opt_usize_sizeof"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_usize_alloc = Module["_my_opt_usize_alloc"] = function() {
+  return (_my_opt_usize_alloc = Module["_my_opt_usize_alloc"] = Module["asm"]["my_opt_usize_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_usize_free = Module["_my_opt_usize_free"] = function() {
+  return (_my_opt_usize_free = Module["_my_opt_usize_free"] = Module["asm"]["my_opt_usize_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_usize_set_is_some = Module["_my_opt_usize_set_is_some"] = function() {
+  return (_my_opt_usize_set_is_some = Module["_my_opt_usize_set_is_some"] = Module["asm"]["my_opt_usize_set_is_some"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_usize_get_is_some = Module["_my_opt_usize_get_is_some"] = function() {
+  return (_my_opt_usize_get_is_some = Module["_my_opt_usize_get_is_some"] = Module["asm"]["my_opt_usize_get_is_some"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_usize_set_v = Module["_my_opt_usize_set_v"] = function() {
+  return (_my_opt_usize_set_v = Module["_my_opt_usize_set_v"] = Module["asm"]["my_opt_usize_set_v"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_usize_get_v = Module["_my_opt_usize_get_v"] = function() {
+  return (_my_opt_usize_get_v = Module["_my_opt_usize_get_v"] = Module["asm"]["my_opt_usize_get_v"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_cw_instr_sizeof = Module["_my_opt_cw_instr_sizeof"] = function() {
+  return (_my_opt_cw_instr_sizeof = Module["_my_opt_cw_instr_sizeof"] = Module["asm"]["my_opt_cw_instr_sizeof"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_cw_instr_alloc = Module["_my_opt_cw_instr_alloc"] = function() {
+  return (_my_opt_cw_instr_alloc = Module["_my_opt_cw_instr_alloc"] = Module["asm"]["my_opt_cw_instr_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_cw_instr_free = Module["_my_opt_cw_instr_free"] = function() {
+  return (_my_opt_cw_instr_free = Module["_my_opt_cw_instr_free"] = Module["asm"]["my_opt_cw_instr_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_cw_instr_set_is_some = Module["_my_opt_cw_instr_set_is_some"] = function() {
+  return (_my_opt_cw_instr_set_is_some = Module["_my_opt_cw_instr_set_is_some"] = Module["asm"]["my_opt_cw_instr_set_is_some"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_cw_instr_get_is_some = Module["_my_opt_cw_instr_get_is_some"] = function() {
+  return (_my_opt_cw_instr_get_is_some = Module["_my_opt_cw_instr_get_is_some"] = Module["asm"]["my_opt_cw_instr_get_is_some"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_cw_instr_set_v = Module["_my_opt_cw_instr_set_v"] = function() {
+  return (_my_opt_cw_instr_set_v = Module["_my_opt_cw_instr_set_v"] = Module["asm"]["my_opt_cw_instr_set_v"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _my_opt_cw_instr_get_v = Module["_my_opt_cw_instr_get_v"] = function() {
+  return (_my_opt_cw_instr_get_v = Module["_my_opt_cw_instr_get_v"] = Module["asm"]["my_opt_cw_instr_get_v"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
 var _cw_config_sizeof = Module["_cw_config_sizeof"] = function() {
   return (_cw_config_sizeof = Module["_cw_config_sizeof"] = Module["asm"]["cw_config_sizeof"]).apply(null, arguments);
 };

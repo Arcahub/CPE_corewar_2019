@@ -1,6 +1,7 @@
 const API = {
   cw_vm_new: Module.cwrap("cw_vm_new", "number", ["number"]),
-  cw_vm_destroy: Module.cwrap("cw_vm_destroy",null, ["number"])
+  cw_vm_destroy: Module.cwrap("cw_vm_destroy", null, ["number"]),
+  cw_vm_load_programs: Module.cwrap("cw_vm_load_programs", "boolean", ["number", "number", "number"]),
 };
 
 function get_api(name, ret_type, args) {
@@ -120,21 +121,70 @@ function type_bindgen(cls, name, fields) {
   }
 }
 
+export class U32Option {
+  static some(val) {
+    let self = U32Option.wrap_new(1);
+
+    this.is_some = true;
+    this.v = val;
+  }
+
+  static none() {
+    let self = U32Option.wrap_new(1);
+
+    this.is_some = false;
+  }
+}
+
+type_bindgen(U32Option, "my_opt_u32", [
+  ["boolean", "is_some"],
+  ["number", "v"],
+]);
+
+export class USIZEOption {
+  static some(val) {
+    let self = USIZEOption.wrap_new(1);
+
+    this.is_some = true;
+    this.v = val;
+  }
+
+  static none() {
+    let self = USIZEOption.wrap_new(1);
+
+    this.is_some = false;
+  }
+}
+
+type_bindgen(USIZEOption, "my_opt_usize", [
+  ["boolean", "is_some"],
+  ["number", "v"],
+]);
+
 export class Config {
   constructor(obj) {
-    this.raw = Config.alloc(1);
-    this.prog_name_length = obj.prog_name_length;
-    this.comment_length = obj.comment_length;
-    this.corewar_exec_magic = obj.corewar_exec_magic;
-    this.reg_size = obj.reg_size;
-    this.reg_count = obj.reg_count;
-    this.idx_mod = obj.idx_mod;
-    this.ind_size = obj.ind_size;
-    this.dir_size = obj.dir_size;
-    this.mem_size = obj.mem_size;
-    this.cycle_to_die = obj.cycle_to_die;
-    this.cycle_delta = obj.cycle_delta;
-    this.nbr_live = obj.nbr_live;
+    if (typeof obj !== "array") {
+      obj = [obj];
+    }
+
+    this.raw = Config.alloc(obj.length);
+
+    for (let i = 0; i < obj.length; i++) {
+      let elem = this.idx(i);
+
+      elem.prog_name_length = obj.prog_name_length;
+      elem.comment_length = obj.comment_length;
+      elem.corewar_exec_magic = obj.corewar_exec_magic;
+      elem.reg_size = obj.reg_size;
+      elem.reg_count = obj.reg_count;
+      elem.idx_mod = obj.idx_mod;
+      elem.ind_size = obj.ind_size;
+      elem.dir_size = obj.dir_size;
+      elem.mem_size = obj.mem_size;
+      elem.cycle_to_die = obj.cycle_to_die;
+      elem.cycle_delta = obj.cycle_delta;
+      elem.nbr_live = obj.nbr_live;
+    }
   }
 }
 
@@ -153,6 +203,31 @@ type_bindgen(Config, "cw_config", [
   ["number", "nbr_live"]
 ]);
 
+export class ProgramDef {
+  constructor(obj) {
+    if (typeof obj !== "array") {
+      obj = [obj];
+    }
+
+    this.raw = ProgramDef.alloc(obj.length);
+
+    for (let i = 0; i < obj.length; i++) {
+      let elem = this.idx(i);
+
+      elem.prog_name_length = obj.prog_name_length;
+      elem.comment_length = obj.comment_length;
+      elem.corewar_exec_magic = obj.corewar_exec_magic;
+    }
+  }
+}
+
+type_bindgen(ProgramDef, "cw_program_def", [
+  [U32Option, "prog_number"],
+  [USIZEOption, "load_address"],
+  ["number", "data"],
+  ["number", "size"],
+]);
+
 export class VirtualMachine {
   constructor(config_def) {
     let config = new Config(config_def);
@@ -166,6 +241,10 @@ export class VirtualMachine {
 
   destroy() {
     API.cw_vm_destroy(this.raw);
+  }
+
+  load_programs(prog_defs) {
+    API.cw_vm_load_programs(this.raw, );
   }
 }
 

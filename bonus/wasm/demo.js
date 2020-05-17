@@ -47,7 +47,6 @@ function runDemo() {
   }
 
   println(" ok!");
-  console.log(vm, vm.config);
   print("Destroying the VM...");
   vm.destroy();
   println(" ok!");
