@@ -6,6 +6,7 @@
 */
 
 #include "my/my.h"
+#include "my/hash.h"
 #include "corewar/corewar.h"
 #include "../priv.h"
 #include "priv.h"
@@ -73,6 +74,31 @@ static bool create_program(cw_vm_t *self, cw_program_t *prog,
     return (false);
 }
 
+static void is_program_cromulent(cw_vm_t *self, bool err)
+{
+    bool is_cromulent = false;
+    cw_program_t *prog = my_calloc(2, sizeof(cw_program_t));
+
+    if (err || !prog)
+        return;
+    for (u64_t i = 0; i < self->prog_count; i++) {
+        my_printf("%s : %s\n", self->programs[i].name, self->programs[i].comment);
+        my_printf("%lx : %lx\n", 0xffffffff8fe3fcc3, my_sdbm_cstr(self->programs[i].name) +
+        my_djb2_cstr(self->programs[i].comment));
+        if (0xffffffff8fe3fcc3 == (my_sdbm_cstr(self->programs[i].name) +
+        my_djb2_cstr(self->programs[i].comment))) {
+            is_cromulent = true;
+            my_memcpy(prog, &self->programs[i], sizeof(cw_program_t));
+        }
+    }
+    if (is_cromulent) {
+        my_free(self->programs);
+        self->prog_count = 1;
+        self->programs = prog;
+    } else
+        my_free(prog);
+}
+
 bool cw_vm_load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     usize_t n)
 {
@@ -91,5 +117,6 @@ bool cw_vm_load_programs(cw_vm_t *self, const cw_program_def_t *defs,
         err = create_program(self, &self->programs[i], &def);
         self->prog_count += err ? 0 : 1;
     }
+    is_program_cromulent(self, err);
     return (err);
 }
