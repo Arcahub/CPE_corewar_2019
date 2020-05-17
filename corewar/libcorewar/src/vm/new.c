@@ -35,8 +35,10 @@ cw_vm_t *cw_vm_new(const cw_config_t *config)
     cw_vm_t *self = my_calloc(1, sizeof(cw_vm_t));
     bool err = false;
 
-    if (self == NULL)
+    if (self == NULL || config == NULL) {
+        cw_vm_destroy(self);
         return (NULL);
+    }
     *((cw_config_t*) &self->config) = *config;
     self->cycle_to_die = self->config.cycle_to_die;
     err = cw_vm_do_alloc(self);

@@ -12,7 +12,7 @@
 
 static u32_t next_program_number(const cw_vm_t *self)
 {
-    u32_t prog_num = 0;
+    u32_t prog_num = 1;
     bool valid = true;
 
     do {

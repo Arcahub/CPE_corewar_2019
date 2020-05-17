@@ -41,7 +41,7 @@ void cw_corewar_cli_print_winner(cw_vm_t *vm)
     }
     if (count != 0)
         return;
-    my_printf("The player %d(%s)has won.\n", prog_number + 1,
+    my_printf("The player %d(%s)has won.\n", prog_number,
         vm->programs[prog_number].name);
 }
 
@@ -81,15 +81,22 @@ cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
         cli->progs_list->len);
     cw_program_def_t *prog = NULL;
     usize_t index = 0;
+    cw_vm_t *vm = cw_vm_new(&VM_CONF);
 
-    if (progs_list == NULL)
+    if (progs_list == NULL || vm == NULL) {
+        cw_vm_destroy(vm);
+        my_free(progs_list);
         return (NULL);
+    }
     LIST_FOR_EACH(cli->progs_list, iter) {
         prog = iter.v;
-        progs_list[index] = *prog;
-        index++;
+        progs_list[index++] = *prog;
     }
-    return (cw_vm_new(&VM_CONF, progs_list, cli->progs_list->len));
+    if (cw_vm_load_programs(vm, progs_list, cli->progs_list->len)) {
+        cw_vm_destroy(vm);
+        return (NULL);
+    }
+    return (vm);
 }
 
 u64_t cw_corewar_cli_run(cw_corewar_cli_t *self)
