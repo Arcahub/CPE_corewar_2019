@@ -48,8 +48,8 @@ static void cw_asm_error_content(cw_asm_error_content_t content)
 static void cw_asm_error_line(cw_asm_error_context_t context)
 {
     int i = 0;
-   cw_asm_error_color_t color = {RESET, false};
-   cw_asm_error_color_t error = {TYPE_COLOR[(int)context.type], false};
+    cw_asm_error_color_t color = {RESET, false};
+    cw_asm_error_color_t error = {TYPE_COLOR[(int)context.type], false};
 
     cw_asm_error_put_str("    > ", color);
     if (context.column >= 0) {

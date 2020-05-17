@@ -43,7 +43,8 @@ static int cw_asm_instruct_check_args_param(cw_asm_error_context_t err_context,
     char *parameter, op_t op, int index)
 {
     args_type_t valid_types = op.type[index];
-    args_type_t type = cw_asm_instruct_check_args_get_type(err_context, parameter);
+    args_type_t type = cw_asm_instruct_check_args_get_type(err_context,
+        parameter);
 
     if ((valid_types & type)) {
         return (0);

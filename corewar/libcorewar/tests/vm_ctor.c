@@ -198,7 +198,8 @@ Test(vm_ctor, invalid_size)
     cw_program_def_t def[1];
     cw_vm_t *vm = NULL;
 
-    load_prog("tests/champs/invalid_size.cor", SOME(usize, 1), NONE(u32), &def[0]);
+    load_prog("tests/champs/invalid_size.cor", SOME(usize, 1), NONE(u32),
+        &def[0]);
     vm = cw_vm_new(&DEFAULT_CONFIG);
     cr_assert_eq( cw_vm_load_programs(vm, def, 1), true);
     cw_vm_destroy(vm);

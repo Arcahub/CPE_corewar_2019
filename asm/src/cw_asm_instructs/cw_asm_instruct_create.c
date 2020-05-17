@@ -7,7 +7,6 @@
 
 #include "asm/instructs/cw_asm_instruct.h"
 
-
 cw_asm_instruct_t *cw_asm_instruct_create(cw_asm_instruct_t *head)
 {
     cw_asm_instruct_t *self = my_malloc(sizeof(cw_asm_instruct_t));

@@ -26,8 +26,8 @@ bool cw_vm__trigger_callbacks_ops(cw_vm_t *vm, cw_core_t *core,
     const cw_instr_t *instr);
 bool cw_vm__trigger_callbacks_io_write(const cw_vm_t *vm, const cw_core_t *core,
     usize_t addr, usize_t size);
-    bool cw_vm__trigger_callbacks_io_read(const cw_vm_t *vm, const cw_core_t *core,
-    usize_t addr, usize_t size);
+    bool cw_vm__trigger_callbacks_io_read(const cw_vm_t *vm, const cw_core_t
+        *core, usize_t addr, usize_t size);
 void cw_vm_destroy_core(cw_core_t *core);
 
 isize_t cw_vm_compute_addr(const cw_vm_t *vm, isize_t addr);

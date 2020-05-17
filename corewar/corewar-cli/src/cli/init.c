@@ -8,7 +8,7 @@
 #include "corewar-cli/corewar-cli.h"
 #include "my/my.h"
 
-cw_corewar_cli_t * cw_corewar_cli_init()
+cw_corewar_cli_t * cw_corewar_cli_init(void)
 {
     cw_corewar_cli_t *self = my_malloc(sizeof(cw_corewar_cli_t));
 
