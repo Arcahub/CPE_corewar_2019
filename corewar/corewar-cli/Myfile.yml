@@ -30,6 +30,7 @@ src:
   - ./src/cli/init.c
   - ./src/cli/destroy.c
   - ./src/cli/dump.c
+  - ./src/cli/print_results.c
   - ./src/cli/add_prog.c
   - ./src/cli/run.c
   - ./src/cli/setup_callbacks.c

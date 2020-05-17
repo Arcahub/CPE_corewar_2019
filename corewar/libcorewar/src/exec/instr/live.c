@@ -32,7 +32,7 @@ void cw_vm__exec__live(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
     if (vm->state.live_calls >= vm->config.nbr_live && vm->cores->len > 1) {
         vm->cycle_to_die -= u64_min(vm->cycle_to_die, vm->config.cycle_delta);
         vm->state.live_calls = 0;
-        core->state.owner = cw_vm__exec_pget(core, &instr->args[0]);
     }
+    core->state.owner = cw_vm__exec_pget(core, &instr->args[0]);
     update_prog(vm, core, instr);
 }
