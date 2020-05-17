@@ -33,7 +33,7 @@ static u64_t cw_corewar_cli_run_without_dump_cycles(cw_corewar_cli_t *self,
 
     (void)(self);
     while (true) {
-        cw_vm_run(vm, SOME(u64, 50));
+        cw_vm_run(vm, SOME(u64, 10));
         cg_ui_update(ui, vm);
         usleep(100000);
     }

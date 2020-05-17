@@ -27,7 +27,8 @@ src:
   - ./src/args_parser/destroy.c
   - ./src/args_parser/run.c
   - ./src/gui/init.c
-  - ./src/gui/update.c
+  - ./src/gui/update/pit.c
+  - ./src/gui/update/update.c
   - ./src/cli/init.c
   - ./src/cli/destroy.c
   - ./src/cli/dump.c

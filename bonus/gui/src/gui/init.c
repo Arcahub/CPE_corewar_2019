@@ -8,6 +8,15 @@
 #include <stdlib.h>
 #include "corewar-gui/gui.h"
 
+static void setup_colors(void)
+{
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_WHITE);
+    init_pair(2, COLOR_CYAN, COLOR_BLUE);
+    init_pair(3, COLOR_BLACK, COLOR_WHITE);
+    init_pair(4, COLOR_RED, COLOR_MAGENTA);
+}
+
 cg_ui_t *cg_ui_init(void)
 {
     cg_ui_t *ui = calloc(1, sizeof(ui));
@@ -15,6 +24,7 @@ cg_ui_t *cg_ui_init(void)
 
     ui->main_win = initscr();
     getmaxyx(stdscr, y, x);
+    setup_colors();
     raw();
     keypad(stdscr, true);
     noecho();
