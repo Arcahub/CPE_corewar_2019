@@ -87,7 +87,7 @@ Test(vm_ctor, one_program_load)
 
     cr_assert_arr_eq(&vm->mem[0], &def.data[DATA_OFFSET],
         def.size - DATA_OFFSET);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
     cw_vm_destroy(vm);
 }
 
@@ -102,7 +102,7 @@ Test(vm_ctor, one_program_load_wrap)
     cr_assert_arr_eq(&vm->mem[6139], &def.data[DATA_OFFSET], 4);
     cr_assert_arr_eq(&vm->mem[0], &def.data[DATA_OFFSET + 5],
         def.size - DATA_OFFSET - 4);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
     cw_vm_destroy(vm);
 }
 
@@ -133,8 +133,8 @@ Test(vm_ctor, two_program_load)
         def[0].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 2],
         &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
-    cr_assert_eq(vm->programs[1].prog_number, 1);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
+    cr_assert_eq(vm->programs[1].prog_number, 2);
     cw_vm_destroy(vm);
 }
 
@@ -154,9 +154,9 @@ Test(vm_ctor, three_program_load)
         &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 3 * 2],
         &def[2].data[DATA_OFFSET], def[2].size - DATA_OFFSET);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
-    cr_assert_eq(vm->programs[1].prog_number, 1);
-    cr_assert_eq(vm->programs[2].prog_number, 2);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
+    cr_assert_eq(vm->programs[1].prog_number, 2);
+    cr_assert_eq(vm->programs[2].prog_number, 3);
     cw_vm_destroy(vm);
 }
 
@@ -176,9 +176,9 @@ Test(vm_ctor, three_program_load_addr)
         &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[621],
         &def[2].data[DATA_OFFSET], def[2].size - DATA_OFFSET);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
-    cr_assert_eq(vm->programs[1].prog_number, 1);
-    cr_assert_eq(vm->programs[2].prog_number, 2);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
+    cr_assert_eq(vm->programs[1].prog_number, 2);
+    cr_assert_eq(vm->programs[2].prog_number, 3);
     cw_vm_destroy(vm);
 }
 
