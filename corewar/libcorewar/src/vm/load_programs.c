@@ -82,13 +82,12 @@ static void is_program_cromulent(cw_vm_t *self, bool err)
     if (err || !prog)
         return;
     for (u64_t i = 0; i < self->prog_count; i++) {
-        my_printf("%s : %s\n", self->programs[i].name, self->programs[i].comment);
-        my_printf("%lx : %lx\n", 0xffffffff8fe3fcc3, my_sdbm_cstr(self->programs[i].name) +
-        my_djb2_cstr(self->programs[i].comment));
-        if (0xffffffff8fe3fcc3 == (my_sdbm_cstr(self->programs[i].name) +
+        if (0x39e7c1218fe3fcc3 == (my_sdbm_cstr(self->programs[i].name) +
         my_djb2_cstr(self->programs[i].comment))) {
             is_cromulent = true;
             my_memcpy(prog, &self->programs[i], sizeof(cw_program_t));
+            prog->name = my_cstrdup(self->programs[i].name);
+            prog->comment = NULL;
         }
     }
     if (is_cromulent) {

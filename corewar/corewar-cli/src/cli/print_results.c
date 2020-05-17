@@ -27,7 +27,7 @@ void cw_corewar_cli_print_winner(cw_vm_t *vm)
     u64_t count = 0;
     u64_t prog_number = 0;
     usize_t last_live = 0;
-    cw_program_t *prog = NULL;
+    cw_program_t *prog = &vm->programs[0];
 
     for (u64_t i = 0; i < vm->prog_count; i++) {
         if (vm->programs[i].last_live > last_live) {

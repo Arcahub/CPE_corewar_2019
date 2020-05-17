@@ -51,8 +51,8 @@ static bool handle_live(void *ptr, cw_vm_t *vm, cw_core_t *core,
     (void)(core);
     for (usize_t i = 0; i < vm->prog_count; i++) {
         if (vm->programs[i].prog_number == num) {
-            my_printf("The player %d (%s) is alive. %d\n", num,
-                vm->programs[i].name, vm->programs[i].last_live);
+            my_printf("The player %d (%s) is alive.\n", num,
+                vm->programs[i].name);
         }
     }
     return (false);
