@@ -48,6 +48,6 @@ void cw_vm__exec_instr(cw_vm_t *vm, cw_core_t *core,
 
     if (fn != NULL) {
         fn(vm, core, instr);
-        cw_vm__trigger_callbacks(vm, core, instr);
+        cw_vm__trigger_callbacks_ops(vm, core, instr);
     }
 }
