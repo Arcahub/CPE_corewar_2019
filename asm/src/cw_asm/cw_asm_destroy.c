@@ -19,5 +19,7 @@ void cw_asm_destroy(cw_asm_t *self)
         cw_asm_instruct_destroy(self->instructs, &self->instructs);
     bufwriter_free(self->bw);
     my_free(self->output_buff.data);
+    bufreader_free(self->fdin);
+    my_free(self->output_path);
     my_free(self);
 }

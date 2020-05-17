@@ -14,9 +14,62 @@ namespace: corewar
 dependencies:
   - libmy=master
 
-allowed: malloc realloc free
+allowed: malloc realloc free write
 
 src:
-  - ./src/lib.c
+  - ./src/exec/instr/add.c
+  - ./src/exec/instr/aff.c
+  - ./src/exec/instr/and.c
+  - ./src/exec/instr/fork.c
+  - ./src/exec/instr/ld.c
+  - ./src/exec/instr/ldi.c
+  - ./src/exec/instr/lfork.c
+  - ./src/exec/instr/live.c
+  - ./src/exec/instr/lld.c
+  - ./src/exec/instr/lldi.c
+  - ./src/exec/instr/or.c
+  - ./src/exec/instr/st.c
+  - ./src/exec/instr/sti.c
+  - ./src/exec/instr/sub.c
+  - ./src/exec/instr/xor.c
+  - ./src/exec/instr/zjmp.c
+  - ./src/exec/exec.c
+  - ./src/exec/utils.c
+  - ./src/fetch/op_codes/add.c
+  - ./src/fetch/op_codes/aff.c
+  - ./src/fetch/op_codes/and.c
+  - ./src/fetch/op_codes/fork.c
+  - ./src/fetch/op_codes/ld.c
+  - ./src/fetch/op_codes/ldi.c
+  - ./src/fetch/op_codes/lfork.c
+  - ./src/fetch/op_codes/live.c
+  - ./src/fetch/op_codes/lld.c
+  - ./src/fetch/op_codes/lldi.c
+  - ./src/fetch/op_codes/or.c
+  - ./src/fetch/op_codes/st.c
+  - ./src/fetch/op_codes/sti.c
+  - ./src/fetch/op_codes/sub.c
+  - ./src/fetch/op_codes/xor.c
+  - ./src/fetch/op_codes/zjmp.c
+  - ./src/fetch/fetch.c
+  - ./src/fetch/pcb.c
+  - ./src/fetch/read_param.c
+  - ./src/run/run.c
+  - ./src/run/update.c
+  - ./src/vm/compute_addr.c
+  - ./src/vm/callback.c
+  - ./src/vm/io_events.c
+  - ./src/vm/check_prog.c
+  - ./src/vm/load_programs.c
+  - ./src/vm/create_core.c
+  - ./src/vm/destroy.c
+  - ./src/vm/new.c
+  - ./src/rw_int.c
 
 tests_src:
+  - ./tests/callbacks_io_events.c
+  - ./tests/callbacks_ops.c
+  - ./tests/pcb_check.c
+  - ./tests/rw_int.c
+  - ./tests/test_champs.c
+  - ./tests/vm_ctor.c

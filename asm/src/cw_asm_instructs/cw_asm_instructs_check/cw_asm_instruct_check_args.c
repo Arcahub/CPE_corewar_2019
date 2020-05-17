@@ -32,9 +32,9 @@ static op_t cw_asm_instruct_check_args_get_op(cw_asm_instruct_t *instruct)
     if (ins == -1) {
         return ((op_t){0});
     }
-    for (int i = 0; op_tab[i].mnemonique; i++)
-        if (ins == op_tab[i].code)
-            op = op_tab[i];
+    for (int i = 0; OP_TAB[i].mnemonique; i++)
+        if (ins == OP_TAB[i].code)
+            op = OP_TAB[i];
     return (op);
 
 }

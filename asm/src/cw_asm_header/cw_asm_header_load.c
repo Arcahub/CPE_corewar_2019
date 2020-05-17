@@ -50,24 +50,24 @@ static int cw_asm_header_load_compute_line(cw_asm_header_t *header, char *line)
 
 int cw_asm_header_load(cw_asm_header_t *self, bufreader_t *fdin)
 {
-    char *line = bufreader_read_line(fdin);
+    char *ln = bufreader_read_line(fdin);
     int count = 0;
     int last_char = 0;
 
-    for (; line && count != 2; line = bufreader_read_line(fdin)) {
-        last_char = my_cstrlen(line) - 1;
-        line[last_char] = (line[last_char] == '\n') ? '\0' : line[last_char];
-        if (cw_asm_is_line_useless(line))
+    for (; ln && count != 2; ln = bufreader_read_line(fdin)) {
+        last_char = (isize_t ) my_cstrlen(ln) - 1 < 0 ? 0 : my_cstrlen(ln) - 1;
+        ln[last_char] = (ln[last_char] == '\n') ? '\0' : ln[last_char];
+        if (cw_asm_is_line_useless(ln))
             continue;
-        else if (!cw_asm_header_load_compute_line(self, line))
+        else if (!cw_asm_header_load_compute_line(self, ln))
             count += 1;
         else {
-            my_free(line);
+            my_free(ln);
             return (84);
         }
-        my_free(line);
+        my_free(ln);
     }
-    if (line)
-        my_free(line);
+    if (ln)
+        my_free(ln);
     return (0);
 }

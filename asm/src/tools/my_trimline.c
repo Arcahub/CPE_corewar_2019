@@ -6,7 +6,7 @@
 */
 
 #include "my/my.h"
-#include "my/io.h"
+#include <stdlib.h>
 
 char *my_trimline(char *line)
 {

@@ -43,7 +43,7 @@ void cw_asm_instruct_load_args(cw_asm_error_context_t err_context,
     cw_asm_instruct_t *instruct, char **line)
 {
     char **args = str_to_word_array_sep(*line, SEPARATOR_CHAR);
-    op_t op = op_tab[instruct->instruct_code - 1];
+    op_t op = OP_TAB[instruct->instruct_code - 1];
     int i = 0;
 
     if (args == NULL)

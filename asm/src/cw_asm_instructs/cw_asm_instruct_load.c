@@ -44,21 +44,21 @@ static cw_asm_instruct_t *cw_asm_instruct_load_compute_line(
 
 int cw_asm_instruct_load(cw_asm_instruct_t **instructs_list, bufreader_t *fdin)
 {
-    char *line = bufreader_read_line(fdin);
+    char *ln = bufreader_read_line(fdin);
     cw_asm_instruct_t *tmp = NULL;
     cw_asm_error_context_t err_context = {-1, -1, 0, 0};
     int last_char = 0;
 
-    for (; line; line = bufreader_read_line(fdin)) {
-        last_char = my_cstrlen(line) - 1;
-        line[last_char] = (line[last_char] == '\n') ? '\0' : line[last_char];
-        if (cw_asm_is_line_useless(line)) {
-            my_free(line);
+    for (; ln; ln = bufreader_read_line(fdin)) {
+        last_char = (isize_t) my_cstrlen(ln) - 1 < 0 ? 0 : my_cstrlen(ln) - 1;
+        ln[last_char] = (ln[last_char] == '\n') ? '\0' : ln[last_char];
+        if (cw_asm_is_line_useless(ln)) {
+            my_free(ln);
             continue;
         }
         tmp = cw_asm_instruct_load_compute_line(err_context,
-            *instructs_list, line);
-        my_free(line);
+            *instructs_list, ln);
+        my_free(ln);
         if (tmp == NULL)
             return (84);
         *instructs_list = tmp;

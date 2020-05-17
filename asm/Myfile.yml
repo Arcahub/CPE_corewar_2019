@@ -19,6 +19,7 @@ allowed: write malloc free open close read
 main: ./src/main.c
 
 src:
+  - ./src/op.c
   - ./src/cw_asm.c
   - ./src/tools/my_getnbr.c
   - ./src/tools/my_trimline.c
