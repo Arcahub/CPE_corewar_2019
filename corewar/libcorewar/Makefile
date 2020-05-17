@@ -7,9 +7,15 @@
 
 CC		?=	gcc
 
+AR		?=	ar
+
 SHELL	=	/bin/sh
 
 MYFILE	=	Myfile.yml
+
+define strup
+$(shell echo $(1) | tr a-z A-Z)
+endef
 
 define readcfg
 $(strip $(shell sed -n '/^$(1):/,/^\S/s/^\s\+\-\|^$(1)://p' $(MYFILE)))
@@ -44,9 +50,8 @@ LIBDIR	?=	$(abspath ./lib)
 INCLUDE =	-I$(OUTDIR)/include -I$(LIBDIR)/include
 
 CFLAGS	=	-fdiagnostics-color -fno-builtin -W -Wall -Wextra -pedantic \
-			$(INCLUDE) $(if $(DEBUG),-g3) \
-			$(patsubst %,-DMY_ALLOW_FUN_%,$(strip \
-				$(shell echo $(ALLOWED) | tr a-z A-Z)))
+			$(INCLUDE) $(if $(DEBUG),-g3) -DMY_TARGET_$(call strup,$(TARGET)) \
+			$(patsubst %,-DMY_ALLOW_FUN_%,$(strip $(call strup,$(ALLOWED))))
 
 CPPFLAGS =	-MD -MP
 
@@ -116,16 +121,18 @@ endif
 
 ifneq ($(WASM),)
 	CC = emcc
-	CFLAGS += -s WASM=1
+	CFLAGS += -O1
 	CFLAGS += -s ALLOW_MEMORY_GROWTH=1
 	CFLAGS += -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]'
-	CFLAGS += -s NO_EXIT_RUNTIME=1
-	NAME = libcorewar.$(WASM)
+	NAME = libcorewar.js
 	BINTYPE = bin
+	AR = emar
 	TARGET = wasm
 endif
 
 export CC
+
+export AR
 
 export SHELL
 
@@ -136,6 +143,7 @@ export DEBUG
 all: $(NAME)
 
 info:
+	@echo "\033[0;32mtarget:\033[0m" $(TARGET)
 	@echo "\033[0;32mname:\033[0m" $(NAME)
 	@echo "\033[0;32mtype:\033[0m" $(BINTYPE)
 	@echo "\033[0;32mnamespace:\033[0m" $(NAMESPC)
@@ -172,7 +180,7 @@ $(OUTNAME): $(DEPSARC) $(OBJ) $(MAINOBJ)
 		printf '\r  \033[K\033[0;32m Finished\033[0m `%s` (binary)\n' "$@"; \
 	fi
 	@if [ '$(BINTYPE)' = 'lib' ]; then \
-		ar -rc $@ $(OBJ); \
+		$(AR) -rc $@ $(OBJ); \
 		printf '\r  \033[K\033[0;32m Finished\033[0m `%s` (library)\n' "$@"; \
 	fi
 
@@ -197,7 +205,7 @@ $(OUTTEST): LIBS += -lcriterion
 $(OUTTEST): $(DEPSARC) $(OBJ) $(TESTOBJ)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(TESTOBJ) $(LIBDIR:%=-L%) $(LIBS)
 	@printf '\r  \033[K\033[0;32m Finished\033[0m %s test build\n' \
-		$(if $(DEBUG),'debug','release')
+		$(TARGET)
 
 run: $(NAME)
 	@printf '\r  \033[K\033[0;32m  Running\033[0m `$(strip $(NAME) $(ARGS))`\n'
