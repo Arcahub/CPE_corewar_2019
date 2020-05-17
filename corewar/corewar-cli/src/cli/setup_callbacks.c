@@ -83,7 +83,6 @@ bool print_instruct(void *user_data, cw_vm_t *vm, cw_core_t *core,
 
 void cw_corewar_cli_setup_callbacks(cw_vm_t *vm)
 {
-    cw_vm_add_instr_callback(vm, NONE(cw_opcode), &print_instruct, NULL);
     cw_vm_add_instr_callback(vm, SOME(cw_opcode, CW_INSTR_AFF), &handle_aff,
         NULL);
     cw_vm_add_instr_callback(vm, SOME(cw_opcode, CW_INSTR_LIVE), &handle_live,
