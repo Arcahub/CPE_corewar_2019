@@ -11,6 +11,7 @@
 #include "my/types.h"
 #include "my/collections/vec.h"
 #include "my/collections/list.h"
+#include "corewar/target.h"
 #include "corewar/instr.h"
 
 typedef struct {
@@ -113,38 +114,38 @@ typedef struct cw_io_event_callback{
 ** Creating and destroying the VM
 */
 
-cw_vm_t *cw_vm_new(const cw_config_t *config);
-void cw_vm_destroy(cw_vm_t *self);
+CW_EXPORT cw_vm_t *cw_vm_new(const cw_config_t *config);
+CW_EXPORT void cw_vm_destroy(cw_vm_t *self);
 
 /*
 ** Load Programms in the vm;
 */
 
-bool cw_vm_load_programs(cw_vm_t *self, const cw_program_def_t *defs,
+CW_EXPORT bool cw_vm_load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     usize_t n);
 
 /*
 ** Running the VM
 */
 
-bool cw_vm_run(cw_vm_t *self, OPT(u64) cycle_count);
+CW_EXPORT bool cw_vm_run(cw_vm_t *self, OPT(u64) cycle_count);
 
 /*
 ** Callbacks
 */
 
-bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
-    cw_instr_callback_fn_t *fn, void*);
-bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
-    cw_instr_callback_fn_t *fn);
+CW_EXPORT bool cw_vm_add_instr_callback(cw_vm_t *self,
+    OPT(cw_opcode) opcode_filter, cw_instr_callback_fn_t *fn, void*);
+CW_EXPORT bool cw_vm_remove_instr_callback(cw_vm_t *self,
+    OPT(cw_opcode) opcode_filter, cw_instr_callback_fn_t *fn);
 
 /*
 ** IO Callbacks
 */
 
-bool cw_vm_add_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
-    cw_io_event_callback_fn_t *fn, void*);
-bool cw_vm_remove_io_event_callback(cw_vm_t *self,
+CW_EXPORT bool cw_vm_add_io_event_callback(cw_vm_t *self,
+    cw_io_event_type_t type, cw_io_event_callback_fn_t *fn, void*);
+CW_EXPORT bool cw_vm_remove_io_event_callback(cw_vm_t *self,
     cw_io_event_callback_fn_t *fn);
 
 /*
