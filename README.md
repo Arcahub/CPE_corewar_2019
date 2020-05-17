@@ -262,11 +262,6 @@ The header is *packed* and its total size is always `2186` bytes
 #### Code section
 
 The code section is a *packed* array of bytes containing every encoded instruction.
-You have the possibility to inject raw bytes between instructions by using the `.code` directive followed by any number of bytes:
-
-```asm
-.code 0x42 0x13 0x37
-```
 
 Instructions are encoded as a *packed* sequence of the following elements:
     - `opcode` on **1** byte
