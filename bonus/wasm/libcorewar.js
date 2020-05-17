@@ -1887,6 +1887,10 @@ var ASM_CONSTS = {
       }
       return false;
     }
+
+  function _setTempRet0($i) {
+      setTempRet0(($i) | 0);
+    }
 var ASSERTIONS = false;
 
 /**
@@ -1921,7 +1925,7 @@ function intArrayToString(array) {
 
 
 var asmGlobalArg = {};
-var asmLibraryArg = { "emscripten_get_sbrk_ptr": _emscripten_get_sbrk_ptr, "emscripten_memcpy_big": _emscripten_memcpy_big, "emscripten_resize_heap": _emscripten_resize_heap, "memory": wasmMemory, "table": wasmTable };
+var asmLibraryArg = { "emscripten_get_sbrk_ptr": _emscripten_get_sbrk_ptr, "emscripten_memcpy_big": _emscripten_memcpy_big, "emscripten_resize_heap": _emscripten_resize_heap, "memory": wasmMemory, "setTempRet0": _setTempRet0, "table": wasmTable };
 var asm = createWasm();
 Module["asm"] = asm;
 /** @type {function(...*):?} */
@@ -1952,6 +1956,386 @@ var _cw_vm_destroy = Module["_cw_vm_destroy"] = function() {
 /** @type {function(...*):?} */
 var _cw_vm_new = Module["_cw_vm_new"] = function() {
   return (_cw_vm_new = Module["_cw_vm_new"] = Module["asm"]["cw_vm_new"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_sizeof = Module["_cw_config_sizeof"] = function() {
+  return (_cw_config_sizeof = Module["_cw_config_sizeof"] = Module["asm"]["cw_config_sizeof"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_alloc = Module["_cw_config_alloc"] = function() {
+  return (_cw_config_alloc = Module["_cw_config_alloc"] = Module["asm"]["cw_config_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_free = Module["_cw_config_free"] = function() {
+  return (_cw_config_free = Module["_cw_config_free"] = Module["asm"]["cw_config_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_prog_name_length = Module["_cw_config_set_prog_name_length"] = function() {
+  return (_cw_config_set_prog_name_length = Module["_cw_config_set_prog_name_length"] = Module["asm"]["cw_config_set_prog_name_length"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_prog_name_length = Module["_cw_config_get_prog_name_length"] = function() {
+  return (_cw_config_get_prog_name_length = Module["_cw_config_get_prog_name_length"] = Module["asm"]["cw_config_get_prog_name_length"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_comment_length = Module["_cw_config_set_comment_length"] = function() {
+  return (_cw_config_set_comment_length = Module["_cw_config_set_comment_length"] = Module["asm"]["cw_config_set_comment_length"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_comment_length = Module["_cw_config_get_comment_length"] = function() {
+  return (_cw_config_get_comment_length = Module["_cw_config_get_comment_length"] = Module["asm"]["cw_config_get_comment_length"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_corewar_exec_magic = Module["_cw_config_set_corewar_exec_magic"] = function() {
+  return (_cw_config_set_corewar_exec_magic = Module["_cw_config_set_corewar_exec_magic"] = Module["asm"]["cw_config_set_corewar_exec_magic"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_corewar_exec_magic = Module["_cw_config_get_corewar_exec_magic"] = function() {
+  return (_cw_config_get_corewar_exec_magic = Module["_cw_config_get_corewar_exec_magic"] = Module["asm"]["cw_config_get_corewar_exec_magic"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_reg_size = Module["_cw_config_set_reg_size"] = function() {
+  return (_cw_config_set_reg_size = Module["_cw_config_set_reg_size"] = Module["asm"]["cw_config_set_reg_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_reg_size = Module["_cw_config_get_reg_size"] = function() {
+  return (_cw_config_get_reg_size = Module["_cw_config_get_reg_size"] = Module["asm"]["cw_config_get_reg_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_reg_count = Module["_cw_config_set_reg_count"] = function() {
+  return (_cw_config_set_reg_count = Module["_cw_config_set_reg_count"] = Module["asm"]["cw_config_set_reg_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_reg_count = Module["_cw_config_get_reg_count"] = function() {
+  return (_cw_config_get_reg_count = Module["_cw_config_get_reg_count"] = Module["asm"]["cw_config_get_reg_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_idx_mod = Module["_cw_config_set_idx_mod"] = function() {
+  return (_cw_config_set_idx_mod = Module["_cw_config_set_idx_mod"] = Module["asm"]["cw_config_set_idx_mod"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_idx_mod = Module["_cw_config_get_idx_mod"] = function() {
+  return (_cw_config_get_idx_mod = Module["_cw_config_get_idx_mod"] = Module["asm"]["cw_config_get_idx_mod"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_ind_size = Module["_cw_config_set_ind_size"] = function() {
+  return (_cw_config_set_ind_size = Module["_cw_config_set_ind_size"] = Module["asm"]["cw_config_set_ind_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_ind_size = Module["_cw_config_get_ind_size"] = function() {
+  return (_cw_config_get_ind_size = Module["_cw_config_get_ind_size"] = Module["asm"]["cw_config_get_ind_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_dir_size = Module["_cw_config_set_dir_size"] = function() {
+  return (_cw_config_set_dir_size = Module["_cw_config_set_dir_size"] = Module["asm"]["cw_config_set_dir_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_dir_size = Module["_cw_config_get_dir_size"] = function() {
+  return (_cw_config_get_dir_size = Module["_cw_config_get_dir_size"] = Module["asm"]["cw_config_get_dir_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_mem_size = Module["_cw_config_set_mem_size"] = function() {
+  return (_cw_config_set_mem_size = Module["_cw_config_set_mem_size"] = Module["asm"]["cw_config_set_mem_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_mem_size = Module["_cw_config_get_mem_size"] = function() {
+  return (_cw_config_get_mem_size = Module["_cw_config_get_mem_size"] = Module["asm"]["cw_config_get_mem_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_cycle_to_die = Module["_cw_config_set_cycle_to_die"] = function() {
+  return (_cw_config_set_cycle_to_die = Module["_cw_config_set_cycle_to_die"] = Module["asm"]["cw_config_set_cycle_to_die"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_cycle_to_die = Module["_cw_config_get_cycle_to_die"] = function() {
+  return (_cw_config_get_cycle_to_die = Module["_cw_config_get_cycle_to_die"] = Module["asm"]["cw_config_get_cycle_to_die"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_cycle_delta = Module["_cw_config_set_cycle_delta"] = function() {
+  return (_cw_config_set_cycle_delta = Module["_cw_config_set_cycle_delta"] = Module["asm"]["cw_config_set_cycle_delta"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_cycle_delta = Module["_cw_config_get_cycle_delta"] = function() {
+  return (_cw_config_get_cycle_delta = Module["_cw_config_get_cycle_delta"] = Module["asm"]["cw_config_get_cycle_delta"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_set_nbr_live = Module["_cw_config_set_nbr_live"] = function() {
+  return (_cw_config_set_nbr_live = Module["_cw_config_set_nbr_live"] = Module["asm"]["cw_config_set_nbr_live"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_config_get_nbr_live = Module["_cw_config_get_nbr_live"] = function() {
+  return (_cw_config_get_nbr_live = Module["_cw_config_get_nbr_live"] = Module["asm"]["cw_config_get_nbr_live"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_sizeof = Module["_cw_program_def_sizeof"] = function() {
+  return (_cw_program_def_sizeof = Module["_cw_program_def_sizeof"] = Module["asm"]["cw_program_def_sizeof"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_alloc = Module["_cw_program_def_alloc"] = function() {
+  return (_cw_program_def_alloc = Module["_cw_program_def_alloc"] = Module["asm"]["cw_program_def_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_free = Module["_cw_program_def_free"] = function() {
+  return (_cw_program_def_free = Module["_cw_program_def_free"] = Module["asm"]["cw_program_def_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_set_prog_number = Module["_cw_program_def_set_prog_number"] = function() {
+  return (_cw_program_def_set_prog_number = Module["_cw_program_def_set_prog_number"] = Module["asm"]["cw_program_def_set_prog_number"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_get_prog_number = Module["_cw_program_def_get_prog_number"] = function() {
+  return (_cw_program_def_get_prog_number = Module["_cw_program_def_get_prog_number"] = Module["asm"]["cw_program_def_get_prog_number"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_set_load_address = Module["_cw_program_def_set_load_address"] = function() {
+  return (_cw_program_def_set_load_address = Module["_cw_program_def_set_load_address"] = Module["asm"]["cw_program_def_set_load_address"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_get_load_address = Module["_cw_program_def_get_load_address"] = function() {
+  return (_cw_program_def_get_load_address = Module["_cw_program_def_get_load_address"] = Module["asm"]["cw_program_def_get_load_address"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_set_data = Module["_cw_program_def_set_data"] = function() {
+  return (_cw_program_def_set_data = Module["_cw_program_def_set_data"] = Module["asm"]["cw_program_def_set_data"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_get_data = Module["_cw_program_def_get_data"] = function() {
+  return (_cw_program_def_get_data = Module["_cw_program_def_get_data"] = Module["asm"]["cw_program_def_get_data"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_set_size = Module["_cw_program_def_set_size"] = function() {
+  return (_cw_program_def_set_size = Module["_cw_program_def_set_size"] = Module["asm"]["cw_program_def_set_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_def_get_size = Module["_cw_program_def_get_size"] = function() {
+  return (_cw_program_def_get_size = Module["_cw_program_def_get_size"] = Module["asm"]["cw_program_def_get_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_sizeof = Module["_cw_program_sizeof"] = function() {
+  return (_cw_program_sizeof = Module["_cw_program_sizeof"] = Module["asm"]["cw_program_sizeof"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_alloc = Module["_cw_program_alloc"] = function() {
+  return (_cw_program_alloc = Module["_cw_program_alloc"] = Module["asm"]["cw_program_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_free = Module["_cw_program_free"] = function() {
+  return (_cw_program_free = Module["_cw_program_free"] = Module["asm"]["cw_program_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_set_name = Module["_cw_program_set_name"] = function() {
+  return (_cw_program_set_name = Module["_cw_program_set_name"] = Module["asm"]["cw_program_set_name"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_get_name = Module["_cw_program_get_name"] = function() {
+  return (_cw_program_get_name = Module["_cw_program_get_name"] = Module["asm"]["cw_program_get_name"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_set_comment = Module["_cw_program_set_comment"] = function() {
+  return (_cw_program_set_comment = Module["_cw_program_set_comment"] = Module["asm"]["cw_program_set_comment"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_get_comment = Module["_cw_program_get_comment"] = function() {
+  return (_cw_program_get_comment = Module["_cw_program_get_comment"] = Module["asm"]["cw_program_get_comment"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_program_get_prog_number = Module["_cw_program_get_prog_number"] = function() {
+  return (_cw_program_get_prog_number = Module["_cw_program_get_prog_number"] = Module["asm"]["cw_program_get_prog_number"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_sizeof = Module["_cw_core_sizeof"] = function() {
+  return (_cw_core_sizeof = Module["_cw_core_sizeof"] = Module["asm"]["cw_core_sizeof"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_alloc = Module["_cw_core_alloc"] = function() {
+  return (_cw_core_alloc = Module["_cw_core_alloc"] = Module["asm"]["cw_core_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_free = Module["_cw_core_free"] = function() {
+  return (_cw_core_free = Module["_cw_core_free"] = Module["asm"]["cw_core_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_set_regs_pc = Module["_cw_core_set_regs_pc"] = function() {
+  return (_cw_core_set_regs_pc = Module["_cw_core_set_regs_pc"] = Module["asm"]["cw_core_set_regs_pc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_get_regs_pc = Module["_cw_core_get_regs_pc"] = function() {
+  return (_cw_core_get_regs_pc = Module["_cw_core_get_regs_pc"] = Module["asm"]["cw_core_get_regs_pc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_get_regs_regs = Module["_cw_core_get_regs_regs"] = function() {
+  return (_cw_core_get_regs_regs = Module["_cw_core_get_regs_regs"] = Module["asm"]["cw_core_get_regs_regs"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_set_regs_zero = Module["_cw_core_set_regs_zero"] = function() {
+  return (_cw_core_set_regs_zero = Module["_cw_core_set_regs_zero"] = Module["asm"]["cw_core_set_regs_zero"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_get_regs_zero = Module["_cw_core_get_regs_zero"] = function() {
+  return (_cw_core_get_regs_zero = Module["_cw_core_get_regs_zero"] = Module["asm"]["cw_core_get_regs_zero"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_set_state_timeout = Module["_cw_core_set_state_timeout"] = function() {
+  return (_cw_core_set_state_timeout = Module["_cw_core_set_state_timeout"] = Module["asm"]["cw_core_set_state_timeout"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_get_state_timeout = Module["_cw_core_get_state_timeout"] = function() {
+  return (_cw_core_get_state_timeout = Module["_cw_core_get_state_timeout"] = Module["asm"]["cw_core_get_state_timeout"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_set_state_age = Module["_cw_core_set_state_age"] = function() {
+  return (_cw_core_set_state_age = Module["_cw_core_set_state_age"] = Module["asm"]["cw_core_set_state_age"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_get_state_age = Module["_cw_core_get_state_age"] = function() {
+  return (_cw_core_get_state_age = Module["_cw_core_get_state_age"] = Module["asm"]["cw_core_get_state_age"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_set_cache_instruct = Module["_cw_core_set_cache_instruct"] = function() {
+  return (_cw_core_set_cache_instruct = Module["_cw_core_set_cache_instruct"] = Module["asm"]["cw_core_set_cache_instruct"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_core_get_cache_instruct = Module["_cw_core_get_cache_instruct"] = function() {
+  return (_cw_core_get_cache_instruct = Module["_cw_core_get_cache_instruct"] = Module["asm"]["cw_core_get_cache_instruct"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_sizeof = Module["_cw_vm_sizeof"] = function() {
+  return (_cw_vm_sizeof = Module["_cw_vm_sizeof"] = Module["asm"]["cw_vm_sizeof"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_alloc = Module["_cw_vm_alloc"] = function() {
+  return (_cw_vm_alloc = Module["_cw_vm_alloc"] = Module["asm"]["cw_vm_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_free = Module["_cw_vm_free"] = function() {
+  return (_cw_vm_free = Module["_cw_vm_free"] = Module["asm"]["cw_vm_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_get_config = Module["_cw_vm_get_config"] = function() {
+  return (_cw_vm_get_config = Module["_cw_vm_get_config"] = Module["asm"]["cw_vm_get_config"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_set_cycle_to_die = Module["_cw_vm_set_cycle_to_die"] = function() {
+  return (_cw_vm_set_cycle_to_die = Module["_cw_vm_set_cycle_to_die"] = Module["asm"]["cw_vm_set_cycle_to_die"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_get_cycle_to_die = Module["_cw_vm_get_cycle_to_die"] = function() {
+  return (_cw_vm_get_cycle_to_die = Module["_cw_vm_get_cycle_to_die"] = Module["asm"]["cw_vm_get_cycle_to_die"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_set_mem = Module["_cw_vm_set_mem"] = function() {
+  return (_cw_vm_set_mem = Module["_cw_vm_set_mem"] = Module["asm"]["cw_vm_set_mem"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_get_mem = Module["_cw_vm_get_mem"] = function() {
+  return (_cw_vm_get_mem = Module["_cw_vm_get_mem"] = Module["asm"]["cw_vm_get_mem"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_set_prog_count = Module["_cw_vm_set_prog_count"] = function() {
+  return (_cw_vm_set_prog_count = Module["_cw_vm_set_prog_count"] = Module["asm"]["cw_vm_set_prog_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_get_prog_count = Module["_cw_vm_get_prog_count"] = function() {
+  return (_cw_vm_get_prog_count = Module["_cw_vm_get_prog_count"] = Module["asm"]["cw_vm_get_prog_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_set_programs = Module["_cw_vm_set_programs"] = function() {
+  return (_cw_vm_set_programs = Module["_cw_vm_set_programs"] = Module["asm"]["cw_vm_set_programs"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_get_programs = Module["_cw_vm_get_programs"] = function() {
+  return (_cw_vm_get_programs = Module["_cw_vm_get_programs"] = Module["asm"]["cw_vm_get_programs"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_set_state_cycles_since_check = Module["_cw_vm_set_state_cycles_since_check"] = function() {
+  return (_cw_vm_set_state_cycles_since_check = Module["_cw_vm_set_state_cycles_since_check"] = Module["asm"]["cw_vm_set_state_cycles_since_check"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_get_state_cycles_since_check = Module["_cw_vm_get_state_cycles_since_check"] = function() {
+  return (_cw_vm_get_state_cycles_since_check = Module["_cw_vm_get_state_cycles_since_check"] = Module["asm"]["cw_vm_get_state_cycles_since_check"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_set_state_live_calls = Module["_cw_vm_set_state_live_calls"] = function() {
+  return (_cw_vm_set_state_live_calls = Module["_cw_vm_set_state_live_calls"] = Module["asm"]["cw_vm_set_state_live_calls"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_get_state_live_calls = Module["_cw_vm_get_state_live_calls"] = function() {
+  return (_cw_vm_get_state_live_calls = Module["_cw_vm_get_state_live_calls"] = Module["asm"]["cw_vm_get_state_live_calls"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */

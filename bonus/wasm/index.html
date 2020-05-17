@@ -1,25 +1,123 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>The Future.</title>
-    </head>
-    <body>
-        Welcome to the future.
-        <script src="./libcorewar.js"></script>
-        <script>
-            Module.onRuntimeInitialized = async _ => {
-                const cw = {
-                    vm: {
-                        new: Module.cwrap("cw_vm_new", "number",
-                            ["number", "number", "number"]),
-                        destroy: Module.cwrap("cw_vm_new", null, ["number"]),
-                    }
-                };
-                console.log("LOADED!!");
-                console.log(cw);
-            };
-        </script>
-    </body>
+  <head>
+    <meta charset="utf-8">
+    <title>The Future.</title>
+    <style>
+      body {
+        max-width: 800px;
+        margin: auto;
+        background: #181a1b;
+        color: #eee;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .settings {
+        display: table;
+      }
+
+      .settings > div {
+        display: table-row;
+      }
+
+      .settings > div > label, #settings > div > input {
+        display: table-cell;
+      }
+
+      #console {
+        padding: 16px;
+        background: #1d1f20;
+        color: #d6d3cd;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to The Future&#8482;.</h1>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <div class="settings">
+              <div>
+                <label for="prog_name_length">prog_name_length:</label>
+                <input id="prog_name_length" type="number" name="prog_name_length" value="128" required>
+              </div>
+              <div>
+                <label for="comment_length">comment_length:</label>
+                <input id="comment_length" type="number" name="comment_length" value="2048" required>
+              </div>
+              <div>
+                <label for="corewar_exec_magic">corewar_exec_magic:</label>
+                <input id="corewar_exec_magic" type="number" name="corewar_exec_magic" value="15369203" required>
+              </div>
+              <div>
+                <label for="reg_size">reg_size:</label>
+                <input id="reg_size" type="number" name="reg_size" value="4" required>
+              </div>
+              <div>
+                <label for="reg_count">reg_count:</label>
+                <input id="reg_count" type="number" name="reg_count" value="16" required>
+              </div>
+              <div>
+                <label for="idx_mod">idx_mod:</label>
+                <input id="idx_mod" type="number" name="idx_mod" value="512" required>
+              </div>
+              <div>
+                <label for="ind_size">ind_size:</label>
+                <input id="ind_size" type="number" name="ind_size" value="2" required>
+              </div>
+              <div>
+                <label for="dir_size">dir_size:</label>
+                <input id="dir_size" type="number" name="dir_size" value="4" required>
+              </div>
+              <div>
+                <label for="mem_size">mem_size:</label>
+                <input id="mem_size" type="number" name="mem_size" value="6144" required>
+              </div>
+              <div>
+                <label for="cycle_to_die">cycle_to_die:</label>
+                <input id="cycle_to_die" type="number" name="cycle_to_die" value="1536" required>
+              </div>
+              <div>
+                <label for="cycle_delta">cycle_delta:</label>
+                <input id="cycle_delta" type="number" name="cycle_delta" value="5" required>
+              </div>
+              <div>
+                <label for="nbr_live">nbr_live:</label>
+                <input id="nbr_live" type="number" name="nbr_live" value="40" required>
+              </div>
+              <input id="run_button" type="submit" value="Fight!" disabled>
+            </div>
+          </td>
+          <td>
+            <div class="settings">
+              <div>
+                <label for="champ1">champ1:</label>
+                <input id="champ1" type="file" name="champ1" required>
+              </div>
+              <div>
+                <label for="champ2">champ1:</label>
+                <input id="champ2" type="file" name="champ2" required>
+              </div>
+              <div>
+                <label for="champ3">champ1:</label>
+                <input id="champ3" type="file" name="champ3">
+              </div>
+              <div>
+                <label for="champ4">champ1:</label>
+                <input id="champ4" type="file" name="champ4">
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pre id="console"></pre>
+    <script src="./libcorewar.js"></script>
+    <script type="module" src="./demo.js"></script>
+  </body>
 </html>

@@ -63,6 +63,7 @@ src:
   - ./src/vm/destroy.c
   - ./src/vm/new.c
   - ./src/rw_int.c
+  - ./src/type_exports.c
 
 tests_src:
   - ./tests/callbacks.c
