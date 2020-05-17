@@ -39,6 +39,7 @@ typedef struct {
     char *name;
     char *comment;
     const u32_t prog_number;
+    usize_t last_live;
 } cw_program_t;
 
 typedef struct {
@@ -50,6 +51,7 @@ typedef struct {
     struct {
         usize_t timeout;
         u64_t age;
+        u64_t owner;
     } state;
     struct {
         OPT(cw_instr) instruct;
@@ -79,20 +81,47 @@ struct cw_vm {
     struct {
         u64_t cycles_since_check;
         u64_t live_calls;
+        usize_t cycles;
     } state;
     struct {
-        list_t *all;
+        list_t *ops;
         list_t *opcodes[CW_OPCODE_LAST + 1];
+        list_t *io_events;
     } callbacks;
 };
+
+typedef enum {
+    CW_IO_WRITE,
+    CW_IO_READ
+} cw_io_event_type_t;
+
+typedef struct {
+    usize_t size;
+    usize_t addr;
+} cw_io_event_t;
+
+typedef bool (cw_io_event_callback_fn_t)(const cw_vm_t*, void*, const
+    cw_core_t *, const cw_io_event_t*);
+
+typedef struct cw_io_event_callback{
+    cw_io_event_callback_fn_t *fn;
+    void *data;
+    cw_io_event_type_t type;
+} cw_io_event_callback_t;
 
 /*
 ** Creating and destroying the VM
 */
 
-cw_vm_t *cw_vm_new(const cw_config_t *config, const cw_program_def_t *defs,
-    usize_t prog_count);
+cw_vm_t *cw_vm_new(const cw_config_t *config);
 void cw_vm_destroy(cw_vm_t *self);
+
+/*
+** Load Programms in the vm;
+*/
+
+bool cw_vm_load_programs(cw_vm_t *self, const cw_program_def_t *defs,
+    usize_t n);
 
 /*
 ** Running the VM
@@ -108,6 +137,15 @@ bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     cw_instr_callback_fn_t *fn, void*);
 bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     cw_instr_callback_fn_t *fn);
+
+/*
+** IO Callbacks
+*/
+
+bool cw_vm_add_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
+    cw_io_event_callback_fn_t *fn, void*);
+bool cw_vm_remove_io_event_callback(cw_vm_t *self,
+    cw_io_event_callback_fn_t *fn);
 
 /*
 ** Utilities

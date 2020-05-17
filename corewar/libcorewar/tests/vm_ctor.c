@@ -57,8 +57,9 @@ static bool load_prog(const char *path, OPT(usize) load_addr, OPT(u32) prog_num,
 
 Test(vm_ctor, no_program)
 {
-    cw_vm_t *vm = cw_vm_new(&DEFAULT_CONFIG, NULL, 0);
+    cw_vm_t *vm = cw_vm_new(&DEFAULT_CONFIG);
 
+    cw_vm_load_programs(vm, NULL, 0);
     cw_vm_destroy(vm);
 }
 
@@ -70,7 +71,8 @@ Test(vm_ctor, one_program)
 
     err = load_prog("tests/champs/tyron.cor", NONE(usize), NONE(u32), &def);
     cr_assert_not(err);
-    vm = cw_vm_new(&DEFAULT_CONFIG, &def, 1);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cw_vm_load_programs(vm, &def, 1);
     cw_vm_destroy(vm);
 }
 
@@ -80,10 +82,12 @@ Test(vm_ctor, one_program_load)
     cw_vm_t *vm = NULL;
 
     load_prog("tests/champs/tyron.cor", NONE(usize), NONE(u32), &def);
-    vm = cw_vm_new(&DEFAULT_CONFIG, &def, 1);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cw_vm_load_programs(vm, &def, 1);
+
     cr_assert_arr_eq(&vm->mem[0], &def.data[DATA_OFFSET],
         def.size - DATA_OFFSET);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
     cw_vm_destroy(vm);
 }
 
@@ -93,11 +97,12 @@ Test(vm_ctor, one_program_load_wrap)
     cw_vm_t *vm = NULL;
 
     load_prog("tests/champs/tyron.cor", SOME(usize, 6139), NONE(u32), &def);
-    vm = cw_vm_new(&DEFAULT_CONFIG, &def, 1);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cw_vm_load_programs(vm, &def, 1);
     cr_assert_arr_eq(&vm->mem[6139], &def.data[DATA_OFFSET], 4);
     cr_assert_arr_eq(&vm->mem[0], &def.data[DATA_OFFSET + 5],
         def.size - DATA_OFFSET - 4);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
     cw_vm_destroy(vm);
 }
 
@@ -110,7 +115,8 @@ Test(vm_ctor, two_program)
     err = load_prog("tests/champs/tyron.cor", NONE(usize), NONE(u32), &def[0]);
     err |= load_prog("tests/champs/bill.cor", NONE(usize), NONE(u32), &def[1]);
     cr_assert_not(err);
-    vm = cw_vm_new(&DEFAULT_CONFIG, def, 2);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cw_vm_load_programs(vm, def, 2);
     cw_vm_destroy(vm);
 }
 
@@ -121,13 +127,14 @@ Test(vm_ctor, two_program_load)
 
     load_prog("tests/champs/tyron.cor", NONE(usize), NONE(u32), &def[0]);
     load_prog("tests/champs/bill.cor", NONE(usize), NONE(u32), &def[1]);
-    vm = cw_vm_new(&DEFAULT_CONFIG, def, 2);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cw_vm_load_programs(vm, def, 2);
     cr_assert_arr_eq(&vm->mem[0], &def[0].data[DATA_OFFSET],
         def[0].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 2],
         &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
-    cr_assert_eq(vm->programs[1].prog_number, 1);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
+    cr_assert_eq(vm->programs[1].prog_number, 2);
     cw_vm_destroy(vm);
 }
 
@@ -139,16 +146,17 @@ Test(vm_ctor, three_program_load)
     load_prog("tests/champs/tyron.cor", NONE(usize), NONE(u32), &def[0]);
     load_prog("tests/champs/bill.cor", NONE(usize), NONE(u32), &def[1]);
     load_prog("tests/champs/42.cor", NONE(usize), NONE(u32), &def[2]);
-    vm = cw_vm_new(&DEFAULT_CONFIG, def, 3);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cw_vm_load_programs(vm, def, 3);
     cr_assert_arr_eq(&vm->mem[0], &def[0].data[DATA_OFFSET],
         def[0].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 3],
         &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 3 * 2],
         &def[2].data[DATA_OFFSET], def[2].size - DATA_OFFSET);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
-    cr_assert_eq(vm->programs[1].prog_number, 1);
-    cr_assert_eq(vm->programs[2].prog_number, 2);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
+    cr_assert_eq(vm->programs[1].prog_number, 2);
+    cr_assert_eq(vm->programs[2].prog_number, 3);
     cw_vm_destroy(vm);
 }
 
@@ -160,16 +168,17 @@ Test(vm_ctor, three_program_load_addr)
     load_prog("tests/champs/tyron.cor", NONE(usize), NONE(u32), &def[0]);
     load_prog("tests/champs/bill.cor", NONE(usize), NONE(u32), &def[1]);
     load_prog("tests/champs/42.cor", SOME(usize, 621), NONE(u32), &def[2]);
-    vm = cw_vm_new(&DEFAULT_CONFIG, def, 3);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cw_vm_load_programs(vm, def, 3);
     cr_assert_arr_eq(&vm->mem[0], &def[0].data[DATA_OFFSET],
         def[0].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[vm->config.mem_size / 3],
         &def[1].data[DATA_OFFSET], def[1].size - DATA_OFFSET);
     cr_assert_arr_eq(&vm->mem[621],
         &def[2].data[DATA_OFFSET], def[2].size - DATA_OFFSET);
-    cr_assert_eq(vm->programs[0].prog_number, 0);
-    cr_assert_eq(vm->programs[1].prog_number, 1);
-    cr_assert_eq(vm->programs[2].prog_number, 2);
+    cr_assert_eq(vm->programs[0].prog_number, 1);
+    cr_assert_eq(vm->programs[1].prog_number, 2);
+    cr_assert_eq(vm->programs[2].prog_number, 3);
     cw_vm_destroy(vm);
 }
 
@@ -180,8 +189,8 @@ Test(vm_ctor, overlap)
 
     load_prog("tests/champs/tyron.cor", SOME(usize, 1), NONE(u32), &def[0]);
     load_prog("tests/champs/bill.cor", SOME(usize, 1), NONE(u32), &def[1]);
-    vm = cw_vm_new(&DEFAULT_CONFIG, def, 2);
-    cr_assert_eq(vm, NULL);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cr_assert_eq(cw_vm_load_programs(vm, def, 2), 1);
 }
 
 Test(vm_ctor, invalid_size)
@@ -190,7 +199,7 @@ Test(vm_ctor, invalid_size)
     cw_vm_t *vm = NULL;
 
     load_prog("tests/champs/invalid_size.cor", SOME(usize, 1), NONE(u32), &def[0]);
-    vm = cw_vm_new(&DEFAULT_CONFIG, def, 1);
-    cr_assert_eq(vm, NULL);
+    vm = cw_vm_new(&DEFAULT_CONFIG);
+    cr_assert_eq( cw_vm_load_programs(vm, def, 1), true);
+    cw_vm_destroy(vm);
 }
-

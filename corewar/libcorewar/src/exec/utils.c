@@ -30,7 +30,8 @@ u64_t cw_vm__exec_plval(const cw_vm_t *vm, const cw_core_t *core,
     case CW_PARAM_REG:
         return (core->regs.regs[param->u.reg]);
     case CW_PARAM_IND:
-        return (cw_vm__read_int(vm, core->regs.pc + param->u.val, size));
+        return (cw_vm__read_int_with_callbacks(vm, core->regs.pc +
+            param->u.val, size, core));
     case CW_PARAM_DIR:
         return (param->u.val);
     }
@@ -44,8 +45,8 @@ u64_t cw_vm__exec_pval(const cw_vm_t *vm, const cw_core_t *core,
     case CW_PARAM_REG:
         return (core->regs.regs[param->u.reg]);
     case CW_PARAM_IND:
-        return (cw_vm__read_int(vm,
-            core->regs.pc + param->u.val % vm->config.idx_mod, size));
+        return (cw_vm__read_int_with_callbacks(vm, core->regs.pc +
+            param->u.val % vm->config.idx_mod, size, core));
     case CW_PARAM_DIR:
         return (param->u.val);
     }

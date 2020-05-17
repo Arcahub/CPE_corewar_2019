@@ -74,7 +74,8 @@ static void test_champ(cw_program_def_t *defs, usize_t count)
     bufwriter_t *out = cstrwriter_new(&output, 64);
     cw_vm_t *vm = NULL;
 
-    vm = cw_vm_new(&VM_CONF, defs, count);
+    vm = cw_vm_new(&VM_CONF);
+    cw_vm_load_programs(vm, defs, count);
     cr_assert_not_null(vm);
     cw_vm_add_instr_callback(vm, SOME(cw_opcode, CW_INSTR_AFF), &handle_aff,
         out);
