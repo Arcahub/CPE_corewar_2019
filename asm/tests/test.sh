@@ -6,7 +6,6 @@
 ##
 
 CHAMP_SRC_DIR='./champs'
-CWD='asm/tests'
 
 REF_BINARY='asm'
 MY_ASM_PATH="../asm"
@@ -69,7 +68,7 @@ run() {
     done
 }
 
-cd $CWD
+cd $(dirname "$0")
 
 if [ ! -d $CHAMP_SRC_DIR ]
 then
