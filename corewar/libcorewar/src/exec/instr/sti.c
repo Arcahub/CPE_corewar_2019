@@ -17,6 +17,6 @@ void cw_vm__exec__sti(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
     i64_t b = cw_vm__exec_pval(vm, core, &instr->args[2], vm->config.ind_size);
     i64_t dst = core->regs.pc + (a + b) % vm->config.idx_mod;
 
-    cw_vm__write_int(vm, val, dst, vm->config.reg_size);
+    cw_vm__write_int(vm, val, dst, vm->config.reg_size, core);
     core->regs.pc = instr->end;
 }

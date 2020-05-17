@@ -58,7 +58,9 @@ src:
   - ./src/run/update.c
   - ./src/vm/compute_addr.c
   - ./src/vm/callback.c
+  - ./src/vm/io_events.c
   - ./src/vm/check_prog.c
+  - ./src/vm/load_programs.c
   - ./src/vm/create_core.c
   - ./src/vm/destroy.c
   - ./src/vm/new.c
@@ -66,7 +68,8 @@ src:
   - ./src/type_exports.c
 
 tests_src:
-  - ./tests/callbacks.c
+  - ./tests/callbacks_io_events.c
+  - ./tests/callbacks_ops.c
   - ./tests/pcb_check.c
   - ./tests/rw_int.c
   - ./tests/test_champs.c

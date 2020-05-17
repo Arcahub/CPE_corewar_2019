@@ -19,8 +19,10 @@ allowed:
   - malloc free
   - write read open close
 
-src:
+main:
   - ./src/main.c
+
+src:
   - ./src/args_parser/add_bind.c
   - ./src/args_parser/init.c
   - ./src/args_parser/destroy.c

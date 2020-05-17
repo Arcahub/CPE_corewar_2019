@@ -5,6 +5,7 @@
 ** run
 */
 
+#include "my/io.h"
 #include "corewar-cli/corewar-cli.h"
 #include "corewar/corewar.h"
 #include "corewar-cli/op.h"
@@ -24,6 +25,26 @@ static const cw_config_t VM_CONF = {
     .nbr_live = NBR_LIVE,
 };
 
+void cw_corewar_cli_print_winner(cw_vm_t *vm)
+{
+    u64_t count = 0;
+    u64_t prog_number = 0;
+    usize_t last_live = 0;
+
+    for (u64_t i = 0; i < vm->prog_count; i++) {
+        if (vm->programs[i].last_live > last_live) {
+            prog_number = i;
+            last_live = vm->programs[i].last_live;
+            count = 0;
+        } else if (vm->programs[i].last_live == last_live)
+            count += 1;
+    }
+    if (count != 0)
+        return;
+    my_printf("The player %d(%s)has won.\n", prog_number,
+        vm->programs[prog_number].name);
+}
+
 static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,
     cw_vm_t *vm)
 {
@@ -33,6 +54,7 @@ static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,
         exit_status = cw_vm_run(vm, self->dump_cycles);
         cw_corewar_cli_dump(vm);
     }
+    cw_corewar_cli_print_winner(vm);
     cw_vm_destroy(vm);
     if (exit_status)
         return (0);
@@ -46,6 +68,7 @@ static u64_t cw_corewar_cli_run_without_dump_cycles(cw_corewar_cli_t *self,
 
     (void)(self);
     exit_status = cw_vm_run(vm, self->dump_cycles);
+    cw_corewar_cli_print_winner(vm);
     cw_vm_destroy(vm);
     if (exit_status)
         return (0);
@@ -58,15 +81,22 @@ cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
         cli->progs_list->len);
     cw_program_def_t *prog = NULL;
     usize_t index = 0;
+    cw_vm_t *vm = cw_vm_new(&VM_CONF);
 
-    if (progs_list == NULL)
+    if (progs_list == NULL || vm == NULL) {
+        cw_vm_destroy(vm);
+        my_free(progs_list);
         return (NULL);
+    }
     LIST_FOR_EACH(cli->progs_list, iter) {
         prog = iter.v;
-        progs_list[index] = *prog;
-        index++;
+        progs_list[index++] = *prog;
     }
-    return (cw_vm_new(&VM_CONF, progs_list, cli->progs_list->len));
+    if (cw_vm_load_programs(vm, progs_list, cli->progs_list->len)) {
+        cw_vm_destroy(vm);
+        return (NULL);
+    }
+    return (vm);
 }
 
 u64_t cw_corewar_cli_run(cw_corewar_cli_t *self)

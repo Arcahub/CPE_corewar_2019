@@ -27,7 +27,7 @@ bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
             my_free(callback);
             return (true);
         }
-    } else if (list_push_front(self->callbacks.all, callback)) {
+    } else if (list_push_front(self->callbacks.ops, callback)) {
         my_free(callback);
         return (true);
     }
@@ -45,7 +45,7 @@ bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
             return (true);
         callback_list = self->callbacks.opcodes[opcode_filter.v];
     } else
-        callback_list = self->callbacks.all;
+        callback_list = self->callbacks.ops;
     LIST_FOR_EACH(callback_list, iter) {
         if (((cw_instr_callback_t*) iter.v)->fn == fn) {
             list_remove(callback_list, iter.i);
@@ -56,13 +56,13 @@ bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     return (false);
 }
 
-bool cw_vm__trigger_callbacks(cw_vm_t *vm, cw_core_t *core,
+bool cw_vm__trigger_callbacks_ops(cw_vm_t *vm, cw_core_t *core,
     const cw_instr_t *instr)
 {
     bool err = false;
     cw_instr_callback_t *cb = NULL;
 
-    LIST_FOR_EACH_AND(vm->callbacks.all, iter, !err) {
+    LIST_FOR_EACH_AND(vm->callbacks.ops, iter, !err) {
         cb = iter.v;
         err = cb->fn(cb->data, vm, core, instr);
     }
