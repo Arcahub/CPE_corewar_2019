@@ -5,9 +5,11 @@
 ** run
 */
 
+#include <unistd.h>
 #include "corewar-gui/corewar-cli.h"
 #include "corewar-gui/corewar.h"
 #include "corewar-gui/op.h"
+#include "corewar-gui/gui.h"
 
 static const cw_config_t VM_CONF = {
     .prog_name_length = PROG_NAME_LENGTH,
@@ -24,28 +26,17 @@ static const cw_config_t VM_CONF = {
     .nbr_live = NBR_LIVE,
 };
 
-static u64_t cw_corewar_cli_run_with_dump_cycles(cw_corewar_cli_t *self,
-    cw_vm_t *vm)
-{
-    bool exit_status = true;
-
-    while (exit_status) {
-        cw_corewar_cli_dump(vm);
-        exit_status = cw_vm_run(vm, self->dump_cycles);
-    }
-    cw_vm_destroy(vm);
-    if (exit_status)
-        return (0);
-    return (84);
-}
-
 static u64_t cw_corewar_cli_run_without_dump_cycles(cw_corewar_cli_t *self,
-    cw_vm_t *vm)
+    cw_vm_t *vm, cg_ui_t *ui)
 {
     bool exit_status = true;
 
     (void)(self);
-    exit_status = cw_vm_run(vm, self->dump_cycles);
+    while (true) {
+        cw_vm_run(vm, SOME(u64, 50));
+        cg_ui_update(ui, vm);
+        usleep(100000);
+    }
     cw_vm_destroy(vm);
     if (exit_status)
         return (0);
@@ -58,26 +49,26 @@ cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
         cli->progs_list->len);
     cw_program_def_t *prog = NULL;
     usize_t index = 0;
+    cw_vm_t *vm = NULL;
 
     if (progs_list == NULL)
         return (NULL);
     LIST_FOR_EACH(cli->progs_list, iter) {
         prog = iter.v;
-        progs_list[index] = *prog;
-        index++;
+        progs_list[index++] = *prog;
     }
-    return (cw_vm_new(&VM_CONF, progs_list, cli->progs_list->len));
+    vm = cw_vm_new(&VM_CONF);
+    cw_vm_load_programs(vm, progs_list, cli->progs_list->len);
+    return (vm);
 }
 
 u64_t cw_corewar_cli_run(cw_corewar_cli_t *self)
 {
     cw_vm_t *vm = cw_corewar_cli_create_vm(self);
+    cg_ui_t *ui = cg_ui_init();
 
     if (vm == NULL)
         return (84);
-    cw_corewar_cli_setup_callbacks(vm);
-    if (self->dump_cycles.is_some)
-        return (cw_corewar_cli_run_with_dump_cycles(self, vm));
-    else
-        return (cw_corewar_cli_run_without_dump_cycles(self, vm));
+    cw_corewar_cli_run_without_dump_cycles(self, vm, ui);
+    return (0);
 }

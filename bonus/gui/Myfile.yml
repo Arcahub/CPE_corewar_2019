@@ -14,6 +14,7 @@ namespace: corewar-gui
 dependencies:
   - libcorewar=master
   - libmy=master
+  - @libncurses
 
 allowed:
   - malloc free
@@ -25,12 +26,13 @@ src:
   - ./src/args_parser/init.c
   - ./src/args_parser/destroy.c
   - ./src/args_parser/run.c
+  - ./src/gui/init.c
+  - ./src/gui/update.c
   - ./src/cli/init.c
   - ./src/cli/destroy.c
   - ./src/cli/dump.c
   - ./src/cli/add_prog.c
   - ./src/cli/run.c
-  - ./src/cli/setup_callbacks.c
   - ./src/cli/parse/parse.c
   - ./src/cli/parse/parse_functions/get_champion_with_args.c
   - ./src/cli/parse/parse_functions/get_champion.c
