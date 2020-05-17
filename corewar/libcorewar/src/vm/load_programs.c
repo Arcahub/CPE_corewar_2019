@@ -5,7 +5,10 @@
 ** load_program
 */
 
+#include "my/my.h"
 #include "corewar/corewar.h"
+#include "../priv.h"
+#include "priv.h"
 
 static u32_t next_program_number(const cw_vm_t *self)
 {
@@ -39,7 +42,7 @@ static bool load_prog(cw_vm_t *self, cw_program_t *prog,
     for (usize_t i = start; i < prog_size; i++)
         if (self->mem[i % self->config.mem_size] != 0)
             return (true);
-    if (!cw_vm__add_core(self, pc, NONE(cw_core)))
+    if (cw_vm__add_core(self, pc, NONE(cw_core)))
         return (true);
     my_memcpy(&self->mem[start], &def->data[data_off], cut - start);
     my_memcpy(&self->mem[0], &def->data[data_off + cut - start], remaining);
@@ -70,7 +73,7 @@ static bool create_program(cw_vm_t *self, cw_program_t *prog,
     return (false);
 }
 
-bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
+bool cw_vm_load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     usize_t n)
 {
     bool err = false;

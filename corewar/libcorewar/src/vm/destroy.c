@@ -27,6 +27,16 @@ static OPT(i32) destroy_callback(void *ptr, void *element)
     return (NONE(i32));
 }
 
+static void destroy_cores(cw_vm_t *self)
+{
+    for (usize_t i = 0; self->cores && i < self->cores->len; i++)
+        cw_vm_destroy_core(self->cores->data[i]);
+    vec_destroy(self->cores);
+    for (usize_t i = 0; self->new_cores && i < self->new_cores->len; i++)
+        cw_vm_destroy_core(self->new_cores->data[i]);
+    vec_destroy(self->new_cores);
+}
+
 void cw_vm_destroy(cw_vm_t *self)
 {
     if (self == NULL)
@@ -35,13 +45,9 @@ void cw_vm_destroy(cw_vm_t *self)
     for (usize_t i = 0; self->programs && i < self->prog_count; i++)
         cw_vm_destroy_program(&self->programs[i]);
     my_free(self->programs);
-    for (usize_t i = 0; self->cores && i < self->cores->len; i++)
-        cw_vm_destroy_core(self->cores->data[i]);
-    vec_destroy(self->cores);
-    for (usize_t i = 0; self->new_cores && i < self->new_cores->len; i++)
-        cw_vm_destroy_core(self->new_cores->data[i]);
-    vec_destroy(self->new_cores);
+    destroy_cores(self);
     list_destroy_with(self->callbacks.ops, &destroy_callback, NULL);
+    list_destroy_with(self->callbacks.io_events, &destroy_callback, NULL);
     for (usize_t i = 0; i < CW_OPCODE_LAST + 1; i++)
         list_destroy_with(self->callbacks.opcodes[i], &destroy_callback, NULL);
     my_free(self);

@@ -28,12 +28,13 @@ bool cw_vm_add_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
     return (false);
 }
 
-bool cw_vm_remove_instr_callback(cw_vm_t *self, cw_instr_callback_fn_t *fn)
+bool cw_vm_remove_io_event_callback(cw_vm_t *self,
+    cw_io_event_callback_fn_t *fn)
 {
     list_t *callback_list = self->callbacks.io_events;
 
     LIST_FOR_EACH(callback_list, iter) {
-        if (((cw_instr_callback_t*) iter.v)->fn == fn) {
+        if (((cw_io_event_callback_t*) iter.v)->fn == fn) {
             list_remove(callback_list, iter.i);
             my_free(iter.v);
             break;
@@ -42,7 +43,7 @@ bool cw_vm_remove_instr_callback(cw_vm_t *self, cw_instr_callback_fn_t *fn)
     return (false);
 }
 
-bool cw_vm__trigger_callbacks_io_write(cw_vm_t *vm, cw_core_t *core,
+bool cw_vm__trigger_callbacks_io_write(const cw_vm_t *vm, const cw_core_t *core,
     usize_t addr, usize_t size)
 {
     bool err = false;
@@ -51,13 +52,14 @@ bool cw_vm__trigger_callbacks_io_write(cw_vm_t *vm, cw_core_t *core,
 
     LIST_FOR_EACH_AND(vm->callbacks.io_events, iter, !err) {
         cb = iter.v;
-        err = cb->fn(vm, cb->data, core, event);
+        if (cb->type == CW_IO_WRITE)
+            err = cb->fn(vm, cb->data, core, &event);
     }
     return (err);
 }
 
 
-bool cw_vm__trigger_callbacks_io_read(cw_vm_t *vm, cw_core_t *core,
+bool cw_vm__trigger_callbacks_io_read(const cw_vm_t *vm, const cw_core_t *core,
     usize_t addr, usize_t size)
 {
     bool err = false;
@@ -66,7 +68,8 @@ bool cw_vm__trigger_callbacks_io_read(cw_vm_t *vm, cw_core_t *core,
 
     LIST_FOR_EACH_AND(vm->callbacks.io_events, iter, !err) {
         cb = iter.v;
-        err = cb->fn(vm, cb->data, core, event);
+        if (cb->type == CW_IO_READ)
+            err = cb->fn(vm, cb->data, core, &event);
     }
     return (err);
 }

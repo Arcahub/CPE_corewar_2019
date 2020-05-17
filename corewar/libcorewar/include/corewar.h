@@ -98,8 +98,8 @@ typedef struct {
     usize_t addr;
 } cw_io_event_t;
 
-typedef bool (cw_io_event_callback_fn_t)(cw_vm_t*, void*, cw_core_t *,
-    cw_io_event_t*);
+typedef bool (cw_io_event_callback_fn_t)(const cw_vm_t*, void*, const
+    cw_core_t *, const cw_io_event_t*);
 
 typedef struct cw_io_event_callback{
     cw_io_event_callback_fn_t *fn;
@@ -118,7 +118,7 @@ void cw_vm_destroy(cw_vm_t *self);
 ** Load Programms in the vm;
 */
 
-bool load_programs(cw_vm_t *self, const cw_program_def_t *defs,
+bool cw_vm_load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     usize_t n);
 
 /*
@@ -142,7 +142,7 @@ bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
 
 bool cw_vm_add_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
     cw_io_event_callback_fn_t *fn, void*);
-bool cw_vm_remove_io_event_callback(cw_vm_t *self, cw_io_event_type_t type,
+bool cw_vm_remove_io_event_callback(cw_vm_t *self,
     cw_io_event_callback_fn_t *fn);
 
 /*
