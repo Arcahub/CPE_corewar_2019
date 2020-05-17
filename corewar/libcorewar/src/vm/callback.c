@@ -8,7 +8,6 @@
 #include "corewar/corewar.h"
 #include "my/my.h"
 
-CW_EXPORT
 bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     cw_instr_callback_fn_t *fn, void *user_data)
 {
@@ -34,7 +33,6 @@ bool cw_vm_add_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     return (false);
 }
 
-CW_EXPORT
 bool cw_vm_remove_instr_callback(cw_vm_t *self, OPT(cw_opcode) opcode_filter,
     cw_instr_callback_fn_t *fn)
 {

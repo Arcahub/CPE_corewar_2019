@@ -1949,6 +1949,21 @@ var _cw_vm_remove_instr_callback = Module["_cw_vm_remove_instr_callback"] = func
 };
 
 /** @type {function(...*):?} */
+var _cw_vm_add_io_event_callback = Module["_cw_vm_add_io_event_callback"] = function() {
+  return (_cw_vm_add_io_event_callback = Module["_cw_vm_add_io_event_callback"] = Module["asm"]["cw_vm_add_io_event_callback"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_remove_io_event_callback = Module["_cw_vm_remove_io_event_callback"] = function() {
+  return (_cw_vm_remove_io_event_callback = Module["_cw_vm_remove_io_event_callback"] = Module["asm"]["cw_vm_remove_io_event_callback"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _cw_vm_load_programs = Module["_cw_vm_load_programs"] = function() {
+  return (_cw_vm_load_programs = Module["_cw_vm_load_programs"] = Module["asm"]["cw_vm_load_programs"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
 var _cw_vm_destroy = Module["_cw_vm_destroy"] = function() {
   return (_cw_vm_destroy = Module["_cw_vm_destroy"] = Module["asm"]["cw_vm_destroy"]).apply(null, arguments);
 };

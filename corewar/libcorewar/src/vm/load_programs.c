@@ -73,7 +73,6 @@ static bool create_program(cw_vm_t *self, cw_program_t *prog,
     return (false);
 }
 
-CW_EXPORT
 bool cw_vm_load_programs(cw_vm_t *self, const cw_program_def_t *defs,
     usize_t n)
 {

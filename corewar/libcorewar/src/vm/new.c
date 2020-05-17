@@ -30,7 +30,6 @@ static bool cw_vm_do_alloc(cw_vm_t *self)
     return (err);
 }
 
-CW_EXPORT
 cw_vm_t *cw_vm_new(const cw_config_t *config)
 {
     cw_vm_t *self = my_calloc(1, sizeof(cw_vm_t));

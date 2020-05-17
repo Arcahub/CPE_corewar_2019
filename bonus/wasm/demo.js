@@ -37,11 +37,19 @@ function runDemo() {
 
   println(" ok!");
   print("Loading the VM...");
-  let vm = new VirtualMachine(config);
+  let vm = null;
+
+  try {
+    vm = new VirtualMachine(config);
+  } catch (e) {
+    println(" failed!");
+    return;
+  }
 
   println(" ok!");
+  console.log(vm, vm.config);
   print("Destroying the VM...");
-  vm.free();
+  vm.destroy();
   println(" ok!");
 }
 

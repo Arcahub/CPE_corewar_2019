@@ -1,55 +1,128 @@
 const API = {
-  cw_vm_new: Module.cwrap("cw_vm_new", "number", ["number", "number", "number"]),
+  cw_vm_new: Module.cwrap("cw_vm_new", "number", ["number"]),
   cw_vm_destroy: Module.cwrap("cw_vm_destroy",null, ["number"])
 };
 
-function type_bindgen(obj, name, fields) {
-  if (!API[name + "_alloc"])
-    API[name + "_alloc"] = Module.cwrap(name + "_alloc", "number", ["number"]);
-  if (!API[name + "_free"])
-    API[name + "_free"] = Module.cwrap(name + "_free", null, ["number"]);
+function get_api(name, ret_type, args) {
+  if (!API[name])
+    API[name] = Module.cwrap(name, ret_type, args);
+  return API[name];
+}
 
-  obj.raw = 0;
+function type_bindgen(cls, name, fields) {
+  let alloc = get_api(name + "_alloc", "number", ["number"]);
+  let free = get_api(name + "_free", null, ["number"]);
+  let sizeof = get_api(name + "_sizeof", "number");
+  let cached_sizeof = undefined;
 
-  obj.alloc = function(n) {
-    if (obj.raw != 0)
-      obj.free();
-    obj.raw = API[name + "_alloc"](n);
+  Object.defineProperty(cls, "sizeof", {
+    get() {
+      if (cached_sizeof)
+        return cached_sizeof;
+      try {
+        cached_sizeof = sizeof();
+      } catch (e) {
+        return undefined;
+      }
+      return cached_sizeof;
+    }
+  });
+
+  cls.wrap = function(raw) {
+    let element = Object.create(cls.prototype);
+
+    element.raw = raw;
+    return element;
   };
 
-  obj.free = function() {
-    API[name + "_free"](obj.raw);
+  cls.alloc = function(n) {
+    return alloc(n);
+  };
+
+  cls.wrap_new = function(n) {
+    return cls.wrap(cls.alloc(n));
+  };
+
+  cls.prototype.free = function() {
+    free(this.raw);
+  };
+
+  cls.prototype.idx = function(i) {
+    return cls.wrap(this.raw + cls.sizeof * i);
+  };
+
+  cls.prototype.detach = function() {
+    let obj = {};
+
+    for (let field of fields) {
+      let type = field[0];
+      let fname = field[1];
+      let is_const = field[2] === true;
+      let is_stack = field[3] === true;
+
+      obj[fname] = this[fname];
+    }
+
+    return obj;
   };
 
   for (let field of fields) {
-    let getter = Module.cwrap(name + "_get_" + field[1], field[0], ["number"]);
-    let setter = Module.cwrap(name + "_set_" + field[1], null, ["number", field[0]]);
+    let type = field[0];
+    let fname = field[1];
+    let is_const = field[2] === true;
+    let is_stack = field[3] === true;
 
-    Object.defineProperty(obj, field[1], {
-      get() { return getter(obj.raw); },
-      set(value) { return setter(obj.raw, value); },
-    });
+    if (typeof type == "string") {
+      let getter = get_api(name + "_get_" + fname, type, ["number"]);
+      let setter = is_const ? null : get_api(name + "_set_" + fname, null, ["number", type]);
+
+      Object.defineProperty(cls.prototype, fname, {
+        get() { return getter(this.raw); },
+        set(value) {
+          if (setter === null)
+            return false;
+          return setter(this.raw, value);
+        },
+      });
+    } else {
+      if (is_stack) {
+        let getter = get_api(name + "_get_" + fname, null, ["number", "number"]);
+        let setter = is_const ? null : get_api(name + "_set_" + fname, null, ["number", "number"]);
+
+        Object.defineProperty(cls.prototype, fname, {
+          get() {
+            let val = type.wrap_new(1);
+            getter(val.raw, this.raw);
+            let detached = val.detach();
+            val.free();
+            return detached;
+          },
+          set(value) {
+            if (setter === null)
+              return false;
+            return setter(this.raw, value.raw);
+          },
+        });
+      } else {
+        let getter = get_api(name + "_get_" + fname, "number", ["number"]);
+        let setter = is_const ? null : get_api(name + "_set_" + fname, null, ["number", "number"]);
+
+        Object.defineProperty(cls.prototype, fname, {
+          get() { return type.wrap(getter(this.raw)); },
+          set(value) {
+            if (setter === null)
+              return false;
+            return setter(this.raw, value.raw);
+          },
+        });
+      }
+    }
   }
 }
 
 export class Config {
   constructor(obj) {
-    type_bindgen(this, "cw_config", [
-      ["number", "prog_name_length"],
-      ["number", "comment_length"],
-      ["number", "corewar_exec_magic"],
-      ["number", "reg_size"],
-      ["number", "reg_count"],
-      ["number", "idx_mod"],
-      ["number", "ind_size"],
-      ["number", "dir_size"],
-      ["number", "mem_size"],
-      ["number", "cycle_to_die"],
-      ["number", "cycle_delta"],
-      ["number", "nbr_live"]
-    ]);
-
-    this.alloc(1);
+    this.raw = Config.alloc(1);
     this.prog_name_length = obj.prog_name_length;
     this.comment_length = obj.comment_length;
     this.corewar_exec_magic = obj.corewar_exec_magic;
@@ -65,15 +138,37 @@ export class Config {
   }
 }
 
+type_bindgen(Config, "cw_config", [
+  ["number", "prog_name_length"],
+  ["number", "comment_length"],
+  ["number", "corewar_exec_magic"],
+  ["number", "reg_size"],
+  ["number", "reg_count"],
+  ["number", "idx_mod"],
+  ["number", "ind_size"],
+  ["number", "dir_size"],
+  ["number", "mem_size"],
+  ["number", "cycle_to_die"],
+  ["number", "cycle_delta"],
+  ["number", "nbr_live"]
+]);
+
 export class VirtualMachine {
   constructor(config_def) {
     let config = new Config(config_def);
 
-    this.raw = API.cw_vm_new(config, 0, 0);
+    this.raw = API.cw_vm_new(config.raw);
     config.free();
+
+    if (this.raw === 0)
+      throw new Error("VM creation failed.");
   }
 
-  free() {
+  destroy() {
     API.cw_vm_destroy(this.raw);
   }
 }
+
+type_bindgen(VirtualMachine, "cw_vm", [
+  [Config, "config", true, true],
+]);
