@@ -81,6 +81,7 @@ cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
         cli->progs_list->len);
     cw_program_def_t *prog = NULL;
     usize_t index = 0;
+    cw_vm_t *vm = NULL;
 
     if (progs_list == NULL)
         return (NULL);
@@ -89,7 +90,12 @@ cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)
         progs_list[index] = *prog;
         index++;
     }
-    return (cw_vm_new(&VM_CONF, progs_list, cli->progs_list->len));
+    vm = cw_vm_new(&VM_CONF);
+    if (!vm || cw_vm_load_programs(vm, progs_list, cli->progs_list->len)) {
+        cw_vm_destroy(vm);
+        return (NULL);
+    }
+    return (vm);
 }
 
 u64_t cw_corewar_cli_run(cw_corewar_cli_t *self)
