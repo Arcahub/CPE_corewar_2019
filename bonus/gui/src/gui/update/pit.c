@@ -25,9 +25,8 @@ static void draw_memory(cg_ui_t *ui, cw_vm_t *vm)
     getmaxyx(ui->pit_win, max_y, max_x);
     for (int y = 1; y < max_y; y++) {
         for (int x = 1; x < max_x; x += 2) {
-            if (is_pc(ui, vm, current_mem)) {
+            if (is_pc(ui, vm, current_mem))
                 wattron(ui->pit_win, COLOR_PAIR(1));
-            }
             mvwprintw(ui->pit_win, y, x, "%02x", vm->mem[current_mem++]);
             if (x + 1 < max_x)
                 x++;

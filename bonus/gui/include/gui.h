@@ -12,9 +12,14 @@
 #include "corewar-gui/corewar.h"
 
 typedef struct {
+    int selected_core;
+} cg_config_t;
+
+typedef struct {
     WINDOW *main_win;
     WINDOW *pit_win;
     WINDOW *stats_win;
+    cg_config_t config;
 } cg_ui_t;
 
 void cg_ui_update(cg_ui_t *ui, cw_vm_t *vm);

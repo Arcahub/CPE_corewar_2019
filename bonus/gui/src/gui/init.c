@@ -19,7 +19,7 @@ static void setup_colors(void)
 
 cg_ui_t *cg_ui_init(void)
 {
-    cg_ui_t *ui = calloc(1, sizeof(ui));
+    cg_ui_t *ui = calloc(1, sizeof(cg_ui_t));
     int x, y = 0;
 
     ui->main_win = initscr();
