@@ -10,6 +10,7 @@
 #include "corewar-gui/corewar.h"
 #include "corewar-gui/op.h"
 #include "corewar-gui/gui.h"
+#include "corewar-gui/input.h"
 
 static const cw_config_t VM_CONF = {
     .prog_name_length = PROG_NAME_LENGTH,
@@ -29,18 +30,22 @@ static const cw_config_t VM_CONF = {
 static u64_t cw_corewar_cli_run_without_dump_cycles(cw_corewar_cli_t *self,
     cw_vm_t *vm, cg_ui_t *ui)
 {
-    bool exit_status = true;
+    bool exit_status = false;
 
+    ui->config.selected_core = 0;
+    ui->config.cursor = 0;
     (void)(self);
-    while (true) {
-        cw_vm_run(vm, SOME(u64, 10));
+    while (!exit_status) {
+        exit_status = cw_vm_run(vm, SOME(u64, 1));
+        exit_status |= cg_input_logic(vm, ui);
         cg_ui_update(ui, vm);
-        usleep(100000);
+        refresh();
+        usleep(10000);
     }
+    cg_logic_endgame(ui, vm);
+    cg_ui_destroy(ui);
     cw_vm_destroy(vm);
-    if (exit_status)
-        return (0);
-    return (84);
+    return (0);
 }
 
 cw_vm_t *cw_corewar_cli_create_vm(cw_corewar_cli_t *cli)

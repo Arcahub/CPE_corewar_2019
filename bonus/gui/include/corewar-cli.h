@@ -9,6 +9,7 @@
 #define COREWAR_CLI_H_
 
 #include "corewar/corewar.h"
+#include "corewar-gui/gui.h"
 
 typedef struct {
     list_t *progs_list;
@@ -23,5 +24,6 @@ u64_t cw_corewar_cli_run(cw_corewar_cli_t *self);
 void cw_corewar_cli_destroy(cw_corewar_cli_t *self);
 void cw_corewar_cli_dump(cw_vm_t *vm);
 void cw_corewar_cli_setup_callbacks(cw_vm_t *vm);
+void cg_logic_endgame(cg_ui_t *ui, cw_vm_t *vm);
 
 #endif /* !COREWAR_CLI_H_ */

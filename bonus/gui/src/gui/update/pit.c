@@ -27,10 +27,13 @@ static void draw_memory(cg_ui_t *ui, cw_vm_t *vm)
         for (int x = 1; x < max_x; x += 2) {
             if (is_pc(ui, vm, current_mem))
                 wattron(ui->pit_win, COLOR_PAIR(1));
+            if (current_mem == ui->config.cursor)
+                wattron(ui->pit_win, COLOR_PAIR(2));
             mvwprintw(ui->pit_win, y, x, "%02x", vm->mem[current_mem++]);
             if (x + 1 < max_x)
                 x++;
             wattroff(ui->pit_win, COLOR_PAIR(1));
+            wattroff(ui->pit_win, COLOR_PAIR(2));
         }
     }
 }

@@ -28,7 +28,10 @@ src:
   - ./src/args_parser/run.c
   - ./src/gui/init.c
   - ./src/gui/update/pit.c
+  - ./src/gui/input/input.c
   - ./src/gui/update/update.c
+  - ./src/gui/logic/endgame.c
+  - ./src/gui/destroy.c
   - ./src/cli/init.c
   - ./src/cli/destroy.c
   - ./src/cli/dump.c

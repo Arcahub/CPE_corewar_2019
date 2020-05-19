@@ -10,9 +10,11 @@
 
 #include <ncurses.h>
 #include "corewar-gui/corewar.h"
+#include "corewar-gui/gui.h"
 
 typedef struct {
     int selected_core;
+    long long int cursor;
 } cg_config_t;
 
 typedef struct {
@@ -25,5 +27,6 @@ typedef struct {
 void cg_ui_update(cg_ui_t *ui, cw_vm_t *vm);
 cg_ui_t *cg_ui_init(void);
 void cg_update_pit(cg_ui_t *ui, cw_vm_t *vm);
+void cg_ui_destroy(cg_ui_t *ui);
 
 #endif /* !GUI_H_ */
