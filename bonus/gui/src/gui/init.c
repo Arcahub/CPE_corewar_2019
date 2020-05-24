@@ -6,19 +6,32 @@
 */
 
 #include <stdlib.h>
-#include "gui.h"
+#include "corewar-gui/gui.h"
+
+static void setup_colors(void)
+{
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_WHITE);
+    init_pair(2, COLOR_BLACK, COLOR_BLUE);
+    init_pair(3, COLOR_BLACK, COLOR_WHITE);
+    init_pair(4, COLOR_RED, COLOR_MAGENTA);
+}
 
 cg_ui_t *cg_ui_init(void)
 {
-    cg_ui_t *ui = calloc(1, sizeof(ui));
+    cg_ui_t *ui = calloc(1, sizeof(cg_ui_t));
     int x, y = 0;
 
-    getmaxyx(stdscr, y, x);
     ui->main_win = initscr();
-    ui->stats_win = subwin(stdscr, y, x * 0.4, 0, 0);
-    ui->pit_win = subwin(stdscr, y, x * 0.6, 0, x * 0.4);
-    raw();
-    keypad(stdscr, true);
+    getmaxyx(stdscr, y, x);
+    setup_colors();
     noecho();
+    nodelay(stdscr, true);
+    cbreak();
+    ui->stats_win = subwin(stdscr, y, x * 0.3, 0, 0);
+    ui->pit_win = subwin(stdscr, y, x * 0.7, 0, x * 0.3);
+    nodelay(ui->stats_win, true);
+    keypad(ui->stats_win, true);
+    curs_set(0);
     return (ui);
 }

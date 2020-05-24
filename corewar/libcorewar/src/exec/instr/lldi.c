@@ -14,7 +14,8 @@ void cw_vm__exec__lldi(cw_vm_t *vm, cw_core_t *core, const cw_instr_t *instr)
     i64_t a = cw_vm__exec_plval(vm, core, &instr->args[0], vm->config.ind_size);
     i64_t b = cw_vm__exec_plval(vm, core, &instr->args[1], vm->config.ind_size);
     i64_t addr = core->regs.pc + a + b;
-    i64_t val = cw_vm__read_int(vm, addr, vm->config.reg_size);
+    i64_t val = cw_vm__read_int_with_callbacks(vm, addr, vm->config.reg_size,
+        core);
 
     val = reg_mask(vm, val);
     core->regs.zero = val == 0;

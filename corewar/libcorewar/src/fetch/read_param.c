@@ -16,7 +16,7 @@ bool cw__fetch_read_param(const cw_vm_t *vm, cw_param_type_t type,
     param->type = type;
     switch (type) {
     case CW_PARAM_REG:
-        param->u.reg = vm->mem[*addr % vm->config.mem_size] - 1;
+        param->u.reg = vm->mem[cw_vm_compute_addr(vm, *addr)] - 1;
         (*addr)++;
         if (param->u.reg >= vm->config.reg_count)
             return (true);
@@ -39,7 +39,7 @@ bool cw__fetch_read_sparam(const cw_vm_t *vm, cw_param_type_t type,
     param->type = type;
     switch (type) {
     case CW_PARAM_REG:
-        param->u.reg = vm->mem[*addr % vm->config.mem_size] - 1;
+        param->u.reg = vm->mem[cw_vm_compute_addr(vm, *addr)] - 1;
         (*addr)++;
         if (param->u.reg >= vm->config.reg_count)
             return (true);

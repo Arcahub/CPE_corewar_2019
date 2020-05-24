@@ -35,7 +35,7 @@ bool cw_vm__fetch_instr(const cw_vm_t *vm, const cw_core_t *core,
 {
     cw__fetch_fn_t *fn = NULL;
 
-    instr->opcode = vm->mem[core->regs.pc];
+    instr->opcode = vm->mem[cw_vm_compute_addr(vm, core->regs.pc)];
     fn = FETCH_FUNCTIONS[instr->opcode];
     if (fn)
         return (fn(vm, core, instr));

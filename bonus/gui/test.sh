@@ -1,0 +1,1 @@
+./corewar-gui "../../champ/42.cor" "../../champ/42.cor"

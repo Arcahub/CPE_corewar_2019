@@ -43,7 +43,7 @@ struct op_s {
 };
 typedef struct op_s op_t;
 
-extern op_t OP_TAB[];
+extern const op_t OP_TAB[];
 
 /*
 ** Size

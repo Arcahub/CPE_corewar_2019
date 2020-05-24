@@ -12,11 +12,11 @@
 
 static void display_row(cw_vm_t *vm, usize_t start_address, usize_t max_add_len)
 {
-    my_printf("%-*x :", max_add_len, start_address);
+    my_printf("%-*X :", max_add_len, start_address);
     for (size_t i = 0; i < 0x20; i++) {
         if (start_address + i >= vm->config.mem_size)
             break;
-        my_printf(" %02x", vm->mem[start_address + i]);
+        my_printf(" %02X", vm->mem[start_address + i]);
     }
     my_putcstr("\n");
 }
