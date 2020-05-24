@@ -10,6 +10,7 @@
 
 static bool is_pc(cg_ui_t *ui, cw_vm_t *vm, usize_t current_add)
 {
+    (void)(ui);
     for (size_t i = 0; i < vm->cores->len; i++) {
         if (((cw_core_t*)vm->cores->data[i])->regs.pc == current_add)
             return (true);
@@ -27,7 +28,7 @@ static void draw_memory(cg_ui_t *ui, cw_vm_t *vm)
         for (int x = 1; x < max_x; x += 2) {
             if (is_pc(ui, vm, current_mem))
                 wattron(ui->pit_win, COLOR_PAIR(1));
-            if (current_mem == ui->config.cursor)
+            if ((long long)current_mem == ui->config.cursor)
                 wattron(ui->pit_win, COLOR_PAIR(2));
             mvwprintw(ui->pit_win, y, x, "%02x", vm->mem[current_mem++]);
             if (x + 1 < max_x)

@@ -18,6 +18,7 @@ static void print_draw_text(cw_vm_t *vm, cg_ui_t *ui,
 {
     int y, x = 0;
 
+    (void)(ui);
     getmaxyx(win, y, x);
     mvwprintw(win, 2, x / 2 - 7, "Draw between: ");
     for (u64_t i = 0; i < vm->prog_count; i++) {

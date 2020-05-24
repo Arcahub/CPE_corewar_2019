@@ -22,7 +22,7 @@ static void draw_header(cg_ui_t *ui)
 
 static void draw_selected_core(cg_ui_t *ui, cw_vm_t *vm)
 {
-    if (vm->cores->len <= ui->config.selected_core)
+    if ((int)vm->cores->len <= ui->config.selected_core)
         return;
     cw_core_t *core = vm->cores->data[ui->config.selected_core];
 

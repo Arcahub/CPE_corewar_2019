@@ -19,7 +19,7 @@ static void change_core(cg_config_t *config, cw_vm_t *vm, int key)
         config->selected_core++;
     if (config->selected_core < 0)
         config->selected_core = vm->cores->len - 1;
-    else if (config->selected_core >= vm->cores->len)
+    else if (config->selected_core >= (long long)vm->cores->len)
         config->selected_core = 0;
 }
 
@@ -58,7 +58,7 @@ static void change_cursor(cg_ui_t *ui, cw_vm_t *vm, int key)
     }
     if (ui->config.cursor < 0)
         ui->config.cursor = vm->config.mem_size - 1;
-    else if (ui->config.cursor >= vm->config.mem_size)
+    else if (ui->config.cursor >= (long long)vm->config.mem_size)
         ui->config.cursor = 0;
 }
 
