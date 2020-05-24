@@ -23,5 +23,6 @@ u64_t cw_corewar_cli_run(cw_corewar_cli_t *self);
 void cw_corewar_cli_destroy(cw_corewar_cli_t *self);
 void cw_corewar_cli_dump(cw_vm_t *vm);
 void cw_corewar_cli_setup_callbacks(cw_vm_t *vm);
+void cw_corewar_cli_print_winner(cw_vm_t *vm);
 
 #endif /* !COREWAR_CLI_H_ */

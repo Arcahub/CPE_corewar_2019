@@ -51,8 +51,8 @@ static bool handle_live(void *ptr, cw_vm_t *vm, cw_core_t *core,
     (void)(core);
     for (usize_t i = 0; i < vm->prog_count; i++) {
         if (vm->programs[i].prog_number == num) {
-            my_printf("The player %d (%s) is alive.\n", num + 1,
-                vm->programs[i].name);
+            my_printf("The player %d (%s) is alive. %d\n", num,
+                vm->programs[i].name, vm->programs[i].last_live);
         }
     }
     return (false);
@@ -83,7 +83,6 @@ bool print_instruct(void *user_data, cw_vm_t *vm, cw_core_t *core,
 
 void cw_corewar_cli_setup_callbacks(cw_vm_t *vm)
 {
-    cw_vm_add_instr_callback(vm, NONE(cw_opcode), &print_instruct, NULL);
     cw_vm_add_instr_callback(vm, SOME(cw_opcode, CW_INSTR_AFF), &handle_aff,
         NULL);
     cw_vm_add_instr_callback(vm, SOME(cw_opcode, CW_INSTR_LIVE), &handle_live,
